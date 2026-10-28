@@ -1,0 +1,49 @@
+Triples:             1537
+Classes:             45
+Object properties:   33
+Data properties:     22
+Properties (total):  55
+Named individuals:   117
+Equivalent-class axioms (defined classes): 6
+Property chains:     2
+Inverse pairs:       7
+
+Property characteristics:
+  FunctionalProperty: 25
+  InverseFunctionalProperty: 3
+  IrreflexiveProperty: 1
+  SymmetricProperty: 1
+  TransitiveProperty: 1
+
+Individuals per asserted class:
+  AdvertisingChannel: 5
+  AgencyBranch: 2
+  Airline: 2
+  Airport: 5
+  BankTransfer: 3
+  Booking: 12
+  BookingStatus: 3
+  CardPayment: 5
+  CashPayment: 1
+  CityDestination: 4
+  Country: 3
+  Customer: 9
+  Excursion: 5
+  FerryTrip: 1
+  Flight: 6
+  HolidayPackage: 7
+  Hotel: 6
+  IslandDestination: 2
+  Language: 4
+  Manager: 2
+  MarketingCampaign: 3
+  MarketingSpecialist: 1
+  MountainDestination: 1
+  Port: 2
+  Region: 6
+  Review: 8
+  TourGuide: 2
+  Transfer: 2
+  TravelAgency: 1
+  TravelAgent: 3
+  TravelInsurance: 2

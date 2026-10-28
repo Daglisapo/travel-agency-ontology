@@ -1,0 +1,2076 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency"
+         xmlns="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<owl:Ontology rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency">
+  <dc:title xml:lang="el">Οντολογία Ταξιδιωτικού Πρακτορείου</dc:title>
+  <dc:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Apostolos Dagklis (2021031)</dc:creator>
+  <rdfs:comment xml:lang="en">Ontology of the structure of a travel agency: destinations, customers, holiday packages, hotels, flights, organised excursions, guides, prices, staff, bookings, payments, reviews and advertising campaigns.</rdfs:comment>
+  <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.0</owl:versionInfo>
+  <rdfs:comment xml:lang="el">Οντολογία της δομής ενός ταξιδιωτικού πρακτορείου: προορισμοί, πελάτες, πακέτα διακοπών, ξενοδοχεία, πτήσεις, οργανωμένες εκδρομές, οδηγοί/συνοδοί, τιμές, προσωπικό, κρατήσεις, πληρωμές, αξιολογήσεις και διαφημιστικές καμπάνιες.</rdfs:comment>
+  <dc:title xml:lang="en">Travel Agency Ontology</dc:title>
+</owl:Ontology>
+
+<owl:ObjectProperty rdf:about="#hasStatus">
+  <rdfs:range rdf:resource="#BookingStatus"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Booking"/>
+  <rdfs:label xml:lang="en">has status</rdfs:label>
+  <rdfs:label xml:lang="el">έχει κατάσταση</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#reviews">
+  <rdfs:range rdf:resource="#HolidayPackage"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Review"/>
+  <rdfs:label xml:lang="el">αξιολογεί</rdfs:label>
+  <rdfs:label xml:lang="en">reviews</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#promotes">
+  <owl:inverseOf rdf:resource="#promotedBy"/>
+  <rdfs:range rdf:resource="#HolidayPackage"/>
+  <rdfs:domain rdf:resource="#MarketingCampaign"/>
+  <rdfs:label xml:lang="en">promotes</rdfs:label>
+  <rdfs:label xml:lang="el">προβάλλει</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasBooking">
+  <rdfs:domain rdf:resource="#Customer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+  <owl:inverseOf rdf:resource="#bookedBy"/>
+  <rdfs:range rdf:resource="#Booking"/>
+  <rdfs:label xml:lang="en">has booking</rdfs:label>
+  <rdfs:label xml:lang="el">έχει κράτηση</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#locatedIn">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+  <rdfs:range rdf:resource="#Place"/>
+  <rdfs:comment xml:lang="el">Μεταβατική: αν η Οία βρίσκεται στη Σαντορίνη και η Σαντορίνη στις Κυκλάδες, τότε η Οία βρίσκεται στις Κυκλάδες. Χρησιμοποιείται για τοποθεσίες, καταλύματα και υποκαταστήματα (χωρίς domain).</rdfs:comment>
+  <rdfs:label xml:lang="en">located in</rdfs:label>
+  <rdfs:label xml:lang="el">βρίσκεται σε</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasDestination">
+  <rdfs:domain rdf:resource="#HolidayPackage"/>
+  <rdfs:range rdf:resource="#Destination"/>
+  <rdfs:subPropertyOf rdf:resource="#visitsPlace"/>
+  <rdfs:label xml:lang="el">έχει προορισμό</rdfs:label>
+  <rdfs:label xml:lang="en">has destination</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#visitsDestination">
+  <rdfs:domain rdf:resource="#Excursion"/>
+  <rdfs:range rdf:resource="#Destination"/>
+  <rdfs:label xml:lang="en">visits destination</rdfs:label>
+  <rdfs:label xml:lang="el">επισκέπτεται προορισμό</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#offeredBy">
+  <rdfs:range rdf:resource="#TravelAgency"/>
+  <rdfs:domain rdf:resource="#HolidayPackage"/>
+  <owl:inverseOf rdf:resource="#offersPackage"/>
+  <rdfs:label xml:lang="el">προσφέρεται από</rdfs:label>
+  <rdfs:label xml:lang="en">offered by</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#arrivesAt">
+  <rdfs:range rdf:resource="#Place"/>
+  <rdfs:domain rdf:resource="#Transport"/>
+  <rdfs:label xml:lang="en">arrives at</rdfs:label>
+  <rdfs:label xml:lang="el">φτάνει σε</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#forPackage">
+  <rdfs:domain rdf:resource="#Booking"/>
+  <rdfs:range rdf:resource="#HolidayPackage"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label xml:lang="en">for package</rdfs:label>
+  <rdfs:label xml:lang="el">αφορά πακέτο</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#branchOf">
+  <owl:inverseOf rdf:resource="#hasBranch"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="#TravelAgency"/>
+  <rdfs:domain rdf:resource="#AgencyBranch"/>
+  <rdfs:label xml:lang="el">υποκατάστημα του</rdfs:label>
+  <rdfs:label xml:lang="en">branch of</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasBranch">
+  <rdfs:range rdf:resource="#AgencyBranch"/>
+  <rdfs:domain rdf:resource="#TravelAgency"/>
+  <rdfs:label xml:lang="en">has branch</rdfs:label>
+  <rdfs:label xml:lang="el">έχει υποκατάστημα</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#createdBy">
+  <rdfs:domain rdf:resource="#MarketingCampaign"/>
+  <rdfs:range rdf:resource="#MarketingSpecialist"/>
+  <rdfs:label xml:lang="en">created by</rdfs:label>
+  <rdfs:label xml:lang="el">σχεδιάστηκε από</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#speaksLanguage">
+  <rdfs:range rdf:resource="#Language"/>
+  <rdfs:domain rdf:resource="#Person"/>
+  <rdfs:label xml:lang="en">speaks language</rdfs:label>
+  <rdfs:label xml:lang="el">μιλά γλώσσα</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#includesService">
+  <rdfs:domain rdf:resource="#HolidayPackage"/>
+  <rdfs:range rdf:resource="#TravelService"/>
+  <rdfs:label xml:lang="en">includes service</rdfs:label>
+  <rdfs:label xml:lang="el">περιλαμβάνει υπηρεσία</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#departsFrom">
+  <rdfs:range rdf:resource="#Place"/>
+  <rdfs:domain rdf:resource="#Transport"/>
+  <rdfs:label xml:lang="en">departs from</rdfs:label>
+  <rdfs:label xml:lang="el">αναχωρεί από</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#bookedBy">
+  <rdfs:domain rdf:resource="#Booking"/>
+  <rdfs:range rdf:resource="#Customer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label xml:lang="el">κρατήθηκε από</rdfs:label>
+  <rdfs:label xml:lang="en">booked by</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#usesChannel">
+  <rdfs:domain rdf:resource="#MarketingCampaign"/>
+  <rdfs:range rdf:resource="#AdvertisingChannel"/>
+  <rdfs:label xml:lang="el">χρησιμοποιεί κανάλι</rdfs:label>
+  <rdfs:label xml:lang="en">uses channel</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#writtenBy">
+  <rdfs:range rdf:resource="#Customer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <owl:inverseOf rdf:resource="#writesReview"/>
+  <rdfs:domain rdf:resource="#Review"/>
+  <rdfs:label xml:lang="el">γράφτηκε από</rdfs:label>
+  <rdfs:label xml:lang="en">written by</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#operatedBy">
+  <rdfs:domain rdf:resource="#Flight"/>
+  <rdfs:range rdf:resource="#Airline"/>
+  <rdfs:label xml:lang="en">operated by</rdfs:label>
+  <rdfs:label xml:lang="el">εκτελείται από</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#manages">
+  <rdfs:range rdf:resource="#AgencyBranch"/>
+  <rdfs:domain rdf:resource="#Manager"/>
+  <rdfs:subPropertyOf rdf:resource="#worksFor"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+  <rdfs:label xml:lang="el">διευθύνει</rdfs:label>
+  <rdfs:comment xml:lang="el">Υπο-ιδιότητα του worksFor: όποιος διευθύνει ένα υποκατάστημα εργάζεται σε αυτό. Κάθε υποκατάστημα έχει το πολύ έναν διευθυντή.</rdfs:comment>
+  <rdfs:label xml:lang="en">manages</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#worksFor">
+  <rdfs:range rdf:resource="#AgencyBranch"/>
+  <owl:inverseOf rdf:resource="#employs"/>
+  <rdfs:domain rdf:resource="#Employee"/>
+  <rdfs:label xml:lang="el">εργάζεται σε</rdfs:label>
+  <rdfs:label xml:lang="en">works for</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#visitsPlace">
+  <rdfs:domain rdf:resource="#HolidayPackage"/>
+  <owl:propertyChainAxiom>
+    <rdf:Description>
+      <rdf:first rdf:resource="#hasDestination"/>
+      <rdf:rest>
+        <rdf:Description>
+          <rdf:first rdf:resource="#locatedIn"/>
+          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        </rdf:Description>
+      </rdf:rest>
+    </rdf:Description>
+  </owl:propertyChainAxiom>
+  <rdfs:range rdf:resource="#Place"/>
+  <rdfs:comment xml:lang="el">Υπερ-ιδιότητα του hasDestination και αλυσίδα hasDestination ∘ locatedIn: ένα πακέτο «επισκέπτεται» τον προορισμό του και όλες τις τοποθεσίες που τον περιέχουν (περιοχή, χώρα).</rdfs:comment>
+  <rdfs:label xml:lang="en">visits place</rdfs:label>
+  <rdfs:label xml:lang="el">επισκέπτεται τοποθεσία</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#servedBy">
+  <owl:propertyChainAxiom>
+    <rdf:Description>
+      <rdf:first rdf:resource="#hasBooking"/>
+      <rdf:rest>
+        <rdf:Description>
+          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+          <rdf:first rdf:resource="#handledBy"/>
+        </rdf:Description>
+      </rdf:rest>
+    </rdf:Description>
+  </owl:propertyChainAxiom>
+  <rdfs:domain rdf:resource="#Customer"/>
+  <rdfs:range rdf:resource="#TravelAgent"/>
+  <rdfs:label xml:lang="el">εξυπηρετήθηκε από</rdfs:label>
+  <rdfs:label xml:lang="en">served by</rdfs:label>
+  <rdfs:comment xml:lang="el">Αλυσίδα ιδιοτήτων: αν ο πελάτης έχει κράτηση που διεκπεραίωσε ο σύμβουλος Χ, τότε εξυπηρετήθηκε από τον Χ.</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#travelsWith">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+  <rdfs:range rdf:resource="#Customer"/>
+  <rdfs:domain rdf:resource="#Customer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+  <rdfs:label xml:lang="en">travels with</rdfs:label>
+  <rdfs:label xml:lang="el">ταξιδεύει μαζί με</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasPayment">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Booking"/>
+  <rdfs:range rdf:resource="#Payment"/>
+  <rdfs:label xml:lang="en">has payment</rdfs:label>
+  <rdfs:label xml:lang="el">έχει πληρωμή</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#handledBy">
+  <rdfs:range rdf:resource="#TravelAgent"/>
+  <rdfs:domain rdf:resource="#Booking"/>
+  <rdfs:label xml:lang="en">handled by</rdfs:label>
+  <rdfs:label xml:lang="el">διεκπεραιώθηκε από</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#writesReview">
+  <rdfs:domain rdf:resource="#Customer"/>
+  <rdfs:range rdf:resource="#Review"/>
+  <rdfs:label xml:lang="el">γράφει αξιολόγηση</rdfs:label>
+  <rdfs:label xml:lang="en">writes review</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#promotedBy">
+  <rdfs:range rdf:resource="#MarketingCampaign"/>
+  <rdfs:domain rdf:resource="#HolidayPackage"/>
+  <rdfs:label xml:lang="el">προβάλλεται από</rdfs:label>
+  <rdfs:label xml:lang="en">promoted by</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasGuide">
+  <rdfs:range rdf:resource="#TourGuide"/>
+  <owl:inverseOf rdf:resource="#guides"/>
+  <rdfs:comment xml:lang="el">Χωρίς domain: χρησιμοποιείται για εκδρομές, αλλά και ως περιορισμός στον ορισμό του GuidedPackage.</rdfs:comment>
+  <rdfs:label xml:lang="el">έχει οδηγό/συνοδό</rdfs:label>
+  <rdfs:label xml:lang="en">has guide</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#guides">
+  <rdfs:domain rdf:resource="#TourGuide"/>
+  <rdfs:label xml:lang="en">guides</rdfs:label>
+  <rdfs:label xml:lang="el">συνοδεύει</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#offersPackage">
+  <rdfs:range rdf:resource="#HolidayPackage"/>
+  <rdfs:domain rdf:resource="#TravelAgency"/>
+  <rdfs:label xml:lang="el">προσφέρει πακέτο</rdfs:label>
+  <rdfs:label xml:lang="en">offers package</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#employs">
+  <rdfs:range rdf:resource="#Employee"/>
+  <rdfs:domain rdf:resource="#AgencyBranch"/>
+  <rdfs:label xml:lang="el">απασχολεί</rdfs:label>
+  <rdfs:label xml:lang="en">employs</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#lastName">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:domain rdf:resource="#Person"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label xml:lang="el">επώνυμο</rdfs:label>
+  <rdfs:label xml:lang="en">last name</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#salary">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Employee"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label xml:lang="el">μηνιαίος μισθός (€)</rdfs:label>
+  <rdfs:label xml:lang="en">monthly salary (EUR)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#pricePerPerson">
+  <rdfs:domain rdf:resource="#HolidayPackage"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label xml:lang="en">price per person (EUR)</rdfs:label>
+  <rdfs:label xml:lang="el">τιμή ανά άτομο (€)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#numberOfTravellers">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Booking"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger"/>
+  <rdfs:label xml:lang="el">αριθμός ταξιδιωτών</rdfs:label>
+  <rdfs:label xml:lang="en">number of travellers</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#rating">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range>
+    <rdfs:Datatype>
+      <owl:withRestrictions>
+        <rdf:Description>
+          <rdf:rest>
+            <rdf:Description>
+              <rdf:first>
+                <rdf:Description>
+                  <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</xsd:maxInclusive>
+                </rdf:Description>
+              </rdf:first>
+              <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+          </rdf:rest>
+          <rdf:first>
+            <rdf:Description>
+              <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</xsd:minInclusive>
+            </rdf:Description>
+          </rdf:first>
+        </rdf:Description>
+      </owl:withRestrictions>
+      <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </rdfs:Datatype>
+  </rdfs:range>
+  <rdfs:domain rdf:resource="#Review"/>
+  <rdfs:label xml:lang="el">βαθμολογία (1-5)</rdfs:label>
+  <rdfs:label xml:lang="en">rating (1-5)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#endDate">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  <rdfs:domain rdf:resource="#MarketingCampaign"/>
+  <rdfs:label xml:lang="en">end date</rdfs:label>
+  <rdfs:label xml:lang="el">ημερομηνία λήξης</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#amount">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Payment"/>
+  <rdfs:label xml:lang="el">ποσό (€)</rdfs:label>
+  <rdfs:label xml:lang="en">amount (EUR)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#maxParticipants">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger"/>
+  <rdfs:domain rdf:resource="#Excursion"/>
+  <rdfs:label xml:lang="el">μέγιστος αριθμός συμμετεχόντων</rdfs:label>
+  <rdfs:label xml:lang="en">max participants</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#durationDays">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#HolidayPackage"/>
+  <rdfs:label xml:lang="el">διάρκεια (ημέρες)</rdfs:label>
+  <rdfs:label xml:lang="en">duration (days)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#startDate">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  <rdfs:domain rdf:resource="#MarketingCampaign"/>
+  <rdfs:label xml:lang="en">start date</rdfs:label>
+  <rdfs:label xml:lang="el">ημερομηνία έναρξης</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#iataCode">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:domain rdf:resource="#Airport"/>
+  <rdfs:label xml:lang="el">κωδικός IATA</rdfs:label>
+  <rdfs:label xml:lang="en">IATA code</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#budget">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#MarketingCampaign"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label xml:lang="el">προϋπολογισμός (€)</rdfs:label>
+  <rdfs:label xml:lang="en">budget (EUR)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#starRating">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  <rdfs:domain rdf:resource="#Hotel"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label xml:lang="el">κατηγορία αστέρων</rdfs:label>
+  <rdfs:label xml:lang="en">star rating</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#loyaltyPoints">
+  <rdfs:domain rdf:resource="#Customer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  <rdfs:label xml:lang="en">loyalty points</rdfs:label>
+  <rdfs:label xml:lang="el">πόντοι επιβράβευσης</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hireDate">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  <rdfs:domain rdf:resource="#Employee"/>
+  <rdfs:label xml:lang="en">hire date</rdfs:label>
+  <rdfs:label xml:lang="el">ημερομηνία πρόσληψης</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#reviewText">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:domain rdf:resource="#Review"/>
+  <rdfs:label xml:lang="en">review text</rdfs:label>
+  <rdfs:label xml:lang="el">κείμενο αξιολόγησης</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#departureDate">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label xml:lang="en">departure date</rdfs:label>
+  <rdfs:label xml:lang="el">ημερομηνία αναχώρησης</rdfs:label>
+  <rdfs:comment xml:lang="el">Για πακέτα και πτήσεις.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#name">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label xml:lang="el">όνομα</rdfs:label>
+  <rdfs:comment xml:lang="el">Ονομασία οργανισμού, τοποθεσίας, πακέτου, υπηρεσίας κ.λπ.</rdfs:comment>
+  <rdfs:label xml:lang="en">name</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#email">
+  <rdfs:domain rdf:resource="#Person"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label xml:lang="el">ηλεκτρονική διεύθυνση</rdfs:label>
+  <rdfs:label xml:lang="en">email</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#bookingDate">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Booking"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  <rdfs:label xml:lang="el">ημερομηνία κράτησης</rdfs:label>
+  <rdfs:label xml:lang="en">booking date</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#flightNumber">
+  <rdfs:domain rdf:resource="#Flight"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label xml:lang="en">flight number</rdfs:label>
+  <rdfs:label xml:lang="el">αριθμός πτήσης</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#firstName">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:domain rdf:resource="#Person"/>
+  <rdfs:label xml:lang="el">όνομα</rdfs:label>
+  <rdfs:label xml:lang="en">first name</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/creator"/>
+
+<owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/title"/>
+
+<owl:Class rdf:about="#Port">
+  <rdfs:subClassOf rdf:resource="#Place"/>
+  <rdfs:label xml:lang="el">Λιμάνι</rdfs:label>
+  <rdfs:label xml:lang="en">Port</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Customer">
+  <rdfs:subClassOf rdf:resource="#Person"/>
+  <rdfs:label xml:lang="el">Πελάτης</rdfs:label>
+  <rdfs:label xml:lang="en">Customer</rdfs:label>
+  <rdfs:comment xml:lang="el">Πρόσωπο που κάνει κρατήσεις πακέτων διακοπών.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#MarketingSpecialist">
+  <rdfs:subClassOf rdf:resource="#Employee"/>
+  <rdfs:label xml:lang="en">Marketing Specialist</rdfs:label>
+  <rdfs:label xml:lang="el">Υπεύθυνος Προβολής</rdfs:label>
+  <rdfs:comment xml:lang="el">Υπάλληλος που σχεδιάζει διαφημιστικές καμπάνιες.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Excursion">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#visitsDestination"/>
+      <owl:someValuesFrom rdf:resource="#Destination"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="#TourGuide"/>
+      <owl:onProperty rdf:resource="#hasGuide"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="#TravelService"/>
+  <rdfs:label xml:lang="el">Οργανωμένη Εκδρομή</rdfs:label>
+  <rdfs:comment xml:lang="el">Κάθε οργανωμένη εκδρομή έχει τουλάχιστον έναν οδηγό/συνοδό (ακόμη κι αν δεν είναι γνωστός ποιος).</rdfs:comment>
+  <rdfs:label xml:lang="en">Organised Excursion</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#TravelAgency">
+  <rdfs:subClassOf rdf:resource="#Organization"/>
+  <rdfs:label xml:lang="el">Ταξιδιωτικό Πρακτορείο</rdfs:label>
+  <rdfs:label xml:lang="en">Travel Agency</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#IslandDestination">
+  <rdfs:subClassOf rdf:resource="#Destination"/>
+  <rdfs:label xml:lang="en">Island Destination</rdfs:label>
+  <rdfs:label xml:lang="el">Νησιωτικός Προορισμός</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#AgencyBranch">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#branchOf"/>
+      <owl:onClass rdf:resource="#TravelAgency"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="#Organization"/>
+  <rdfs:label xml:lang="en">Agency Branch</rdfs:label>
+  <rdfs:comment xml:lang="el">Κάθε υποκατάστημα ανήκει σε ακριβώς ένα πρακτορείο.</rdfs:comment>
+  <rdfs:label xml:lang="el">Υποκατάστημα</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Booking">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#bookedBy"/>
+      <owl:onClass rdf:resource="#Customer"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#forPackage"/>
+      <owl:onClass rdf:resource="#HolidayPackage"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onClass rdf:resource="#BookingStatus"/>
+      <owl:onProperty rdf:resource="#hasStatus"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="el">Κράτηση</rdfs:label>
+  <rdfs:comment xml:lang="el">Κράτηση ενός πακέτου από ακριβώς έναν πελάτη, με ακριβώς μία κατάσταση.</rdfs:comment>
+  <rdfs:label xml:lang="en">Booking</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Employee">
+  <rdfs:subClassOf rdf:resource="#Person"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="#AgencyBranch"/>
+      <owl:onProperty rdf:resource="#worksFor"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="el">Υπάλληλος</rdfs:label>
+  <rdfs:comment xml:lang="el">Μέλος του προσωπικού του πρακτορείου· εργάζεται σε τουλάχιστον ένα υποκατάστημα.</rdfs:comment>
+  <rdfs:label xml:lang="en">Employee</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Person">
+  <rdfs:label xml:lang="en">Person</rdfs:label>
+  <rdfs:label xml:lang="el">Πρόσωπο</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#MarketingCampaign">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#usesChannel"/>
+      <owl:someValuesFrom rdf:resource="#AdvertisingChannel"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#promotes"/>
+      <owl:someValuesFrom rdf:resource="#HolidayPackage"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="el">Διαφημιστική Καμπάνια</rdfs:label>
+  <rdfs:label xml:lang="en">Marketing Campaign</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#HolidayPackage">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#pricePerPerson"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="#Accommodation"/>
+      <owl:onProperty rdf:resource="#includesService"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="#Destination"/>
+      <owl:onProperty rdf:resource="#hasDestination"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="el">Πακέτο Διακοπών</rdfs:label>
+  <rdfs:comment xml:lang="el">Πακέτο με τουλάχιστον έναν προορισμό, τουλάχιστον ένα κατάλυμα και ακριβώς μία τιμή ανά άτομο.</rdfs:comment>
+  <rdfs:label xml:lang="en">Holiday Package</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Transfer">
+  <rdfs:subClassOf rdf:resource="#Transport"/>
+  <rdfs:label xml:lang="en">Transfer</rdfs:label>
+  <rdfs:label xml:lang="el">Οδική Μεταφορά (Transfer)</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Transport">
+  <rdfs:subClassOf rdf:resource="#TravelService"/>
+  <rdfs:label xml:lang="en">Transport</rdfs:label>
+  <rdfs:label xml:lang="el">Μεταφορά</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Flight">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onClass rdf:resource="#Airline"/>
+      <owl:onProperty rdf:resource="#operatedBy"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="#Transport"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#arrivesAt"/>
+      <owl:onClass rdf:resource="#Airport"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onClass rdf:resource="#Airport"/>
+      <owl:onProperty rdf:resource="#departsFrom"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="el">Πτήση</rdfs:label>
+  <rdfs:label xml:lang="en">Flight</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#CashPayment">
+  <rdfs:subClassOf rdf:resource="#Payment"/>
+  <rdfs:label xml:lang="el">Πληρωμή με Μετρητά</rdfs:label>
+  <rdfs:label xml:lang="en">Cash Payment</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Payment">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#amount"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="el">Πληρωμή</rdfs:label>
+  <rdfs:label xml:lang="en">Payment</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#MountainDestination">
+  <rdfs:subClassOf rdf:resource="#Destination"/>
+  <rdfs:label xml:lang="el">Ορεινός Προορισμός</rdfs:label>
+  <rdfs:label xml:lang="en">Mountain Destination</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#TravelInsurance">
+  <rdfs:subClassOf rdf:resource="#TravelService"/>
+  <rdfs:label xml:lang="en">Travel Insurance</rdfs:label>
+  <rdfs:label xml:lang="el">Ταξιδιωτική Ασφάλιση</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Place">
+  <rdfs:label xml:lang="en">Place</rdfs:label>
+  <rdfs:label xml:lang="el">Τοποθεσία</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Airport">
+  <rdfs:subClassOf rdf:resource="#Place"/>
+  <rdfs:label xml:lang="el">Αεροδρόμιο</rdfs:label>
+  <rdfs:label xml:lang="en">Airport</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#TravelAgent">
+  <rdfs:subClassOf rdf:resource="#Employee"/>
+  <rdfs:label xml:lang="en">Travel Agent</rdfs:label>
+  <rdfs:label xml:lang="el">Ταξιδιωτικός Σύμβουλος</rdfs:label>
+  <rdfs:comment xml:lang="el">Υπάλληλος που εξυπηρετεί πελάτες και διεκπεραιώνει κρατήσεις.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#CardPayment">
+  <rdfs:subClassOf rdf:resource="#Payment"/>
+  <rdfs:label xml:lang="el">Πληρωμή με Κάρτα</rdfs:label>
+  <rdfs:label xml:lang="en">Card Payment</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#LongStayPackage">
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#HolidayPackage"/>
+        <owl:Restriction>
+          <owl:someValuesFrom>
+            <rdfs:Datatype>
+              <owl:withRestrictions>
+                <rdf:Description>
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                  <rdf:first>
+                    <rdf:Description>
+                      <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</xsd:minInclusive>
+                    </rdf:Description>
+                  </rdf:first>
+                </rdf:Description>
+              </owl:withRestrictions>
+              <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+            </rdfs:Datatype>
+          </owl:someValuesFrom>
+          <owl:onProperty rdf:resource="#durationDays"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label xml:lang="en">Long Stay Package</rdfs:label>
+  <rdfs:comment xml:lang="el">Ορισμένη κλάση: πακέτο διάρκειας τουλάχιστον 7 ημερών.</rdfs:comment>
+  <rdfs:label xml:lang="el">Πακέτο Μεγάλης Διάρκειας</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#BookingStatus">
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:oneOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Confirmed"/>
+        <rdf:Description rdf:about="#Pending"/>
+        <rdf:Description rdf:about="#Cancelled"/>
+      </owl:oneOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label xml:lang="en">Booking Status</rdfs:label>
+  <rdfs:comment xml:lang="el">Απαριθμητή κλάση με τρεις τιμές.</rdfs:comment>
+  <rdfs:label xml:lang="el">Κατάσταση Κράτησης</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Destination">
+  <rdfs:subClassOf rdf:resource="#Place"/>
+  <rdfs:label xml:lang="en">Destination</rdfs:label>
+  <rdfs:comment xml:lang="el">Τοποθεσία στην οποία το πρακτορείο οργανώνει ταξίδια.</rdfs:comment>
+  <rdfs:label xml:lang="el">Προορισμός</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Manager">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#manages"/>
+      <owl:someValuesFrom rdf:resource="#AgencyBranch"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="#Employee"/>
+  <rdfs:comment xml:lang="el">Υπάλληλος που διευθύνει υποκατάστημα. Δεν δηλώνεται ξένη με τις άλλες υποκλάσεις του Employee: ένας διευθυντής μπορεί να είναι και σύμβουλος.</rdfs:comment>
+  <rdfs:label xml:lang="el">Διευθυντής Υποκαταστήματος</rdfs:label>
+  <rdfs:label xml:lang="en">Manager</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Region">
+  <rdfs:subClassOf rdf:resource="#Place"/>
+  <rdfs:label xml:lang="el">Περιφέρεια / Περιοχή</rdfs:label>
+  <rdfs:label xml:lang="en">Region</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Language">
+  <rdfs:label xml:lang="el">Γλώσσα</rdfs:label>
+  <rdfs:label xml:lang="en">Language</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Review">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#reviews"/>
+      <owl:onClass rdf:resource="#HolidayPackage"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onClass rdf:resource="#Customer"/>
+      <owl:onProperty rdf:resource="#writtenBy"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="en">Review</rdfs:label>
+  <rdfs:label xml:lang="el">Αξιολόγηση</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Airline">
+  <rdfs:subClassOf rdf:resource="#Organization"/>
+  <rdfs:label xml:lang="el">Αεροπορική Εταιρεία</rdfs:label>
+  <rdfs:label xml:lang="en">Airline</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Accommodation">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#locatedIn"/>
+      <owl:someValuesFrom rdf:resource="#Destination"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="#TravelService"/>
+  <rdfs:label xml:lang="en">Accommodation</rdfs:label>
+  <rdfs:label xml:lang="el">Κατάλυμα</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#TravelService">
+  <rdfs:label xml:lang="el">Ταξιδιωτική Υπηρεσία</rdfs:label>
+  <rdfs:label xml:lang="en">Travel Service</rdfs:label>
+  <rdfs:comment xml:lang="el">Συστατικό ενός πακέτου διακοπών (διαμονή, μεταφορά, εκδρομή, ασφάλεια).</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#GuidedPackage">
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#HolidayPackage"/>
+        <owl:Restriction>
+          <owl:someValuesFrom>
+            <owl:Restriction>
+              <owl:onProperty rdf:resource="#hasGuide"/>
+              <owl:someValuesFrom rdf:resource="#TourGuide"/>
+            </owl:Restriction>
+          </owl:someValuesFrom>
+          <owl:onProperty rdf:resource="#includesService"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label xml:lang="en">Guided Package</rdfs:label>
+  <rdfs:comment xml:lang="el">Ορισμένη κλάση: πακέτο που περιλαμβάνει υπηρεσία με οδηγό/συνοδό.</rdfs:comment>
+  <rdfs:label xml:lang="el">Πακέτο με Συνοδό</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#TourGuide">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#speaksLanguage"/>
+      <owl:someValuesFrom rdf:resource="#Language"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="#Employee"/>
+  <rdfs:label xml:lang="el">Οδηγός / Συνοδός</rdfs:label>
+  <rdfs:label xml:lang="en">Tour Guide</rdfs:label>
+  <rdfs:comment xml:lang="el">Συνοδός ή ξεναγός οργανωμένων εκδρομών· μιλά τουλάχιστον μία γλώσσα.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#FerryTrip">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="#Port"/>
+      <owl:onProperty rdf:resource="#departsFrom"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="#Transport"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#arrivesAt"/>
+      <owl:someValuesFrom rdf:resource="#Port"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="el">Ακτοπλοϊκή Μετακίνηση</rdfs:label>
+  <rdfs:label xml:lang="en">Ferry Trip</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Hotel">
+  <rdfs:subClassOf rdf:resource="#Accommodation"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom>
+        <rdfs:Datatype>
+          <owl:withRestrictions>
+            <rdf:Description>
+              <rdf:rest>
+                <rdf:Description>
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                  <rdf:first>
+                    <rdf:Description>
+                      <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</xsd:maxInclusive>
+                    </rdf:Description>
+                  </rdf:first>
+                </rdf:Description>
+              </rdf:rest>
+              <rdf:first>
+                <rdf:Description>
+                  <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</xsd:minInclusive>
+                </rdf:Description>
+              </rdf:first>
+            </rdf:Description>
+          </owl:withRestrictions>
+          <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        </rdfs:Datatype>
+      </owl:someValuesFrom>
+      <owl:onProperty rdf:resource="#starRating"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="en">Hotel</rdfs:label>
+  <rdfs:label xml:lang="el">Ξενοδοχείο</rdfs:label>
+  <rdfs:comment xml:lang="el">Ξενοδοχείο με κατηγορία αστέρων 1–5.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#FlightPackage">
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#HolidayPackage"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#includesService"/>
+          <owl:someValuesFrom rdf:resource="#Flight"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label xml:lang="el">Πακέτο με Πτήση</rdfs:label>
+  <rdfs:comment xml:lang="el">Ορισμένη κλάση: πακέτο που περιλαμβάνει τουλάχιστον μία πτήση.</rdfs:comment>
+  <rdfs:label xml:lang="en">Flight Package</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#AdvertisingChannel">
+  <rdfs:label xml:lang="el">Διαφημιστικό Κανάλι</rdfs:label>
+  <rdfs:label xml:lang="en">Advertising Channel</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Country">
+  <rdfs:subClassOf rdf:resource="#Place"/>
+  <rdfs:label xml:lang="en">Country</rdfs:label>
+  <rdfs:label xml:lang="el">Χώρα</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#BankTransfer">
+  <rdfs:subClassOf rdf:resource="#Payment"/>
+  <rdfs:label xml:lang="el">Τραπεζική Μεταφορά</rdfs:label>
+  <rdfs:label xml:lang="en">Bank Transfer</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#CityDestination">
+  <rdfs:subClassOf rdf:resource="#Destination"/>
+  <rdfs:label xml:lang="el">Αστικός Προορισμός</rdfs:label>
+  <rdfs:label xml:lang="en">City Destination</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Organization">
+  <rdfs:label xml:lang="en">Organization</rdfs:label>
+  <rdfs:label xml:lang="el">Οργανισμός</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#VIPCustomer">
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Customer"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#loyaltyPoints"/>
+          <owl:someValuesFrom>
+            <rdfs:Datatype>
+              <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+              <owl:withRestrictions>
+                <rdf:Description>
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                  <rdf:first>
+                    <rdf:Description>
+                      <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</xsd:minInclusive>
+                    </rdf:Description>
+                  </rdf:first>
+                </rdf:Description>
+              </owl:withRestrictions>
+            </rdfs:Datatype>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:comment xml:lang="el">Ορισμένη κλάση: πελάτης με τουλάχιστον 1000 πόντους επιβράβευσης. Τα μέλη της συνάγονται από τον reasoner.</rdfs:comment>
+  <rdfs:label xml:lang="en">VIP Customer</rdfs:label>
+  <rdfs:label xml:lang="el">Πελάτης VIP</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#IslandPackage">
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#HolidayPackage"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#hasDestination"/>
+          <owl:someValuesFrom rdf:resource="#IslandDestination"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label xml:lang="el">Νησιωτικό Πακέτο</rdfs:label>
+  <rdfs:label xml:lang="en">Island Package</rdfs:label>
+  <rdfs:comment xml:lang="el">Ορισμένη κλάση: πακέτο με τουλάχιστον έναν νησιωτικό προορισμό.</rdfs:comment>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#Booking02">
+  <hasStatus rdf:resource="#Confirmed"/>
+  <hasPayment rdf:resource="#Payment02"/>
+  <forPackage rdf:resource="#MykonosSummer"/>
+  <bookedBy rdf:resource="#KaterinaLazarou"/>
+  <handledBy rdf:resource="#EleniDimitriou"/>
+  <rdf:type rdf:resource="#Booking"/>
+  <bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-05T15:40:00</bookingDate>
+  <numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</numberOfTravellers>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Confirmed">
+  <rdf:type rdf:resource="#BookingStatus"/>
+  <rdfs:label xml:lang="el">Επιβεβαιωμένη</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ThessalonikiGastronomy">
+  <hasDestination rdf:resource="#Thessaloniki"/>
+  <includesService rdf:resource="#ThessalonikiFoodWalk"/>
+  <includesService rdf:resource="#WhiteTowerHotel"/>
+  <offeredBy rdf:resource="#AegeanHorizons"/>
+  <rdf:type rdf:resource="#HolidayPackage"/>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-02-20T10:00:00</departureDate>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Thessaloniki Gastronomy Weekend</name>
+  <durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</durationDays>
+  <pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">230.0</pricePerPerson>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#WinterInGreece">
+  <promotes rdf:resource="#ThessalonikiGastronomy"/>
+  <createdBy rdf:resource="#AnnaVasileiou"/>
+  <promotes rdf:resource="#ArachovaWinter"/>
+  <rdf:type rdf:resource="#MarketingCampaign"/>
+  <usesChannel rdf:resource="#Newsletter"/>
+  <usesChannel rdf:resource="#TravelFair"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Χειμώνας στην Ελλάδα</name>
+  <startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-15T00:00:00</startDate>
+  <endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-01-31T23:59:59</endDate>
+  <budget rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1800.0</budget>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ParisCityBreak">
+  <offeredBy rdf:resource="#AegeanHorizons"/>
+  <includesService rdf:resource="#Flight_MS440"/>
+  <rdf:type rdf:resource="#HolidayPackage"/>
+  <hasDestination rdf:resource="#Paris"/>
+  <includesService rdf:resource="#LumiereHotel"/>
+  <includesService rdf:resource="#LouvreTour"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Paris City Break</name>
+  <durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</durationDays>
+  <pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">560.0</pricePerPerson>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-03-11T09:10:00</departureDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CycladesHopping">
+  <includesService rdf:resource="#PremiumInsurance"/>
+  <includesService rdf:resource="#CalderaViewHotel"/>
+  <rdf:type rdf:resource="#HolidayPackage"/>
+  <hasDestination rdf:resource="#Santorini"/>
+  <includesService rdf:resource="#Ferry_PiraeusMykonos"/>
+  <offeredBy rdf:resource="#AegeanHorizons"/>
+  <includesService rdf:resource="#MykonosBlueSuites"/>
+  <hasDestination rdf:resource="#Mykonos"/>
+  <includesService rdf:resource="#Flight_HA210"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cyclades Island Hopping</name>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-07-03T10:00:00</departureDate>
+  <pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1450.0</pricePerPerson>
+  <durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</durationDays>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#LumiereHotel">
+  <locatedIn rdf:resource="#Paris"/>
+  <rdf:type rdf:resource="#Hotel"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hôtel Lumière</name>
+  <starRating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</starRating>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Paris">
+  <locatedIn rdf:resource="#IleDeFrance"/>
+  <rdf:type rdf:resource="#CityDestination"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Παρίσι</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Review06">
+  <writtenBy rdf:resource="#AndreasPappas"/>
+  <reviews rdf:resource="#ArachovaWinter"/>
+  <rdf:type rdf:resource="#Review"/>
+  <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</rating>
+  <reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ζεστό σαλέ, ιδανικό για οικογένειες.</reviewText>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Lazio">
+  <rdf:type rdf:resource="#Region"/>
+  <locatedIn rdf:resource="#Italy"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Λάτσιο</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#JTR">
+  <locatedIn rdf:resource="#Santorini"/>
+  <rdf:type rdf:resource="#Airport"/>
+  <iataCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">JTR</iataCode>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κρατικός Αερολιμένας Σαντορίνης</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Santorini">
+  <locatedIn rdf:resource="#Cyclades"/>
+  <rdf:type rdf:resource="#IslandDestination"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Σαντορίνη</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#IleDeFrance">
+  <locatedIn rdf:resource="#France"/>
+  <rdf:type rdf:resource="#Region"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ιλ-ντε-Φρανς</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#France">
+  <rdf:type rdf:resource="#Country"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Γαλλία</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SKG">
+  <locatedIn rdf:resource="#Thessaloniki"/>
+  <rdf:type rdf:resource="#Airport"/>
+  <iataCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SKG</iataCode>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Αερολιμένας Θεσσαλονίκης «Μακεδονία»</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#MykonosSummer">
+  <includesService rdf:resource="#MykonosBlueSuites"/>
+  <includesService rdf:resource="#DelosDayTrip"/>
+  <rdf:type rdf:resource="#HolidayPackage"/>
+  <hasDestination rdf:resource="#Mykonos"/>
+  <includesService rdf:resource="#Ferry_PiraeusMykonos"/>
+  <offeredBy rdf:resource="#AegeanHorizons"/>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-07-10T07:00:00</departureDate>
+  <pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">640.0</pricePerPerson>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mykonos Summer</name>
+  <durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</durationDays>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#VaticanTour">
+  <visitsDestination rdf:resource="#Rome"/>
+  <rdf:type rdf:resource="#Excursion"/>
+  <hasGuide rdf:resource="#GiorgosNikolaou"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ξενάγηση στα Μουσεία του Βατικανού</name>
+  <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</maxParticipants>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Ferry_PiraeusMykonos">
+  <arrivesAt rdf:resource="#MykonosPort"/>
+  <departsFrom rdf:resource="#PiraeusPort"/>
+  <rdf:type rdf:resource="#FerryTrip"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Πειραιάς → Μύκονος (ταχύπλοο)</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#FCO">
+  <rdf:type rdf:resource="#Airport"/>
+  <locatedIn rdf:resource="#Rome"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Rome Fiumicino</name>
+  <iataCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FCO</iataCode>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AthensBranch">
+  <branchOf rdf:resource="#AegeanHorizons"/>
+  <locatedIn rdf:resource="#Athens"/>
+  <rdf:type rdf:resource="#AgencyBranch"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Υποκατάστημα Αθήνας</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SofiaAlexiou">
+  <speaksLanguage rdf:resource="#Greek"/>
+  <worksFor rdf:resource="#AthensBranch"/>
+  <speaksLanguage rdf:resource="#English"/>
+  <rdf:type rdf:resource="#TourGuide"/>
+  <speaksLanguage rdf:resource="#French"/>
+  <salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1250.0</salary>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Αλεξίου</lastName>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Σοφία</firstName>
+  <hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2020-04-01T09:00:00</hireDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#MykonosBlueSuites">
+  <locatedIn rdf:resource="#Mykonos"/>
+  <rdf:type rdf:resource="#Hotel"/>
+  <starRating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</starRating>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mykonos Blue Suites</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ATH">
+  <locatedIn rdf:resource="#Athens"/>
+  <rdf:type rdf:resource="#Airport"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Διεθνής Αερολιμένας Αθηνών</name>
+  <iataCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ATH</iataCode>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Booking01">
+  <bookedBy rdf:resource="#DimitrisKarras"/>
+  <rdf:type rdf:resource="#Booking"/>
+  <hasPayment rdf:resource="#Payment01"/>
+  <handledBy rdf:resource="#NikosGeorgiou"/>
+  <forPackage rdf:resource="#SantoriniEscape"/>
+  <hasStatus rdf:resource="#Confirmed"/>
+  <bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-02T11:20:00</bookingDate>
+  <numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</numberOfTravellers>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#French">
+  <rdf:type rdf:resource="#Language"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Français</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PremiumInsurance">
+  <rdf:type rdf:resource="#TravelInsurance"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ταξιδιωτική ασφάλιση Premium</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Thessaloniki">
+  <locatedIn rdf:resource="#CentralMacedonia"/>
+  <rdf:type rdf:resource="#CityDestination"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Θεσσαλονίκη</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#TravelFair">
+  <rdf:type rdf:resource="#AdvertisingChannel"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Τουριστική έκθεση</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Booking12">
+  <rdf:type rdf:resource="#Booking"/>
+  <handledBy rdf:resource="#EleniDimitriou"/>
+  <hasPayment rdf:resource="#Payment12"/>
+  <bookedBy rdf:resource="#DimitrisKarras"/>
+  <forPackage rdf:resource="#ArachovaWinter"/>
+  <hasStatus rdf:resource="#Confirmed"/>
+  <numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</numberOfTravellers>
+  <bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-12-20T18:00:00</bookingDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Review08">
+  <writtenBy rdf:resource="#MarthaKosta"/>
+  <rdf:type rdf:resource="#Review"/>
+  <reviews rdf:resource="#MykonosSummer"/>
+  <reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ακριβό για την περίοδο.</reviewText>
+  <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</rating>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Payment03">
+  <rdf:type rdf:resource="#CardPayment"/>
+  <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2900.0</amount>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Booking08">
+  <hasStatus rdf:resource="#Cancelled"/>
+  <rdf:type rdf:resource="#Booking"/>
+  <bookedBy rdf:resource="#LauraBianchi"/>
+  <handledBy rdf:resource="#MariaPapadopoulou"/>
+  <forPackage rdf:resource="#SantoriniEscape"/>
+  <numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</numberOfTravellers>
+  <bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-08T08:50:00</bookingDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Booking07">
+  <forPackage rdf:resource="#ArachovaWinter"/>
+  <handledBy rdf:resource="#EleniDimitriou"/>
+  <hasStatus rdf:resource="#Confirmed"/>
+  <bookedBy rdf:resource="#AndreasPappas"/>
+  <hasPayment rdf:resource="#Payment07"/>
+  <rdf:type rdf:resource="#Booking"/>
+  <bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-25T13:10:00</bookingDate>
+  <numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</numberOfTravellers>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ArachovaWinter">
+  <includesService rdf:resource="#ParnassosChalet"/>
+  <rdf:type rdf:resource="#HolidayPackage"/>
+  <includesService rdf:resource="#Transfer_AthensArachova"/>
+  <hasDestination rdf:resource="#Arachova"/>
+  <offeredBy rdf:resource="#AegeanHorizons"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Arachova Winter Weekend</name>
+  <durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</durationDays>
+  <pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">310.0</pricePerPerson>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-01-15T09:00:00</departureDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#EuropeCityBreaks">
+  <promotes rdf:resource="#RomanHoliday"/>
+  <createdBy rdf:resource="#AnnaVasileiou"/>
+  <promotes rdf:resource="#ParisCityBreak"/>
+  <usesChannel rdf:resource="#SocialMedia"/>
+  <rdf:type rdf:resource="#MarketingCampaign"/>
+  <usesChannel rdf:resource="#RadioSpot"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">City breaks στην Ευρώπη</name>
+  <budget rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3500.0</budget>
+  <endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-02-28T23:59:59</endDate>
+  <startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-15T00:00:00</startDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RomanHoliday">
+  <includesService rdf:resource="#BasicInsurance"/>
+  <includesService rdf:resource="#Flight_MS330"/>
+  <hasDestination rdf:resource="#Rome"/>
+  <includesService rdf:resource="#RomaCentroHotel"/>
+  <rdf:type rdf:resource="#HolidayPackage"/>
+  <includesService rdf:resource="#VaticanTour"/>
+  <offeredBy rdf:resource="#AegeanHorizons"/>
+  <includesService rdf:resource="#Flight_MS331"/>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-04-22T07:45:00</departureDate>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Roman Holiday</name>
+  <pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">720.0</pricePerPerson>
+  <durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</durationDays>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Payment12">
+  <rdf:type rdf:resource="#CardPayment"/>
+  <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">620.0</amount>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Booking04">
+  <forPackage rdf:resource="#RomanHoliday"/>
+  <hasStatus rdf:resource="#Confirmed"/>
+  <hasPayment rdf:resource="#Payment04"/>
+  <handledBy rdf:resource="#NikosGeorgiou"/>
+  <rdf:type rdf:resource="#Booking"/>
+  <bookedBy rdf:resource="#PetrosMichail"/>
+  <bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-12-01T12:00:00</bookingDate>
+  <numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</numberOfTravellers>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CDG">
+  <rdf:type rdf:resource="#Airport"/>
+  <locatedIn rdf:resource="#Paris"/>
+  <iataCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CDG</iataCode>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Paris Charles de Gaulle</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SummerIslands2027">
+  <usesChannel rdf:resource="#Newsletter"/>
+  <promotes rdf:resource="#CycladesHopping"/>
+  <usesChannel rdf:resource="#AgencyWebsite"/>
+  <rdf:type rdf:resource="#MarketingCampaign"/>
+  <promotes rdf:resource="#SantoriniEscape"/>
+  <promotes rdf:resource="#MykonosSummer"/>
+  <createdBy rdf:resource="#AnnaVasileiou"/>
+  <usesChannel rdf:resource="#SocialMedia"/>
+  <endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-05-31T23:59:59</endDate>
+  <startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-02-01T00:00:00</startDate>
+  <budget rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6000.0</budget>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Καλοκαίρι στα νησιά 2027</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Newsletter">
+  <rdf:type rdf:resource="#AdvertisingChannel"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Email newsletter</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AndreasPappas">
+  <speaksLanguage rdf:resource="#Greek"/>
+  <rdf:type rdf:resource="#Customer"/>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ανδρέας</firstName>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">apappas@mail.example</email>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Παππάς</lastName>
+  <loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</loyaltyPoints>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#HellasAir">
+  <rdf:type rdf:resource="#Airline"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HellasAir</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#English">
+  <rdf:type rdf:resource="#Language"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">English</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Transfer_AthensArachova">
+  <arrivesAt rdf:resource="#Arachova"/>
+  <departsFrom rdf:resource="#Athens"/>
+  <rdf:type rdf:resource="#Transfer"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Πούλμαν Αθήνα → Αράχωβα</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#KostasIoannou">
+  <speaksLanguage rdf:resource="#Greek"/>
+  <speaksLanguage rdf:resource="#English"/>
+  <manages rdf:resource="#AthensBranch"/>
+  <rdf:type rdf:resource="#Manager"/>
+  <salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2050.0</salary>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">k.ioannou@aegeanhorizons.example</email>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ιωάννου</lastName>
+  <hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2012-01-09T09:00:00</hireDate>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κώστας</firstName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Booking05">
+  <bookedBy rdf:resource="#JohnSmith"/>
+  <handledBy rdf:resource="#NikosGeorgiou"/>
+  <hasStatus rdf:resource="#Confirmed"/>
+  <forPackage rdf:resource="#RomanHoliday"/>
+  <hasPayment rdf:resource="#Payment05"/>
+  <rdf:type rdf:resource="#Booking"/>
+  <bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-18T17:30:00</bookingDate>
+  <numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</numberOfTravellers>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Payment11">
+  <rdf:type rdf:resource="#BankTransfer"/>
+  <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1920.0</amount>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ThessalonikiFoodWalk">
+  <hasGuide rdf:resource="#GiorgosNikolaou"/>
+  <visitsDestination rdf:resource="#Thessaloniki"/>
+  <rdf:type rdf:resource="#Excursion"/>
+  <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15</maxParticipants>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Γαστρονομική περιήγηση στη Θεσσαλονίκη</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Athens">
+  <rdf:type rdf:resource="#CityDestination"/>
+  <locatedIn rdf:resource="#Attica"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Αθήνα</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Booking06">
+  <forPackage rdf:resource="#ParisCityBreak"/>
+  <rdf:type rdf:resource="#Booking"/>
+  <handledBy rdf:resource="#EleniDimitriou"/>
+  <hasStatus rdf:resource="#Pending"/>
+  <bookedBy rdf:resource="#IoannaStavrou"/>
+  <numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</numberOfTravellers>
+  <bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-12-10T09:45:00</bookingDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Review05">
+  <reviews rdf:resource="#RomanHoliday"/>
+  <rdf:type rdf:resource="#Review"/>
+  <writtenBy rdf:resource="#JohnSmith"/>
+  <reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Good tour, but the hotel room was small.</reviewText>
+  <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</rating>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Italian">
+  <rdf:type rdf:resource="#Language"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Italiano</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ThessalonikiBranch">
+  <branchOf rdf:resource="#AegeanHorizons"/>
+  <locatedIn rdf:resource="#Thessaloniki"/>
+  <rdf:type rdf:resource="#AgencyBranch"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Υποκατάστημα Θεσσαλονίκης</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#IoannaStavrou">
+  <speaksLanguage rdf:resource="#Greek"/>
+  <rdf:type rdf:resource="#Customer"/>
+  <speaksLanguage rdf:resource="#French"/>
+  <loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">999</loyaltyPoints>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">istavrou@mail.example</email>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Σταύρου</lastName>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ιωάννα</firstName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#GiorgosNikolaou">
+  <speaksLanguage rdf:resource="#Italian"/>
+  <speaksLanguage rdf:resource="#Greek"/>
+  <speaksLanguage rdf:resource="#English"/>
+  <rdf:type rdf:resource="#TourGuide"/>
+  <worksFor rdf:resource="#ThessalonikiBranch"/>
+  <salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1200.0</salary>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Νικολάου</lastName>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Γιώργος</firstName>
+  <hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2022-03-15T09:00:00</hireDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Review04">
+  <rdf:type rdf:resource="#Review"/>
+  <reviews rdf:resource="#RomanHoliday"/>
+  <writtenBy rdf:resource="#PetrosMichail"/>
+  <reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Πολύ καλός ξεναγός στο Βατικανό.</reviewText>
+  <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</rating>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Cyclades">
+  <locatedIn rdf:resource="#Greece"/>
+  <rdf:type rdf:resource="#Region"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κυκλάδες</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Payment02">
+  <rdf:type rdf:resource="#BankTransfer"/>
+  <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">640.0</amount>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Attica">
+  <locatedIn rdf:resource="#Greece"/>
+  <rdf:type rdf:resource="#Region"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Αττική</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CalderaViewHotel">
+  <locatedIn rdf:resource="#Santorini"/>
+  <rdf:type rdf:resource="#Hotel"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Caldera View Hotel</name>
+  <starRating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</starRating>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#WhiteTowerHotel">
+  <locatedIn rdf:resource="#Thessaloniki"/>
+  <rdf:type rdf:resource="#Hotel"/>
+  <starRating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</starRating>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">White Tower Hotel</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#DimitrisKarras">
+  <speaksLanguage rdf:resource="#Greek"/>
+  <travelsWith rdf:resource="#ElenaKarra"/>
+  <rdf:type rdf:resource="#Customer"/>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dkarras@mail.example</email>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Δημήτρης</firstName>
+  <loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1850</loyaltyPoints>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Καρράς</lastName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#VolcanoBoatTour">
+  <hasGuide rdf:resource="#SofiaAlexiou"/>
+  <rdf:type rdf:resource="#Excursion"/>
+  <visitsDestination rdf:resource="#Santorini"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κρουαζιέρα στο ηφαίστειο</name>
+  <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</maxParticipants>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Cancelled">
+  <rdf:type rdf:resource="#BookingStatus"/>
+  <rdfs:label xml:lang="el">Ακυρωμένη</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#BasicInsurance">
+  <rdf:type rdf:resource="#TravelInsurance"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Βασική ταξιδιωτική ασφάλιση</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Booking03">
+  <hasPayment rdf:resource="#Payment03"/>
+  <handledBy rdf:resource="#MariaPapadopoulou"/>
+  <bookedBy rdf:resource="#PetrosMichail"/>
+  <rdf:type rdf:resource="#Booking"/>
+  <hasStatus rdf:resource="#Confirmed"/>
+  <forPackage rdf:resource="#CycladesHopping"/>
+  <bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-28T10:05:00</bookingDate>
+  <numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</numberOfTravellers>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CentralMacedonia">
+  <rdf:type rdf:resource="#Region"/>
+  <locatedIn rdf:resource="#Greece"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κεντρική Μακεδονία</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Review02">
+  <writtenBy rdf:resource="#KaterinaLazarou"/>
+  <reviews rdf:resource="#MykonosSummer"/>
+  <rdf:type rdf:resource="#Review"/>
+  <reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Πολύ ωραία εκδρομή στη Δήλο, λίγο κουραστικό το ταχύπλοο.</reviewText>
+  <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</rating>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Payment09">
+  <rdf:type rdf:resource="#CardPayment"/>
+  <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">460.0</amount>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#MedSkyAirways">
+  <rdf:type rdf:resource="#Airline"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MedSky Airways</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#LauraBianchi">
+  <speaksLanguage rdf:resource="#Italian"/>
+  <speaksLanguage rdf:resource="#English"/>
+  <rdf:type rdf:resource="#Customer"/>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bianchi</lastName>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laura</firstName>
+  <loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">150</loyaltyPoints>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lbianchi@mail.example</email>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Payment04">
+  <rdf:type rdf:resource="#CardPayment"/>
+  <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">720.0</amount>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RadioSpot">
+  <rdf:type rdf:resource="#AdvertisingChannel"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ραδιοφωνικό σποτ</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Payment05">
+  <rdf:type rdf:resource="#BankTransfer"/>
+  <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1440.0</amount>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Italy">
+  <rdf:type rdf:resource="#Country"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ιταλία</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Payment01">
+  <rdf:type rdf:resource="#CardPayment"/>
+  <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1780.0</amount>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CentralGreece">
+  <locatedIn rdf:resource="#Greece"/>
+  <rdf:type rdf:resource="#Region"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Στερεά Ελλάδα</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RomaCentroHotel">
+  <locatedIn rdf:resource="#Rome"/>
+  <rdf:type rdf:resource="#Hotel"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Roma Centro Hotel</name>
+  <starRating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</starRating>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#DelosDayTrip">
+  <visitsDestination rdf:resource="#Mykonos"/>
+  <hasGuide rdf:resource="#SofiaAlexiou"/>
+  <rdf:type rdf:resource="#Excursion"/>
+  <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">25</maxParticipants>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ημερήσια εκδρομή στη Δήλο</name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#LouvreTour">
+  <visitsDestination rdf:resource="#Paris"/>
+  <rdf:type rdf:resource="#Excursion"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ξενάγηση στο Λούβρο</name>
+  <maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</maxParticipants>
+</owl:NamedIndividual>
+
+<Review rdf:about="#Review07">
+  <reviews rdf:resource="#ThessalonikiGastronomy"/>
+  <writtenBy rdf:resource="#MarthaKosta"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Υπέροχη γαστρονομική περιήγηση.</reviewText>
+  <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</rating>
+</Review>
+
+<Port rdf:about="#PiraeusPort">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <locatedIn rdf:resource="#Attica"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Λιμάνι Πειραιά</name>
+</Port>
+
+<MarketingSpecialist rdf:about="#AnnaVasileiou">
+  <speaksLanguage rdf:resource="#Greek"/>
+  <speaksLanguage rdf:resource="#English"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <worksFor rdf:resource="#ThessalonikiBranch"/>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Άννα</firstName>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Βασιλείου</lastName>
+  <hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2018-11-05T09:00:00</hireDate>
+  <salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1500.0</salary>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">a.vasileiou@aegeanhorizons.example</email>
+</MarketingSpecialist>
+
+<Customer rdf:about="#KaterinaLazarou">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <speaksLanguage rdf:resource="#Greek"/>
+  <loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">300</loyaltyPoints>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">klazarou@mail.example</email>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Λαζάρου</lastName>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κατερίνα</firstName>
+</Customer>
+
+<Flight rdf:about="#Flight_HA102">
+  <arrivesAt rdf:resource="#SKG"/>
+  <operatedBy rdf:resource="#HellasAir"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <departsFrom rdf:resource="#JTR"/>
+  <flightNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HA102</flightNumber>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-06-19T20:15:00</departureDate>
+</Flight>
+
+<Booking rdf:about="#Booking11">
+  <forPackage rdf:resource="#MykonosSummer"/>
+  <handledBy rdf:resource="#EleniDimitriou"/>
+  <hasStatus rdf:resource="#Confirmed"/>
+  <bookedBy rdf:resource="#MarthaKosta"/>
+  <hasPayment rdf:resource="#Payment11"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</numberOfTravellers>
+  <bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-12-15T11:15:00</bookingDate>
+</Booking>
+
+<IslandDestination rdf:about="#Mykonos">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <locatedIn rdf:resource="#Cyclades"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Μύκονος</name>
+</IslandDestination>
+
+<CityDestination rdf:about="#Rome">
+  <locatedIn rdf:resource="#Lazio"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ρώμη</name>
+</CityDestination>
+
+<Port rdf:about="#MykonosPort">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <locatedIn rdf:resource="#Mykonos"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Λιμάνι Μυκόνου</name>
+</Port>
+
+<Customer rdf:about="#PetrosMichail">
+  <speaksLanguage rdf:resource="#Greek"/>
+  <speaksLanguage rdf:resource="#English"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Μιχαήλ</lastName>
+  <loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2600</loyaltyPoints>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pmichail@mail.example</email>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Πέτρος</firstName>
+</Customer>
+
+<Booking rdf:about="#Booking10">
+  <bookedBy rdf:resource="#ElenaKarra"/>
+  <forPackage rdf:resource="#SantoriniEscape"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasStatus rdf:resource="#Pending"/>
+  <handledBy rdf:resource="#NikosGeorgiou"/>
+  <bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-12-12T10:30:00</bookingDate>
+  <numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</numberOfTravellers>
+</Booking>
+
+<Review rdf:about="#Review01">
+  <reviews rdf:resource="#SantoriniEscape"/>
+  <writtenBy rdf:resource="#DimitrisKarras"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Εξαιρετικό ξενοδοχείο και άψογη οργάνωση.</reviewText>
+  <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</rating>
+</Review>
+
+<HolidayPackage rdf:about="#SantoriniEscape">
+  <includesService rdf:resource="#CalderaViewHotel"/>
+  <includesService rdf:resource="#VolcanoBoatTour"/>
+  <hasDestination rdf:resource="#Santorini"/>
+  <includesService rdf:resource="#Flight_HA101"/>
+  <offeredBy rdf:resource="#AegeanHorizons"/>
+  <includesService rdf:resource="#Transfer_JTR_Oia"/>
+  <includesService rdf:resource="#BasicInsurance"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesService rdf:resource="#Flight_HA102"/>
+  <pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">890.0</pricePerPerson>
+  <durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</durationDays>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-06-12T08:30:00</departureDate>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Santorini Escape</name>
+</HolidayPackage>
+
+<AdvertisingChannel rdf:about="#AgencyWebsite">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ιστότοπος πρακτορείου</name>
+</AdvertisingChannel>
+
+<Language rdf:about="#Greek">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ελληνικά</name>
+</Language>
+
+<Flight rdf:about="#Flight_HA210">
+  <departsFrom rdf:resource="#ATH"/>
+  <operatedBy rdf:resource="#HellasAir"/>
+  <arrivesAt rdf:resource="#JTR"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <flightNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HA210</flightNumber>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-07-03T10:00:00</departureDate>
+</Flight>
+
+<TravelAgency rdf:about="#AegeanHorizons">
+  <hasBranch rdf:resource="#ThessalonikiBranch"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasBranch rdf:resource="#AthensBranch"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Aegean Horizons Travel</name>
+</TravelAgency>
+
+<Transfer rdf:about="#Transfer_JTR_Oia">
+  <departsFrom rdf:resource="#JTR"/>
+  <arrivesAt rdf:resource="#Santorini"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Transfer αεροδρόμιο Σαντορίνης → ξενοδοχείο</name>
+</Transfer>
+
+<Customer rdf:about="#MarthaKosta">
+  <speaksLanguage rdf:resource="#Greek"/>
+  <speaksLanguage rdf:resource="#English"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mkosta@mail.example</email>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Μάρθα</firstName>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κώστα</lastName>
+  <loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1200</loyaltyPoints>
+</Customer>
+
+<Flight rdf:about="#Flight_MS440">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <arrivesAt rdf:resource="#CDG"/>
+  <operatedBy rdf:resource="#MedSkyAirways"/>
+  <departsFrom rdf:resource="#ATH"/>
+  <flightNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MS440</flightNumber>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-03-11T09:10:00</departureDate>
+</Flight>
+
+<Customer rdf:about="#ElenaKarra">
+  <speaksLanguage rdf:resource="#Greek"/>
+  <speaksLanguage rdf:resource="#English"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Έλενα</firstName>
+  <loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">420</loyaltyPoints>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Καρρά</lastName>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ekarra@mail.example</email>
+</Customer>
+
+<MountainDestination rdf:about="#Arachova">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <locatedIn rdf:resource="#CentralGreece"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Αράχωβα</name>
+</MountainDestination>
+
+<Customer rdf:about="#JohnSmith">
+  <speaksLanguage rdf:resource="#English"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <travelsWith rdf:resource="#LauraBianchi"/>
+  <loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</loyaltyPoints>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jsmith@mail.example</email>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Smith</lastName>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">John</firstName>
+</Customer>
+
+<TravelAgent rdf:about="#NikosGeorgiou">
+  <speaksLanguage rdf:resource="#Italian"/>
+  <speaksLanguage rdf:resource="#Greek"/>
+  <speaksLanguage rdf:resource="#English"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <worksFor rdf:resource="#ThessalonikiBranch"/>
+  <hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-05-10T09:00:00</hireDate>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Γεωργίου</lastName>
+  <salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1350.0</salary>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Νίκος</firstName>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">n.georgiou@aegeanhorizons.example</email>
+</TravelAgent>
+
+<TravelAgent rdf:about="#EleniDimitriou">
+  <speaksLanguage rdf:resource="#French"/>
+  <speaksLanguage rdf:resource="#Greek"/>
+  <worksFor rdf:resource="#AthensBranch"/>
+  <speaksLanguage rdf:resource="#English"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ελένη</firstName>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">e.dimitriou@aegeanhorizons.example</email>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Δημητρίου</lastName>
+  <salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1400.0</salary>
+  <hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2019-09-16T09:00:00</hireDate>
+</TravelAgent>
+
+<Flight rdf:about="#Flight_HA101">
+  <departsFrom rdf:resource="#SKG"/>
+  <operatedBy rdf:resource="#HellasAir"/>
+  <arrivesAt rdf:resource="#JTR"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-06-12T08:30:00</departureDate>
+  <flightNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HA101</flightNumber>
+</Flight>
+
+<Hotel rdf:about="#ParnassosChalet">
+  <locatedIn rdf:resource="#Arachova"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <starRating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</starRating>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Parnassos Chalet</name>
+</Hotel>
+
+<Country rdf:about="#Greece">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ελλάδα</name>
+</Country>
+
+<Manager rdf:about="#MariaPapadopoulou">
+  <speaksLanguage rdf:resource="#Greek"/>
+  <rdf:type rdf:resource="#TravelAgent"/>
+  <speaksLanguage rdf:resource="#English"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <manages rdf:resource="#ThessalonikiBranch"/>
+  <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Παπαδοπούλου</lastName>
+  <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Μαρία</firstName>
+  <hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2015-03-01T09:00:00</hireDate>
+  <salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2100.0</salary>
+  <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m.papadopoulou@aegeanhorizons.example</email>
+</Manager>
+
+<CashPayment rdf:about="#Payment07">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1240.0</amount>
+</CashPayment>
+
+<Booking rdf:about="#Booking09">
+  <hasPayment rdf:resource="#Payment09"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <handledBy rdf:resource="#NikosGeorgiou"/>
+  <hasStatus rdf:resource="#Confirmed"/>
+  <bookedBy rdf:resource="#MarthaKosta"/>
+  <forPackage rdf:resource="#ThessalonikiGastronomy"/>
+  <bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-12-03T16:00:00</bookingDate>
+  <numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</numberOfTravellers>
+</Booking>
+
+<Flight rdf:about="#Flight_MS330">
+  <operatedBy rdf:resource="#MedSkyAirways"/>
+  <departsFrom rdf:resource="#SKG"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <arrivesAt rdf:resource="#FCO"/>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-04-22T07:45:00</departureDate>
+  <flightNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MS330</flightNumber>
+</Flight>
+
+<Flight rdf:about="#Flight_MS331">
+  <arrivesAt rdf:resource="#SKG"/>
+  <operatedBy rdf:resource="#MedSkyAirways"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <departsFrom rdf:resource="#FCO"/>
+  <flightNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MS331</flightNumber>
+  <departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-04-26T19:30:00</departureDate>
+</Flight>
+
+<BookingStatus rdf:about="#Pending">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <rdfs:label xml:lang="el">Σε αναμονή</rdfs:label>
+</BookingStatus>
+
+<Review rdf:about="#Review03">
+  <writtenBy rdf:resource="#PetrosMichail"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <reviews rdf:resource="#CycladesHopping"/>
+  <reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Το καλύτερο πακέτο που έχουμε κλείσει.</reviewText>
+  <rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</rating>
+</Review>
+
+<AdvertisingChannel rdf:about="#SocialMedia">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Social media (Facebook / Instagram)</name>
+</AdvertisingChannel>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Flight"/>
+    <rdf:Description rdf:about="#FerryTrip"/>
+    <rdf:Description rdf:about="#Transfer"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#TravelAgent"/>
+    <rdf:Description rdf:about="#TourGuide"/>
+    <rdf:Description rdf:about="#MarketingSpecialist"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Person"/>
+    <rdf:Description rdf:about="#Organization"/>
+    <rdf:Description rdf:about="#Place"/>
+    <rdf:Description rdf:about="#TravelService"/>
+    <rdf:Description rdf:about="#HolidayPackage"/>
+    <rdf:Description rdf:about="#Booking"/>
+    <rdf:Description rdf:about="#BookingStatus"/>
+    <rdf:Description rdf:about="#Payment"/>
+    <rdf:Description rdf:about="#Review"/>
+    <rdf:Description rdf:about="#MarketingCampaign"/>
+    <rdf:Description rdf:about="#AdvertisingChannel"/>
+    <rdf:Description rdf:about="#Language"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#TravelAgency"/>
+    <rdf:Description rdf:about="#AgencyBranch"/>
+    <rdf:Description rdf:about="#Airline"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Accommodation"/>
+    <rdf:Description rdf:about="#Transport"/>
+    <rdf:Description rdf:about="#Excursion"/>
+    <rdf:Description rdf:about="#TravelInsurance"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Greek"/>
+    <rdf:Description rdf:about="#English"/>
+    <rdf:Description rdf:about="#Italian"/>
+    <rdf:Description rdf:about="#French"/>
+    <rdf:Description rdf:about="#Confirmed"/>
+    <rdf:Description rdf:about="#Pending"/>
+    <rdf:Description rdf:about="#Cancelled"/>
+    <rdf:Description rdf:about="#SocialMedia"/>
+    <rdf:Description rdf:about="#AgencyWebsite"/>
+    <rdf:Description rdf:about="#Newsletter"/>
+    <rdf:Description rdf:about="#RadioSpot"/>
+    <rdf:Description rdf:about="#TravelFair"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Country"/>
+    <rdf:Description rdf:about="#Region"/>
+    <rdf:Description rdf:about="#Destination"/>
+    <rdf:Description rdf:about="#Airport"/>
+    <rdf:Description rdf:about="#Port"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#CardPayment"/>
+    <rdf:Description rdf:about="#BankTransfer"/>
+    <rdf:Description rdf:about="#CashPayment"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+
+</rdf:RDF>

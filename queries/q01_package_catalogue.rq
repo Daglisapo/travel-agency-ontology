@@ -1,0 +1,17 @@
+# Q1. Κατάλογος πακέτων διακοπών: προορισμός, διάρκεια και τιμή ανά άτομο,
+#     ταξινομημένα από το φθηνότερο στο ακριβότερο.
+# Χαρακτηριστικά: πολλαπλά triple patterns, ORDER BY
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?package ?destination ?days ?price
+WHERE {
+  ?p a ta:HolidayPackage ;
+     ta:name ?package ;
+     ta:hasDestination ?d ;
+     ta:durationDays ?days ;
+     ta:pricePerPerson ?price .
+  ?d ta:name ?destination .
+}
+ORDER BY ASC(?price) ?destination

@@ -1,0 +1,20 @@
+# Q11. [Reasoning] Ξενοδοχεία στην Ελλάδα, με κατηγορία αστέρων και προορισμό. Κάθε
+#      ξενοδοχείο συνδέεται ρητά μόνο με τον προορισμό του (π.χ. Σαντορίνη)· το ότι
+#      βρίσκεται στην Ελλάδα προκύπτει από τη μεταβατικότητα του locatedIn.
+#      (Χωρίς reasoner, το ίδιο αποτέλεσμα δίνει το property path ta:locatedIn+ .)
+# Χαρακτηριστικά: transitive property, rdfs:subClassOf* path, ORDER BY DESC
+# Γράφημα: inferred (στο asserted επιστρέφει 0 γραμμές)
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?hotel ?stars ?destination
+WHERE {
+  ?h a ta:Hotel ;
+     ta:name ?hotel ;
+     ta:starRating ?stars ;
+     ta:locatedIn ta:Greece ;
+     ta:locatedIn ?d .
+  ?d a/rdfs:subClassOf* ta:Destination ;
+     ta:name ?destination .
+}
+ORDER BY DESC(?stars) ?hotel

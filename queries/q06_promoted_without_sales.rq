@@ -1,0 +1,18 @@
+# Q6. Πακέτα που προβάλλονται σε διαφημιστική καμπάνια αλλά δεν έχουν ακόμη
+#     καμία επιβεβαιωμένη κράτηση, μαζί με τα κανάλια της καμπάνιας.
+# Χαρακτηριστικά: FILTER NOT EXISTS (άρνηση), GROUP_CONCAT
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?package ?campaign ?budget (GROUP_CONCAT(?channel; separator=", ") AS ?channels)
+WHERE {
+  ?p a ta:HolidayPackage ; ta:name ?package .
+  FILTER NOT EXISTS { ?b ta:forPackage ?p ; ta:hasStatus ta:Confirmed . }
+  ?c a ta:MarketingCampaign ;
+     ta:promotes ?p ;
+     ta:name ?campaign ;
+     ta:budget ?budget ;
+     ta:usesChannel/ta:name ?channel .
+}
+GROUP BY ?package ?campaign ?budget

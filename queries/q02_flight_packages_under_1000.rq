@@ -1,0 +1,29 @@
+# Q2. Πακέτα με πτήση και τιμή κάτω από 1000 €, με αριθμό πτήσης και αεροπορική
+#     εταιρεία· αν το πακέτο έχει οργανωμένη εκδρομή, εμφανίζεται και αυτή μαζί με
+#     τον συνοδό της (όταν έχει οριστεί).
+# Χαρακτηριστικά: FILTER, εμφωλευμένο OPTIONAL, property path (/), CONCAT
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?package ?price ?flight ?airline ?excursion ?guide
+WHERE {
+  ?p a ta:HolidayPackage ;
+     ta:name ?package ;
+     ta:pricePerPerson ?price ;
+     ta:includesService ?f .
+  ?f a ta:Flight ;
+     ta:flightNumber ?flight ;
+     ta:operatedBy/ta:name ?airline .
+  FILTER (?price < 1000)
+  OPTIONAL {
+    ?p ta:includesService ?e .
+    ?e a ta:Excursion ; ta:name ?excursion .
+    OPTIONAL {
+      ?e ta:hasGuide ?g .
+      ?g ta:firstName ?gf ; ta:lastName ?gl .
+      BIND (CONCAT(?gf, " ", ?gl) AS ?guide)
+    }
+  }
+}
+ORDER BY ?price ?flight

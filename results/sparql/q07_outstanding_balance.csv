@@ -1,0 +1,12 @@
+﻿booking,customer,package,status,cost,paid,balance
+Booking10,Καρρά,Santorini Escape,Σε αναμονή,890,0,890
+Booking06,Σταύρου,Paris City Break,Σε αναμονή,560,0,560
+Booking01,Καρράς,Santorini Escape,Επιβεβαιωμένη,1780,1780,0
+Booking02,Λαζάρου,Mykonos Summer,Επιβεβαιωμένη,640,640,0
+Booking03,Μιχαήλ,Cyclades Island Hopping,Επιβεβαιωμένη,2900,2900,0
+Booking04,Μιχαήλ,Roman Holiday,Επιβεβαιωμένη,720,720,0
+Booking05,Smith,Roman Holiday,Επιβεβαιωμένη,1440,1440,0
+Booking07,Παππάς,Arachova Winter Weekend,Επιβεβαιωμένη,1240,1240,0
+Booking09,Κώστα,Thessaloniki Gastronomy Weekend,Επιβεβαιωμένη,460,460,0
+Booking11,Κώστα,Mykonos Summer,Επιβεβαιωμένη,1920,1920,0
+Booking12,Καρράς,Arachova Winter Weekend,Επιβεβαιωμένη,620,620,0

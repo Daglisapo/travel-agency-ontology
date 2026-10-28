@@ -1,0 +1,208 @@
+Οντολογία: travel_agency.owl
+owlready2 0.51
+
+=== HermiT ===
+Χρόνος συλλογισμού: 2.7 s
+Συνεπής (consistent): ΝΑΙ
+Unsatisfiable κλάσεις: καμία
+
+Συναγόμενες ιεραρχικές σχέσεις κλάσεων: 5
+  FlightPackage ⊑ HolidayPackage
+  GuidedPackage ⊑ HolidayPackage
+  IslandPackage ⊑ HolidayPackage
+  LongStayPackage ⊑ HolidayPackage
+  VIPCustomer ⊑ Customer
+
+Συναγόμενοι τύποι στιγμιοτύπων: 18
+  FlightPackage: CycladesHopping, ParisCityBreak, RomanHoliday, SantoriniEscape
+  GuidedPackage: MykonosSummer, ParisCityBreak, RomanHoliday, SantoriniEscape, ThessalonikiGastronomy
+  IslandPackage: CycladesHopping, MykonosSummer, SantoriniEscape
+  LongStayPackage: CycladesHopping, SantoriniEscape
+  VIPCustomer: DimitrisKarras, JohnSmith, MarthaKosta, PetrosMichail
+
+Συναγόμενες τιμές ιδιοτήτων: 66
+  employs (2):
+      AthensBranch → KostasIoannou
+      ThessalonikiBranch → MariaPapadopoulou
+  locatedIn (36):
+      ATH → Attica
+      ATH → Greece
+      Arachova → Greece
+      Athens → Greece
+      AthensBranch → Attica
+      AthensBranch → Greece
+      CDG → France
+      CDG → IleDeFrance
+      CalderaViewHotel → Cyclades
+      CalderaViewHotel → Greece
+      FCO → Italy
+      FCO → Lazio
+      JTR → Cyclades
+      JTR → Greece
+      LumiereHotel → France
+      LumiereHotel → IleDeFrance
+      Mykonos → Greece
+      MykonosBlueSuites → Cyclades
+      MykonosBlueSuites → Greece
+      MykonosPort → Cyclades
+      MykonosPort → Greece
+      Paris → France
+      ParnassosChalet → CentralGreece
+      ParnassosChalet → Greece
+      PiraeusPort → Greece
+      RomaCentroHotel → Italy
+      RomaCentroHotel → Lazio
+      Rome → Italy
+      SKG → CentralMacedonia
+      SKG → Greece
+      Santorini → Greece
+      Thessaloniki → Greece
+      ThessalonikiBranch → CentralMacedonia
+      ThessalonikiBranch → Greece
+      WhiteTowerHotel → CentralMacedonia
+      WhiteTowerHotel → Greece
+  servedBy (12):
+      AndreasPappas → EleniDimitriou
+      DimitrisKarras → EleniDimitriou
+      DimitrisKarras → NikosGeorgiou
+      ElenaKarra → NikosGeorgiou
+      IoannaStavrou → EleniDimitriou
+      JohnSmith → NikosGeorgiou
+      KaterinaLazarou → EleniDimitriou
+      LauraBianchi → MariaPapadopoulou
+      MarthaKosta → EleniDimitriou
+      MarthaKosta → NikosGeorgiou
+      PetrosMichail → MariaPapadopoulou
+      PetrosMichail → NikosGeorgiou
+  visitsPlace (14):
+      ArachovaWinter → CentralGreece
+      ArachovaWinter → Greece
+      CycladesHopping → Cyclades
+      CycladesHopping → Greece
+      MykonosSummer → Cyclades
+      MykonosSummer → Greece
+      ParisCityBreak → France
+      ParisCityBreak → IleDeFrance
+      RomanHoliday → Italy
+      RomanHoliday → Lazio
+      SantoriniEscape → Cyclades
+      SantoriniEscape → Greece
+      ThessalonikiGastronomy → CentralMacedonia
+      ThessalonikiGastronomy → Greece
+  worksFor (2):
+      KostasIoannou → AthensBranch
+      MariaPapadopoulou → ThessalonikiBranch
+
+=== Pellet ===
+Χρόνος συλλογισμού: 2.6 s
+Συνεπής (consistent): ΝΑΙ
+Unsatisfiable κλάσεις: καμία
+
+Συναγόμενες ιεραρχικές σχέσεις κλάσεων: 5
+  FlightPackage ⊑ HolidayPackage
+  GuidedPackage ⊑ HolidayPackage
+  IslandPackage ⊑ HolidayPackage
+  LongStayPackage ⊑ HolidayPackage
+  VIPCustomer ⊑ Customer
+
+Συναγόμενοι τύποι στιγμιοτύπων: 18
+  FlightPackage: CycladesHopping, ParisCityBreak, RomanHoliday, SantoriniEscape
+  GuidedPackage: MykonosSummer, ParisCityBreak, RomanHoliday, SantoriniEscape, ThessalonikiGastronomy
+  IslandPackage: CycladesHopping, MykonosSummer, SantoriniEscape
+  LongStayPackage: CycladesHopping, SantoriniEscape
+  VIPCustomer: DimitrisKarras, JohnSmith, MarthaKosta, PetrosMichail
+
+Συναγόμενες τιμές ιδιοτήτων: 74
+  employs (2):
+      AthensBranch → KostasIoannou
+      ThessalonikiBranch → MariaPapadopoulou
+  locatedIn (36):
+      ATH → Attica
+      ATH → Greece
+      Arachova → Greece
+      Athens → Greece
+      AthensBranch → Attica
+      AthensBranch → Greece
+      CDG → France
+      CDG → IleDeFrance
+      CalderaViewHotel → Cyclades
+      CalderaViewHotel → Greece
+      FCO → Italy
+      FCO → Lazio
+      JTR → Cyclades
+      JTR → Greece
+      LumiereHotel → France
+      LumiereHotel → IleDeFrance
+      Mykonos → Greece
+      MykonosBlueSuites → Cyclades
+      MykonosBlueSuites → Greece
+      MykonosPort → Cyclades
+      MykonosPort → Greece
+      Paris → France
+      ParnassosChalet → CentralGreece
+      ParnassosChalet → Greece
+      PiraeusPort → Greece
+      RomaCentroHotel → Italy
+      RomaCentroHotel → Lazio
+      Rome → Italy
+      SKG → CentralMacedonia
+      SKG → Greece
+      Santorini → Greece
+      Thessaloniki → Greece
+      ThessalonikiBranch → CentralMacedonia
+      ThessalonikiBranch → Greece
+      WhiteTowerHotel → CentralMacedonia
+      WhiteTowerHotel → Greece
+  servedBy (12):
+      AndreasPappas → EleniDimitriou
+      DimitrisKarras → EleniDimitriou
+      DimitrisKarras → NikosGeorgiou
+      ElenaKarra → NikosGeorgiou
+      IoannaStavrou → EleniDimitriou
+      JohnSmith → NikosGeorgiou
+      KaterinaLazarou → EleniDimitriou
+      LauraBianchi → MariaPapadopoulou
+      MarthaKosta → EleniDimitriou
+      MarthaKosta → NikosGeorgiou
+      PetrosMichail → MariaPapadopoulou
+      PetrosMichail → NikosGeorgiou
+  visitsPlace (22):
+      ArachovaWinter → Arachova
+      ArachovaWinter → CentralGreece
+      ArachovaWinter → Greece
+      CycladesHopping → Cyclades
+      CycladesHopping → Greece
+      CycladesHopping → Mykonos
+      CycladesHopping → Santorini
+      MykonosSummer → Cyclades
+      MykonosSummer → Greece
+      MykonosSummer → Mykonos
+      ParisCityBreak → France
+      ParisCityBreak → IleDeFrance
+      ParisCityBreak → Paris
+      RomanHoliday → Italy
+      RomanHoliday → Lazio
+      RomanHoliday → Rome
+      SantoriniEscape → Cyclades
+      SantoriniEscape → Greece
+      SantoriniEscape → Santorini
+      ThessalonikiGastronomy → CentralMacedonia
+      ThessalonikiGastronomy → Greece
+      ThessalonikiGastronomy → Thessaloniki
+  worksFor (2):
+      KostasIoannou → AthensBranch
+      MariaPapadopoulou → ThessalonikiBranch
+
+=== Σύγκριση HermiT / Pellet ===
+Συμπεράσματα μόνο από Pellet: 8
+  ArachovaWinter visitsPlace Arachova
+  CycladesHopping visitsPlace Mykonos
+  CycladesHopping visitsPlace Santorini
+  MykonosSummer visitsPlace Mykonos
+  ParisCityBreak visitsPlace Paris
+  RomanHoliday visitsPlace Rome
+  SantoriniEscape visitsPlace Santorini
+  ThessalonikiGastronomy visitsPlace Thessaloniki
+Συμπεράσματα μόνο από HermiT: 0
+
+Αρχείο travel_agency_inferred.owl: asserted + συμπεράσματα Pellet, μαζί με τις τιμές αντίστροφων/συμμετρικών ιδιοτήτων (π.χ. 12 τιμές hasBooking, που δεν δηλώνονται ρητά αλλά προκύπτουν από το bookedBy).

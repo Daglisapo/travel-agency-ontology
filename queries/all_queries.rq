@@ -1,0 +1,278 @@
+# Όλα τα ερωτήματα SPARQL της εργασίας (παράγεται από το scripts/run_queries.py).
+# Κάθε ερώτημα εκτελείται χωριστά· στο Protégé: Window > Tabs > SPARQL Query.
+
+# ============================================================================
+# q01_package_catalogue.rq
+# ============================================================================
+# Q1. Κατάλογος πακέτων διακοπών: προορισμός, διάρκεια και τιμή ανά άτομο,
+#     ταξινομημένα από το φθηνότερο στο ακριβότερο.
+# Χαρακτηριστικά: πολλαπλά triple patterns, ORDER BY
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?package ?destination ?days ?price
+WHERE {
+  ?p a ta:HolidayPackage ;
+     ta:name ?package ;
+     ta:hasDestination ?d ;
+     ta:durationDays ?days ;
+     ta:pricePerPerson ?price .
+  ?d ta:name ?destination .
+}
+ORDER BY ASC(?price) ?destination
+
+# ============================================================================
+# q02_flight_packages_under_1000.rq
+# ============================================================================
+# Q2. Πακέτα με πτήση και τιμή κάτω από 1000 €, με αριθμό πτήσης και αεροπορική
+#     εταιρεία· αν το πακέτο έχει οργανωμένη εκδρομή, εμφανίζεται και αυτή μαζί με
+#     τον συνοδό της (όταν έχει οριστεί).
+# Χαρακτηριστικά: FILTER, εμφωλευμένο OPTIONAL, property path (/), CONCAT
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?package ?price ?flight ?airline ?excursion ?guide
+WHERE {
+  ?p a ta:HolidayPackage ;
+     ta:name ?package ;
+     ta:pricePerPerson ?price ;
+     ta:includesService ?f .
+  ?f a ta:Flight ;
+     ta:flightNumber ?flight ;
+     ta:operatedBy/ta:name ?airline .
+  FILTER (?price < 1000)
+  OPTIONAL {
+    ?p ta:includesService ?e .
+    ?e a ta:Excursion ; ta:name ?excursion .
+    OPTIONAL {
+      ?e ta:hasGuide ?g .
+      ?g ta:firstName ?gf ; ta:lastName ?gl .
+      BIND (CONCAT(?gf, " ", ?gl) AS ?guide)
+    }
+  }
+}
+ORDER BY ?price ?flight
+
+# ============================================================================
+# q03_revenue_per_package.rq
+# ============================================================================
+# Q3. Επιβεβαιωμένες κρατήσεις, ταξιδιώτες και έσοδα ανά πακέτο, από τα πιο
+#     κερδοφόρα στα λιγότερο κερδοφόρα.
+# Χαρακτηριστικά: COUNT, SUM, GROUP BY, ORDER BY DESC
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?package (COUNT(?b) AS ?bookings) (SUM(?n) AS ?travellers) (SUM(?amount) AS ?revenue)
+WHERE {
+  ?b a ta:Booking ;
+     ta:forPackage ?p ;
+     ta:hasStatus ta:Confirmed ;
+     ta:numberOfTravellers ?n ;
+     ta:hasPayment/ta:amount ?amount .
+  ?p ta:name ?package .
+}
+GROUP BY ?package
+ORDER BY DESC(?revenue)
+
+# ============================================================================
+# q04_best_rated_packages.rq
+# ============================================================================
+# Q4. Μέση βαθμολογία πελατών ανά πακέτο· εμφανίζονται μόνο τα πακέτα με μέσο
+#     όρο τουλάχιστον 4 (στα 5).
+# Χαρακτηριστικά: AVG, COUNT, MIN, GROUP BY, HAVING, ORDER BY
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?package (COUNT(?r) AS ?reviews) (AVG(?rating) AS ?avgRating) (MIN(?rating) AS ?worst)
+WHERE {
+  ?r a ta:Review ;
+     ta:reviews ?p ;
+     ta:rating ?rating .
+  ?p ta:name ?package .
+}
+GROUP BY ?package
+HAVING (AVG(?rating) >= 4)
+ORDER BY DESC(?avgRating) ?package
+
+# ============================================================================
+# q05_staff_contacts_union.rq
+# ============================================================================
+# Q5. Με ποια μέλη του προσωπικού ήρθε σε επαφή ο πελάτης Πέτρος Μιχαήλ: οι
+#     σύμβουλοι που διεκπεραίωσαν τις κρατήσεις του και οι συνοδοί των εκδρομών
+#     που περιλαμβάνονται στα πακέτα που έκλεισε.
+# Χαρακτηριστικά: UNION, BIND, IF/BOUND, DISTINCT
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?role ?employee ?context
+WHERE {
+  ?b ta:bookedBy ta:PetrosMichail ;
+     ta:forPackage ?p .
+  ?p ta:name ?pname .
+  {
+    ?b ta:handledBy ?e .
+    BIND ("Ταξιδιωτικός σύμβουλος" AS ?role)
+  }
+  UNION
+  {
+    ?p ta:includesService ?x .
+    ?x a ta:Excursion ; ta:hasGuide ?e ; ta:name ?xname .
+    BIND ("Οδηγός / Συνοδός" AS ?role)
+  }
+  ?e ta:firstName ?f ; ta:lastName ?l .
+  BIND (CONCAT(?f, " ", ?l) AS ?employee)
+  # Το ?pname δεν είναι ορατό μέσα στα σκέλη του UNION, γι' αυτό το πλαίσιο υπολογίζεται εδώ.
+  BIND (IF(BOUND(?xname), CONCAT(?pname, ": ", ?xname), ?pname) AS ?context)
+}
+ORDER BY ?role ?employee
+
+# ============================================================================
+# q06_promoted_without_sales.rq
+# ============================================================================
+# Q6. Πακέτα που προβάλλονται σε διαφημιστική καμπάνια αλλά δεν έχουν ακόμη
+#     καμία επιβεβαιωμένη κράτηση, μαζί με τα κανάλια της καμπάνιας.
+# Χαρακτηριστικά: FILTER NOT EXISTS (άρνηση), GROUP_CONCAT
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?package ?campaign ?budget (GROUP_CONCAT(?channel; separator=", ") AS ?channels)
+WHERE {
+  ?p a ta:HolidayPackage ; ta:name ?package .
+  FILTER NOT EXISTS { ?b ta:forPackage ?p ; ta:hasStatus ta:Confirmed . }
+  ?c a ta:MarketingCampaign ;
+     ta:promotes ?p ;
+     ta:name ?campaign ;
+     ta:budget ?budget ;
+     ta:usesChannel/ta:name ?channel .
+}
+GROUP BY ?package ?campaign ?budget
+
+# ============================================================================
+# q07_outstanding_balance.rq
+# ============================================================================
+# Q7. Έλεγχος εξόφλησης: για κάθε μη ακυρωμένη κράτηση υπολογίζεται το κόστος
+#     (τιμή ανά άτομο × ταξιδιώτες), το ποσό που πληρώθηκε και το υπόλοιπο.
+# Χαρακτηριστικά: BIND με αριθμητικές πράξεις, COALESCE, OPTIONAL, FILTER, LANG, STRAFTER
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?booking ?customer ?package ?status ?cost ?paid ?balance
+WHERE {
+  ?b a ta:Booking ;
+     ta:bookedBy ?c ;
+     ta:forPackage ?p ;
+     ta:numberOfTravellers ?n ;
+     ta:hasStatus ?s .
+  FILTER (?s != ta:Cancelled)
+  ?s rdfs:label ?status .
+  FILTER (LANG(?status) = "el")
+  ?c ta:lastName ?customer .
+  ?p ta:name ?package ; ta:pricePerPerson ?price .
+  OPTIONAL { ?b ta:hasPayment/ta:amount ?amount . }
+  BIND (?price * ?n AS ?cost)
+  BIND (COALESCE(?amount, 0) AS ?paid)
+  BIND (?cost - ?paid AS ?balance)
+  BIND (STRAFTER(STR(?b), "#") AS ?booking)
+}
+ORDER BY DESC(?balance) ?booking
+
+# ============================================================================
+# q08_vip_customers_reasoning.rq
+# ============================================================================
+# Q8. [Reasoning] Οι πελάτες VIP και οι σύμβουλοι που τους εξυπηρέτησαν.
+#     Κανένας πελάτης δεν δηλώνεται ρητά VIPCustomer: ο reasoner τους κατατάσσει
+#     από τον ορισμό VIPCustomer ≡ Customer ⊓ ∃loyaltyPoints.integer[≥ 1000].
+#     Η ιδιότητα servedBy επίσης δεν δηλώνεται: προκύπτει από την αλυσίδα
+#     hasBooking ∘ handledBy, όπου το hasBooking προκύπτει ως αντίστροφο του bookedBy.
+# Χαρακτηριστικά: συναγόμενη κλάση, property chain, inverse, OPTIONAL, GROUP_CONCAT
+# Γράφημα: inferred (στο asserted επιστρέφει 0 γραμμές)
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?customer ?points (GROUP_CONCAT(DISTINCT ?agent; separator=", ") AS ?servedBy)
+WHERE {
+  ?c a ta:VIPCustomer ;
+     ta:firstName ?f ; ta:lastName ?l ;
+     ta:loyaltyPoints ?points .
+  BIND (CONCAT(?f, " ", ?l) AS ?customer)
+  OPTIONAL { ?c ta:servedBy/ta:lastName ?agent . }
+}
+GROUP BY ?customer ?points
+ORDER BY DESC(?points)
+
+# ============================================================================
+# q09_packages_per_country_reasoning.rq
+# ============================================================================
+# Q9. [Reasoning] Πόσα πακέτα επισκέπτονται κάθε χώρα. Τα πακέτα συνδέονται μόνο με
+#     πόλεις/νησιά (hasDestination)· η σχέση με τη χώρα συνάγεται από την αλυσίδα
+#     hasDestination ∘ locatedIn ⊑ visitsPlace και τη μεταβατικότητα του locatedIn.
+# Χαρακτηριστικά: property chain, transitive property, COUNT DISTINCT, GROUP_CONCAT
+# Γράφημα: inferred (στο asserted επιστρέφει 0 γραμμές)
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?country (COUNT(DISTINCT ?p) AS ?packages)
+       (GROUP_CONCAT(DISTINCT ?package; separator=", ") AS ?packageNames)
+WHERE {
+  ?p ta:visitsPlace ?c ;
+     ta:name ?package .
+  ?c a ta:Country ;
+     ta:name ?country .
+}
+GROUP BY ?country
+ORDER BY DESC(?packages) ?country
+
+# ============================================================================
+# q10_package_categories_reasoning.rq
+# ============================================================================
+# Q10. [Reasoning] Σε ποιες ορισμένες (defined) κατηγορίες ανήκει κάθε πακέτο.
+#      Οι κατηγορίες FlightPackage, IslandPackage, GuidedPackage, LongStayPackage
+#      δεν δηλώνονται σε κανένα πακέτο: συνάγονται από τον reasoner.
+# Χαρακτηριστικά: VALUES, OPTIONAL, GROUP_CONCAT, LANG
+# Γράφημα: inferred (στο asserted όλες οι κατηγορίες είναι κενές)
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?package (GROUP_CONCAT(?category; separator=", ") AS ?categories)
+WHERE {
+  ?p a ta:HolidayPackage ; ta:name ?package .
+  OPTIONAL {
+    VALUES ?class { ta:FlightPackage ta:IslandPackage ta:GuidedPackage ta:LongStayPackage }
+    ?p a ?class .
+    ?class rdfs:label ?category .
+    FILTER (LANG(?category) = "el")
+  }
+}
+GROUP BY ?package
+ORDER BY ?package
+
+# ============================================================================
+# q11_hotels_in_greece_reasoning.rq
+# ============================================================================
+# Q11. [Reasoning] Ξενοδοχεία στην Ελλάδα, με κατηγορία αστέρων και προορισμό. Κάθε
+#      ξενοδοχείο συνδέεται ρητά μόνο με τον προορισμό του (π.χ. Σαντορίνη)· το ότι
+#      βρίσκεται στην Ελλάδα προκύπτει από τη μεταβατικότητα του locatedIn.
+#      (Χωρίς reasoner, το ίδιο αποτέλεσμα δίνει το property path ta:locatedIn+ .)
+# Χαρακτηριστικά: transitive property, rdfs:subClassOf* path, ORDER BY DESC
+# Γράφημα: inferred (στο asserted επιστρέφει 0 γραμμές)
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?hotel ?stars ?destination
+WHERE {
+  ?h a ta:Hotel ;
+     ta:name ?hotel ;
+     ta:starRating ?stars ;
+     ta:locatedIn ta:Greece ;
+     ta:locatedIn ?d .
+  ?d a/rdfs:subClassOf* ta:Destination ;
+     ta:name ?destination .
+}
+ORDER BY DESC(?stars) ?hotel

@@ -1,0 +1,20 @@
+# Q8. [Reasoning] Οι πελάτες VIP και οι σύμβουλοι που τους εξυπηρέτησαν.
+#     Κανένας πελάτης δεν δηλώνεται ρητά VIPCustomer: ο reasoner τους κατατάσσει
+#     από τον ορισμό VIPCustomer ≡ Customer ⊓ ∃loyaltyPoints.integer[≥ 1000].
+#     Η ιδιότητα servedBy επίσης δεν δηλώνεται: προκύπτει από την αλυσίδα
+#     hasBooking ∘ handledBy, όπου το hasBooking προκύπτει ως αντίστροφο του bookedBy.
+# Χαρακτηριστικά: συναγόμενη κλάση, property chain, inverse, OPTIONAL, GROUP_CONCAT
+# Γράφημα: inferred (στο asserted επιστρέφει 0 γραμμές)
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?customer ?points (GROUP_CONCAT(DISTINCT ?agent; separator=", ") AS ?servedBy)
+WHERE {
+  ?c a ta:VIPCustomer ;
+     ta:firstName ?f ; ta:lastName ?l ;
+     ta:loyaltyPoints ?points .
+  BIND (CONCAT(?f, " ", ?l) AS ?customer)
+  OPTIONAL { ?c ta:servedBy/ta:lastName ?agent . }
+}
+GROUP BY ?customer ?points
+ORDER BY DESC(?points)

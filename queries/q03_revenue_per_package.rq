@@ -1,0 +1,18 @@
+# Q3. Επιβεβαιωμένες κρατήσεις, ταξιδιώτες και έσοδα ανά πακέτο, από τα πιο
+#     κερδοφόρα στα λιγότερο κερδοφόρα.
+# Χαρακτηριστικά: COUNT, SUM, GROUP BY, ORDER BY DESC
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?package (COUNT(?b) AS ?bookings) (SUM(?n) AS ?travellers) (SUM(?amount) AS ?revenue)
+WHERE {
+  ?b a ta:Booking ;
+     ta:forPackage ?p ;
+     ta:hasStatus ta:Confirmed ;
+     ta:numberOfTravellers ?n ;
+     ta:hasPayment/ta:amount ?amount .
+  ?p ta:name ?package .
+}
+GROUP BY ?package
+ORDER BY DESC(?revenue)

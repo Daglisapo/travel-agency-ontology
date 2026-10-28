@@ -1,0 +1,17 @@
+# Q4. Μέση βαθμολογία πελατών ανά πακέτο· εμφανίζονται μόνο τα πακέτα με μέσο
+#     όρο τουλάχιστον 4 (στα 5).
+# Χαρακτηριστικά: AVG, COUNT, MIN, GROUP BY, HAVING, ORDER BY
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?package (COUNT(?r) AS ?reviews) (AVG(?rating) AS ?avgRating) (MIN(?rating) AS ?worst)
+WHERE {
+  ?r a ta:Review ;
+     ta:reviews ?p ;
+     ta:rating ?rating .
+  ?p ta:name ?package .
+}
+GROUP BY ?package
+HAVING (AVG(?rating) >= 4)
+ORDER BY DESC(?avgRating) ?package

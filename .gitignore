@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# LaTeX build files (το τελικό paper/paper.pdf ανεβαίνει κανονικά)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.synctex.gz
+
+# ZIP υποβολής στο moodle (παράγεται από το scripts/make_submission.py)
+*.zip
+
+# Protégé
+catalog-v001.xml
+
+# Τοπικές ρυθμίσεις Claude Code
+CLAUDE.md
+
+# Windows
+Thumbs.db
+desktop.ini

@@ -1,0 +1,2223 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency-inferred"
+         xmlns="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency-inferred#"
+         xmlns:trav="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<owl:Ontology rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency-inferred">
+  <rdfs:comment xml:lang="el">Η οντολογία travel_agency.owl μαζί με τα συμπεράσματα του reasoner Pellet (τύποι στιγμιοτύπων και τιμές ιδιοτήτων), παραγόμενη από το scripts/reason.py.</rdfs:comment>
+</owl:Ontology>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasDestination">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#visitsPlace"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Destination"/>
+  <rdfs:label xml:lang="en">has destination</rdfs:label>
+  <rdfs:label xml:lang="el">έχει προορισμό</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasBooking">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking"/>
+  <owl:inverseOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#bookedBy"/>
+  <rdfs:label xml:lang="en">has booking</rdfs:label>
+  <rdfs:label xml:lang="el">έχει κράτηση</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#reviews">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label xml:lang="en">reviews</rdfs:label>
+  <rdfs:label xml:lang="el">αξιολογεί</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#speaksLanguage">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Person"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Language"/>
+  <rdfs:label xml:lang="el">μιλά γλώσσα</rdfs:label>
+  <rdfs:label xml:lang="en">speaks language</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#arrivesAt">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Place"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transport"/>
+  <rdfs:label xml:lang="el">φτάνει σε</rdfs:label>
+  <rdfs:label xml:lang="en">arrives at</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#handledBy">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelAgent"/>
+  <rdfs:label xml:lang="en">handled by</rdfs:label>
+  <rdfs:label xml:lang="el">διεκπεραιώθηκε από</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasPayment">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+  <rdfs:label xml:lang="en">has payment</rdfs:label>
+  <rdfs:label xml:lang="el">έχει πληρωμή</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#forPackage">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdfs:label xml:lang="en">for package</rdfs:label>
+  <rdfs:label xml:lang="el">αφορά πακέτο</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#servedBy">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelAgent"/>
+  <owl:propertyChainAxiom>
+    <rdf:Description>
+      <rdf:rest>
+        <rdf:Description>
+          <rdf:first rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#handledBy"/>
+          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        </rdf:Description>
+      </rdf:rest>
+      <rdf:first rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasBooking"/>
+    </rdf:Description>
+  </owl:propertyChainAxiom>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <rdfs:label xml:lang="en">served by</rdfs:label>
+  <rdfs:comment xml:lang="el">Αλυσίδα ιδιοτήτων: αν ο πελάτης έχει κράτηση που διεκπεραίωσε ο σύμβουλος Χ, τότε εξυπηρετήθηκε από τον Χ.</rdfs:comment>
+  <rdfs:label xml:lang="el">εξυπηρετήθηκε από</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#branchOf">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AgencyBranch"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelAgency"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <owl:inverseOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasBranch"/>
+  <rdfs:label xml:lang="el">υποκατάστημα του</rdfs:label>
+  <rdfs:label xml:lang="en">branch of</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#visitsPlace">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Place"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <owl:propertyChainAxiom>
+    <rdf:Description>
+      <rdf:first rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasDestination"/>
+      <rdf:rest>
+        <rdf:Description>
+          <rdf:first rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#locatedIn"/>
+          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        </rdf:Description>
+      </rdf:rest>
+    </rdf:Description>
+  </owl:propertyChainAxiom>
+  <rdfs:comment xml:lang="el">Υπερ-ιδιότητα του hasDestination και αλυσίδα hasDestination ∘ locatedIn: ένα πακέτο «επισκέπτεται» τον προορισμό του και όλες τις τοποθεσίες που τον περιέχουν (περιοχή, χώρα).</rdfs:comment>
+  <rdfs:label xml:lang="en">visits place</rdfs:label>
+  <rdfs:label xml:lang="el">επισκέπτεται τοποθεσία</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#offersPackage">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelAgency"/>
+  <rdfs:label xml:lang="el">προσφέρει πακέτο</rdfs:label>
+  <rdfs:label xml:lang="en">offers package</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#writesReview">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <rdfs:label xml:lang="en">writes review</rdfs:label>
+  <rdfs:label xml:lang="el">γράφει αξιολόγηση</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#writtenBy">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <owl:inverseOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#writesReview"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review"/>
+  <rdfs:label xml:lang="en">written by</rdfs:label>
+  <rdfs:label xml:lang="el">γράφτηκε από</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#employs">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AgencyBranch"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Employee"/>
+  <rdfs:label xml:lang="en">employs</rdfs:label>
+  <rdfs:label xml:lang="el">απασχολεί</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#createdBy">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingCampaign"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingSpecialist"/>
+  <rdfs:label xml:lang="el">σχεδιάστηκε από</rdfs:label>
+  <rdfs:label xml:lang="en">created by</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#offeredBy">
+  <owl:inverseOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#offersPackage"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelAgency"/>
+  <rdfs:label xml:lang="el">προσφέρεται από</rdfs:label>
+  <rdfs:label xml:lang="en">offered by</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#bookedBy">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking"/>
+  <rdfs:label xml:lang="en">booked by</rdfs:label>
+  <rdfs:label xml:lang="el">κρατήθηκε από</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#locatedIn">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Place"/>
+  <rdfs:comment xml:lang="el">Μεταβατική: αν η Οία βρίσκεται στη Σαντορίνη και η Σαντορίνη στις Κυκλάδες, τότε η Οία βρίσκεται στις Κυκλάδες. Χρησιμοποιείται για τοποθεσίες, καταλύματα και υποκαταστήματα (χωρίς domain).</rdfs:comment>
+  <rdfs:label xml:lang="en">located in</rdfs:label>
+  <rdfs:label xml:lang="el">βρίσκεται σε</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#worksFor">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AgencyBranch"/>
+  <owl:inverseOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#employs"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Employee"/>
+  <rdfs:label xml:lang="el">εργάζεται σε</rdfs:label>
+  <rdfs:label xml:lang="en">works for</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#travelsWith">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <rdfs:label xml:lang="el">ταξιδεύει μαζί με</rdfs:label>
+  <rdfs:label xml:lang="en">travels with</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#includesService">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelService"/>
+  <rdfs:label xml:lang="el">περιλαμβάνει υπηρεσία</rdfs:label>
+  <rdfs:label xml:lang="en">includes service</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasGuide">
+  <owl:inverseOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#guides"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TourGuide"/>
+  <rdfs:label xml:lang="el">έχει οδηγό/συνοδό</rdfs:label>
+  <rdfs:comment xml:lang="el">Χωρίς domain: χρησιμοποιείται για εκδρομές, αλλά και ως περιορισμός στον ορισμό του GuidedPackage.</rdfs:comment>
+  <rdfs:label xml:lang="en">has guide</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#manages">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Manager"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AgencyBranch"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+  <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#worksFor"/>
+  <rdfs:label xml:lang="el">διευθύνει</rdfs:label>
+  <rdfs:comment xml:lang="el">Υπο-ιδιότητα του worksFor: όποιος διευθύνει ένα υποκατάστημα εργάζεται σε αυτό. Κάθε υποκατάστημα έχει το πολύ έναν διευθυντή.</rdfs:comment>
+  <rdfs:label xml:lang="en">manages</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#usesChannel">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AdvertisingChannel"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingCampaign"/>
+  <rdfs:label xml:lang="en">uses channel</rdfs:label>
+  <rdfs:label xml:lang="el">χρησιμοποιεί κανάλι</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasStatus">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BookingStatus"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking"/>
+  <rdfs:label xml:lang="el">έχει κατάσταση</rdfs:label>
+  <rdfs:label xml:lang="en">has status</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#departsFrom">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transport"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Place"/>
+  <rdfs:label xml:lang="en">departs from</rdfs:label>
+  <rdfs:label xml:lang="el">αναχωρεί από</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#promotedBy">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingCampaign"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdfs:label xml:lang="en">promoted by</rdfs:label>
+  <rdfs:label xml:lang="el">προβάλλεται από</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasBranch">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelAgency"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AgencyBranch"/>
+  <rdfs:label xml:lang="el">έχει υποκατάστημα</rdfs:label>
+  <rdfs:label xml:lang="en">has branch</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#visitsDestination">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Destination"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Excursion"/>
+  <rdfs:label xml:lang="en">visits destination</rdfs:label>
+  <rdfs:label xml:lang="el">επισκέπτεται προορισμό</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#promotes">
+  <owl:inverseOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#promotedBy"/>
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingCampaign"/>
+  <rdfs:label xml:lang="el">προβάλλει</rdfs:label>
+  <rdfs:label xml:lang="en">promotes</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#guides">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TourGuide"/>
+  <rdfs:label xml:lang="el">συνοδεύει</rdfs:label>
+  <rdfs:label xml:lang="en">guides</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#operatedBy">
+  <rdfs:range rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airline"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight"/>
+  <rdfs:label xml:lang="el">εκτελείται από</rdfs:label>
+  <rdfs:label xml:lang="en">operated by</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#iataCode">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airport"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label xml:lang="el">κωδικός IATA</rdfs:label>
+  <rdfs:label xml:lang="en">IATA code</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#startDate">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingCampaign"/>
+  <rdfs:label xml:lang="en">start date</rdfs:label>
+  <rdfs:label xml:lang="el">ημερομηνία έναρξης</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#loyaltyPoints">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <rdfs:label xml:lang="en">loyalty points</rdfs:label>
+  <rdfs:label xml:lang="el">πόντοι επιβράβευσης</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#amount">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label xml:lang="en">amount (EUR)</rdfs:label>
+  <rdfs:label xml:lang="el">ποσό (€)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#durationDays">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdfs:label xml:lang="en">duration (days)</rdfs:label>
+  <rdfs:label xml:lang="el">διάρκεια (ημέρες)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#bookingDate">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  <rdfs:label xml:lang="el">ημερομηνία κράτησης</rdfs:label>
+  <rdfs:label xml:lang="en">booking date</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#rating">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review"/>
+  <rdfs:range>
+    <rdfs:Datatype>
+      <owl:withRestrictions>
+        <rdf:Description>
+          <rdf:first>
+            <rdf:Description>
+              <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</xsd:minInclusive>
+            </rdf:Description>
+          </rdf:first>
+          <rdf:rest>
+            <rdf:Description>
+              <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+              <rdf:first>
+                <rdf:Description>
+                  <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</xsd:maxInclusive>
+                </rdf:Description>
+              </rdf:first>
+            </rdf:Description>
+          </rdf:rest>
+        </rdf:Description>
+      </owl:withRestrictions>
+      <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </rdfs:Datatype>
+  </rdfs:range>
+  <rdfs:label xml:lang="el">βαθμολογία (1-5)</rdfs:label>
+  <rdfs:label xml:lang="en">rating (1-5)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#pricePerPerson">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdfs:label xml:lang="en">price per person (EUR)</rdfs:label>
+  <rdfs:label xml:lang="el">τιμή ανά άτομο (€)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#flightNumber">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight"/>
+  <rdfs:label xml:lang="en">flight number</rdfs:label>
+  <rdfs:label xml:lang="el">αριθμός πτήσης</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#numberOfTravellers">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger"/>
+  <rdfs:label xml:lang="en">number of travellers</rdfs:label>
+  <rdfs:label xml:lang="el">αριθμός ταξιδιωτών</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#salary">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Employee"/>
+  <rdfs:label xml:lang="en">monthly salary (EUR)</rdfs:label>
+  <rdfs:label xml:lang="el">μηνιαίος μισθός (€)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#firstName">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Person"/>
+  <rdfs:label xml:lang="el">όνομα</rdfs:label>
+  <rdfs:label xml:lang="en">first name</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#name">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label xml:lang="el">όνομα</rdfs:label>
+  <rdfs:comment xml:lang="el">Ονομασία οργανισμού, τοποθεσίας, πακέτου, υπηρεσίας κ.λπ.</rdfs:comment>
+  <rdfs:label xml:lang="en">name</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#reviewText">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label xml:lang="en">review text</rdfs:label>
+  <rdfs:label xml:lang="el">κείμενο αξιολόγησης</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hireDate">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Employee"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  <rdfs:label xml:lang="en">hire date</rdfs:label>
+  <rdfs:label xml:lang="el">ημερομηνία πρόσληψης</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#departureDate">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  <rdfs:label xml:lang="en">departure date</rdfs:label>
+  <rdfs:label xml:lang="el">ημερομηνία αναχώρησης</rdfs:label>
+  <rdfs:comment xml:lang="el">Για πακέτα και πτήσεις.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#lastName">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Person"/>
+  <rdfs:label xml:lang="en">last name</rdfs:label>
+  <rdfs:label xml:lang="el">επώνυμο</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#budget">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingCampaign"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label xml:lang="el">προϋπολογισμός (€)</rdfs:label>
+  <rdfs:label xml:lang="en">budget (EUR)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#endDate">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingCampaign"/>
+  <rdfs:label xml:lang="en">end date</rdfs:label>
+  <rdfs:label xml:lang="el">ημερομηνία λήξης</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#maxParticipants">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Excursion"/>
+  <rdfs:label xml:lang="en">max participants</rdfs:label>
+  <rdfs:label xml:lang="el">μέγιστος αριθμός συμμετεχόντων</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#email">
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Person"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label xml:lang="el">ηλεκτρονική διεύθυνση</rdfs:label>
+  <rdfs:label xml:lang="en">email</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#starRating">
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Hotel"/>
+  <rdfs:label xml:lang="en">star rating</rdfs:label>
+  <rdfs:label xml:lang="el">κατηγορία αστέρων</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/title"/>
+
+<owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/creator"/>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Excursion">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Destination"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#visitsDestination"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelService"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasGuide"/>
+      <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TourGuide"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:comment xml:lang="el">Κάθε οργανωμένη εκδρομή έχει τουλάχιστον έναν οδηγό/συνοδό (ακόμη κι αν δεν είναι γνωστός ποιος).</rdfs:comment>
+  <rdfs:label xml:lang="en">Organised Excursion</rdfs:label>
+  <rdfs:label xml:lang="el">Οργανωμένη Εκδρομή</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#bookedBy"/>
+      <owl:onClass rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onClass rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#forPackage"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasStatus"/>
+      <owl:onClass rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BookingStatus"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="el">Κράτηση</rdfs:label>
+  <rdfs:comment xml:lang="el">Κράτηση ενός πακέτου από ακριβώς έναν πελάτη, με ακριβώς μία κατάσταση.</rdfs:comment>
+  <rdfs:label xml:lang="en">Booking</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AdvertisingChannel">
+  <rdfs:label xml:lang="el">Διαφημιστικό Κανάλι</rdfs:label>
+  <rdfs:label xml:lang="en">Advertising Channel</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Accommodation"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#includesService"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Destination"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasDestination"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#pricePerPerson"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="en">Holiday Package</rdfs:label>
+  <rdfs:label xml:lang="el">Πακέτο Διακοπών</rdfs:label>
+  <rdfs:comment xml:lang="el">Πακέτο με τουλάχιστον έναν προορισμό, τουλάχιστον ένα κατάλυμα και ακριβώς μία τιμή ανά άτομο.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airport">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Place"/>
+  <rdfs:label xml:lang="el">Αεροδρόμιο</rdfs:label>
+  <rdfs:label xml:lang="en">Airport</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Place">
+  <rdfs:label xml:lang="el">Τοποθεσία</rdfs:label>
+  <rdfs:label xml:lang="en">Place</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BookingStatus">
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:oneOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Confirmed"/>
+        <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Pending"/>
+        <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cancelled"/>
+      </owl:oneOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:comment xml:lang="el">Απαριθμητή κλάση με τρεις τιμές.</rdfs:comment>
+  <rdfs:label xml:lang="el">Κατάσταση Κράτησης</rdfs:label>
+  <rdfs:label xml:lang="en">Booking Status</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#GuidedPackage">
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+        <owl:Restriction>
+          <owl:someValuesFrom>
+            <owl:Restriction>
+              <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TourGuide"/>
+              <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasGuide"/>
+            </owl:Restriction>
+          </owl:someValuesFrom>
+          <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#includesService"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdfs:label xml:lang="en">Guided Package</rdfs:label>
+  <rdfs:comment xml:lang="el">Ορισμένη κλάση: πακέτο που περιλαμβάνει υπηρεσία με οδηγό/συνοδό.</rdfs:comment>
+  <rdfs:label xml:lang="el">Πακέτο με Συνοδό</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MountainDestination">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Destination"/>
+  <rdfs:label xml:lang="el">Ορεινός Προορισμός</rdfs:label>
+  <rdfs:label xml:lang="en">Mountain Destination</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#operatedBy"/>
+      <owl:onClass rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airline"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transport"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onClass rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airport"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#arrivesAt"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onClass rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airport"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#departsFrom"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="en">Flight</rdfs:label>
+  <rdfs:label xml:lang="el">Πτήση</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Language">
+  <rdfs:label xml:lang="el">Γλώσσα</rdfs:label>
+  <rdfs:label xml:lang="en">Language</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AgencyBranch">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onClass rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelAgency"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#branchOf"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Organization"/>
+  <rdfs:comment xml:lang="el">Κάθε υποκατάστημα ανήκει σε ακριβώς ένα πρακτορείο.</rdfs:comment>
+  <rdfs:label xml:lang="en">Agency Branch</rdfs:label>
+  <rdfs:label xml:lang="el">Υποκατάστημα</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#FlightPackage">
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#includesService"/>
+          <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdfs:comment xml:lang="el">Ορισμένη κλάση: πακέτο που περιλαμβάνει τουλάχιστον μία πτήση.</rdfs:comment>
+  <rdfs:label xml:lang="el">Πακέτο με Πτήση</rdfs:label>
+  <rdfs:label xml:lang="en">Flight Package</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Destination">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Place"/>
+  <rdfs:label xml:lang="en">Destination</rdfs:label>
+  <rdfs:comment xml:lang="el">Τοποθεσία στην οποία το πρακτορείο οργανώνει ταξίδια.</rdfs:comment>
+  <rdfs:label xml:lang="el">Προορισμός</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Country">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Place"/>
+  <rdfs:label xml:lang="en">Country</rdfs:label>
+  <rdfs:label xml:lang="el">Χώρα</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transport">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelService"/>
+  <rdfs:label xml:lang="el">Μεταφορά</rdfs:label>
+  <rdfs:label xml:lang="en">Transport</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#amount"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="el">Πληρωμή</rdfs:label>
+  <rdfs:label xml:lang="en">Payment</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelInsurance">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelService"/>
+  <rdfs:label xml:lang="en">Travel Insurance</rdfs:label>
+  <rdfs:label xml:lang="el">Ταξιδιωτική Ασφάλιση</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelService">
+  <rdfs:label xml:lang="en">Travel Service</rdfs:label>
+  <rdfs:comment xml:lang="el">Συστατικό ενός πακέτου διακοπών (διαμονή, μεταφορά, εκδρομή, ασφάλεια).</rdfs:comment>
+  <rdfs:label xml:lang="el">Ταξιδιωτική Υπηρεσία</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelAgent">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Employee"/>
+  <rdfs:label xml:lang="en">Travel Agent</rdfs:label>
+  <rdfs:label xml:lang="el">Ταξιδιωτικός Σύμβουλος</rdfs:label>
+  <rdfs:comment xml:lang="el">Υπάλληλος που εξυπηρετεί πελάτες και διεκπεραιώνει κρατήσεις.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Employee">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#worksFor"/>
+      <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AgencyBranch"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Person"/>
+  <rdfs:label xml:lang="en">Employee</rdfs:label>
+  <rdfs:comment xml:lang="el">Μέλος του προσωπικού του πρακτορείου· εργάζεται σε τουλάχιστον ένα υποκατάστημα.</rdfs:comment>
+  <rdfs:label xml:lang="el">Υπάλληλος</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onClass rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#reviews"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#writtenBy"/>
+      <owl:onClass rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="en">Review</rdfs:label>
+  <rdfs:label xml:lang="el">Αξιολόγηση</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transfer">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transport"/>
+  <rdfs:label xml:lang="en">Transfer</rdfs:label>
+  <rdfs:label xml:lang="el">Οδική Μεταφορά (Transfer)</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Person"/>
+  <rdfs:label xml:lang="en">Customer</rdfs:label>
+  <rdfs:comment xml:lang="el">Πρόσωπο που κάνει κρατήσεις πακέτων διακοπών.</rdfs:comment>
+  <rdfs:label xml:lang="el">Πελάτης</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#VIPCustomer">
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#loyaltyPoints"/>
+          <owl:someValuesFrom>
+            <rdfs:Datatype>
+              <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+              <owl:withRestrictions>
+                <rdf:Description>
+                  <rdf:first>
+                    <rdf:Description>
+                      <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</xsd:minInclusive>
+                    </rdf:Description>
+                  </rdf:first>
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                </rdf:Description>
+              </owl:withRestrictions>
+            </rdfs:Datatype>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <rdfs:label xml:lang="en">VIP Customer</rdfs:label>
+  <rdfs:label xml:lang="el">Πελάτης VIP</rdfs:label>
+  <rdfs:comment xml:lang="el">Ορισμένη κλάση: πελάτης με τουλάχιστον 1000 πόντους επιβράβευσης. Τα μέλη της συνάγονται από τον reasoner.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Accommodation">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#locatedIn"/>
+      <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Destination"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelService"/>
+  <rdfs:label xml:lang="en">Accommodation</rdfs:label>
+  <rdfs:label xml:lang="el">Κατάλυμα</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TourGuide">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Employee"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Language"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#speaksLanguage"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="en">Tour Guide</rdfs:label>
+  <rdfs:comment xml:lang="el">Συνοδός ή ξεναγός οργανωμένων εκδρομών· μιλά τουλάχιστον μία γλώσσα.</rdfs:comment>
+  <rdfs:label xml:lang="el">Οδηγός / Συνοδός</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingCampaign">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AdvertisingChannel"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#usesChannel"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#promotes"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="el">Διαφημιστική Καμπάνια</rdfs:label>
+  <rdfs:label xml:lang="en">Marketing Campaign</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#IslandPackage">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+        <owl:Restriction>
+          <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#IslandDestination"/>
+          <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#hasDestination"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:comment xml:lang="el">Ορισμένη κλάση: πακέτο με τουλάχιστον έναν νησιωτικό προορισμό.</rdfs:comment>
+  <rdfs:label xml:lang="el">Νησιωτικό Πακέτο</rdfs:label>
+  <rdfs:label xml:lang="en">Island Package</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Manager">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AgencyBranch"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#manages"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Employee"/>
+  <rdfs:label xml:lang="en">Manager</rdfs:label>
+  <rdfs:label xml:lang="el">Διευθυντής Υποκαταστήματος</rdfs:label>
+  <rdfs:comment xml:lang="el">Υπάλληλος που διευθύνει υποκατάστημα. Δεν δηλώνεται ξένη με τις άλλες υποκλάσεις του Employee: ένας διευθυντής μπορεί να είναι και σύμβουλος.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#FerryTrip">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Port"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#arrivesAt"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Port"/>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#departsFrom"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transport"/>
+  <rdfs:label xml:lang="en">Ferry Trip</rdfs:label>
+  <rdfs:label xml:lang="el">Ακτοπλοϊκή Μετακίνηση</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#LongStayPackage">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#durationDays"/>
+          <owl:someValuesFrom>
+            <rdfs:Datatype>
+              <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+              <owl:withRestrictions>
+                <rdf:Description>
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                  <rdf:first>
+                    <rdf:Description>
+                      <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</xsd:minInclusive>
+                    </rdf:Description>
+                  </rdf:first>
+                </rdf:Description>
+              </owl:withRestrictions>
+            </rdfs:Datatype>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label xml:lang="el">Πακέτο Μεγάλης Διάρκειας</rdfs:label>
+  <rdfs:label xml:lang="en">Long Stay Package</rdfs:label>
+  <rdfs:comment xml:lang="el">Ορισμένη κλάση: πακέτο διάρκειας τουλάχιστον 7 ημερών.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BankTransfer">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment"/>
+  <rdfs:label xml:lang="el">Τραπεζική Μεταφορά</rdfs:label>
+  <rdfs:label xml:lang="en">Bank Transfer</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Port">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Place"/>
+  <rdfs:label xml:lang="en">Port</rdfs:label>
+  <rdfs:label xml:lang="el">Λιμάνι</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingSpecialist">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Employee"/>
+  <rdfs:label xml:lang="el">Υπεύθυνος Προβολής</rdfs:label>
+  <rdfs:label xml:lang="en">Marketing Specialist</rdfs:label>
+  <rdfs:comment xml:lang="el">Υπάλληλος που σχεδιάζει διαφημιστικές καμπάνιες.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CityDestination">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Destination"/>
+  <rdfs:label xml:lang="el">Αστικός Προορισμός</rdfs:label>
+  <rdfs:label xml:lang="en">City Destination</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Region">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Place"/>
+  <rdfs:label xml:lang="en">Region</rdfs:label>
+  <rdfs:label xml:lang="el">Περιφέρεια / Περιοχή</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelAgency">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Organization"/>
+  <rdfs:label xml:lang="el">Ταξιδιωτικό Πρακτορείο</rdfs:label>
+  <rdfs:label xml:lang="en">Travel Agency</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CardPayment">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment"/>
+  <rdfs:label xml:lang="en">Card Payment</rdfs:label>
+  <rdfs:label xml:lang="el">Πληρωμή με Κάρτα</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Person">
+  <rdfs:label xml:lang="el">Πρόσωπο</rdfs:label>
+  <rdfs:label xml:lang="en">Person</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Hotel">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Accommodation"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:someValuesFrom>
+        <rdfs:Datatype>
+          <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+          <owl:withRestrictions>
+            <rdf:Description>
+              <rdf:first>
+                <rdf:Description>
+                  <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</xsd:minInclusive>
+                </rdf:Description>
+              </rdf:first>
+              <rdf:rest>
+                <rdf:Description>
+                  <rdf:first>
+                    <rdf:Description>
+                      <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</xsd:maxInclusive>
+                    </rdf:Description>
+                  </rdf:first>
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                </rdf:Description>
+              </rdf:rest>
+            </rdf:Description>
+          </owl:withRestrictions>
+        </rdfs:Datatype>
+      </owl:someValuesFrom>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#starRating"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label xml:lang="en">Hotel</rdfs:label>
+  <rdfs:label xml:lang="el">Ξενοδοχείο</rdfs:label>
+  <rdfs:comment xml:lang="el">Ξενοδοχείο με κατηγορία αστέρων 1–5.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Organization">
+  <rdfs:label xml:lang="en">Organization</rdfs:label>
+  <rdfs:label xml:lang="el">Οργανισμός</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CashPayment">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment"/>
+  <rdfs:label xml:lang="el">Πληρωμή με Μετρητά</rdfs:label>
+  <rdfs:label xml:lang="en">Cash Payment</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#IslandDestination">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Destination"/>
+  <rdfs:label xml:lang="el">Νησιωτικός Προορισμός</rdfs:label>
+  <rdfs:label xml:lang="en">Island Destination</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airline">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Organization"/>
+  <rdfs:label xml:lang="en">Airline</rdfs:label>
+  <rdfs:label xml:lang="el">Αεροπορική Εταιρεία</rdfs:label>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarthaKosta">
+  <trav:hasBooking rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking09"/>
+  <trav:servedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EleniDimitriou"/>
+  <trav:writesReview rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review08"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <trav:writesReview rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review07"/>
+  <trav:hasBooking rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking11"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#VIPCustomer"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+  <trav:servedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#NikosGeorgiou"/>
+  <trav:loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1200</trav:loyaltyPoints>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mkosta@mail.example</trav:email>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κώστα</trav:lastName>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Μάρθα</trav:firstName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking09">
+  <trav:handledBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#NikosGeorgiou"/>
+  <trav:bookedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarthaKosta"/>
+  <trav:hasStatus rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Confirmed"/>
+  <trav:forPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiGastronomy"/>
+  <trav:hasPayment rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment09"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking"/>
+  <trav:numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</trav:numberOfTravellers>
+  <trav:bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-12-03T16:00:00</trav:bookingDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#DimitrisKarras">
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <trav:hasBooking rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking01"/>
+  <trav:hasBooking rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking12"/>
+  <trav:servedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#NikosGeorgiou"/>
+  <trav:writesReview rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review01"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#VIPCustomer"/>
+  <trav:servedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EleniDimitriou"/>
+  <trav:travelsWith rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ElenaKarra"/>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dkarras@mail.example</trav:email>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Καρράς</trav:lastName>
+  <trav:loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1850</trav:loyaltyPoints>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Δημήτρης</trav:firstName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#IoannaStavrou">
+  <trav:hasBooking rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking06"/>
+  <trav:servedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EleniDimitriou"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#French"/>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ιωάννα</trav:firstName>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">istavrou@mail.example</trav:email>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Σταύρου</trav:lastName>
+  <trav:loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">999</trav:loyaltyPoints>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transfer_AthensArachova">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transfer"/>
+  <trav:arrivesAt rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Arachova"/>
+  <trav:departsFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Athens"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Πούλμαν Αθήνα → Αράχωβα</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review07">
+  <trav:writtenBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarthaKosta"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review"/>
+  <trav:reviews rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiGastronomy"/>
+  <trav:reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Υπέροχη γαστρονομική περιήγηση.</trav:reviewText>
+  <trav:rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</trav:rating>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#JTR">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Santorini"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airport"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cyclades"/>
+  <trav:iataCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">JTR</trav:iataCode>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κρατικός Αερολιμένας Σαντορίνης</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#RomanHoliday">
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BasicInsurance"/>
+  <trav:offeredBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AegeanHorizons"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Italy"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#FlightPackage"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#RomaCentroHotel"/>
+  <trav:hasDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Rome"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight_MS331"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#VaticanTour"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight_MS330"/>
+  <trav:promotedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EuropeCityBreaks"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#GuidedPackage"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Rome"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Lazio"/>
+  <trav:durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</trav:durationDays>
+  <trav:pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">720.0</trav:pricePerPerson>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-04-22T07:45:00</trav:departureDate>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Roman Holiday</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment02">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BankTransfer"/>
+  <trav:amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">640.0</trav:amount>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#LauraBianchi">
+  <trav:hasBooking rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking08"/>
+  <trav:servedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MariaPapadopoulou"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Italian"/>
+  <trav:travelsWith rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#JohnSmith"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bianchi</trav:lastName>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Laura</trav:firstName>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lbianchi@mail.example</trav:email>
+  <trav:loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">150</trav:loyaltyPoints>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review04">
+  <trav:writtenBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#PetrosMichail"/>
+  <trav:reviews rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#RomanHoliday"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review"/>
+  <trav:rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</trav:rating>
+  <trav:reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Πολύ καλός ξεναγός στο Βατικανό.</trav:reviewText>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#PetrosMichail">
+  <trav:hasBooking rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking03"/>
+  <trav:servedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MariaPapadopoulou"/>
+  <trav:writesReview rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review03"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <trav:servedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#NikosGeorgiou"/>
+  <trav:writesReview rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review04"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#VIPCustomer"/>
+  <trav:hasBooking rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking04"/>
+  <trav:loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2600</trav:loyaltyPoints>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Μιχαήλ</trav:lastName>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pmichail@mail.example</trav:email>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Πέτρος</trav:firstName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#WinterInGreece">
+  <trav:createdBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AnnaVasileiou"/>
+  <trav:usesChannel rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Newsletter"/>
+  <trav:promotes rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiGastronomy"/>
+  <trav:promotes rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ArachovaWinter"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingCampaign"/>
+  <trav:usesChannel rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelFair"/>
+  <trav:budget rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1800.0</trav:budget>
+  <trav:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-15T00:00:00</trav:startDate>
+  <trav:endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-01-31T23:59:59</trav:endDate>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Χειμώνας στην Ελλάδα</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Language"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">English</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AndreasPappas">
+  <trav:servedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EleniDimitriou"/>
+  <trav:writesReview rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review06"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <trav:hasBooking rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking07"/>
+  <trav:loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</trav:loyaltyPoints>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ανδρέας</trav:firstName>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">apappas@mail.example</trav:email>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Παππάς</trav:lastName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cyclades">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Region"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κυκλάδες</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ParnassosChalet">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CentralGreece"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Arachova"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Hotel"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Parnassos Chalet</trav:name>
+  <trav:starRating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</trav:starRating>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ATH">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airport"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Athens"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Attica"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:iataCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ATH</trav:iataCode>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Διεθνής Αερολιμένας Αθηνών</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CalderaViewHotel">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cyclades"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Santorini"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Hotel"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Caldera View Hotel</trav:name>
+  <trav:starRating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</trav:starRating>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transfer_JTR_Oia">
+  <trav:arrivesAt rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Santorini"/>
+  <trav:departsFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#JTR"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transfer"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Transfer αεροδρόμιο Σαντορίνης → ξενοδοχείο</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#WhiteTowerHotel">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Hotel"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Thessaloniki"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CentralMacedonia"/>
+  <trav:starRating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</trav:starRating>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">White Tower Hotel</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment05">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BankTransfer"/>
+  <trav:amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1440.0</trav:amount>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#RomaCentroHotel">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Hotel"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Lazio"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Italy"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Rome"/>
+  <trav:starRating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</trav:starRating>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Roma Centro Hotel</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SKG">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airport"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Thessaloniki"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CentralMacedonia"/>
+  <trav:iataCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SKG</trav:iataCode>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Αερολιμένας Θεσσαλονίκης «Μακεδονία»</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Lazio">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Region"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Italy"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Λάτσιο</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Confirmed">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BookingStatus"/>
+  <rdfs:label xml:lang="el">Επιβεβαιωμένη</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review03">
+  <trav:writtenBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#PetrosMichail"/>
+  <trav:reviews rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CycladesHopping"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review"/>
+  <trav:rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</trav:rating>
+  <trav:reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Το καλύτερο πακέτο που έχουμε κλείσει.</trav:reviewText>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiFoodWalk">
+  <trav:hasGuide rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#GiorgosNikolaou"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Excursion"/>
+  <trav:visitsDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Thessaloniki"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Γαστρονομική περιήγηση στη Θεσσαλονίκη</trav:name>
+  <trav:maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">15</trav:maxParticipants>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Pending">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BookingStatus"/>
+  <rdfs:label xml:lang="el">Σε αναμονή</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment12">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CardPayment"/>
+  <trav:amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">620.0</trav:amount>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking03">
+  <trav:forPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CycladesHopping"/>
+  <trav:hasStatus rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Confirmed"/>
+  <trav:bookedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#PetrosMichail"/>
+  <trav:hasPayment rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment03"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking"/>
+  <trav:handledBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MariaPapadopoulou"/>
+  <trav:numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</trav:numberOfTravellers>
+  <trav:bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-10-28T10:05:00</trav:bookingDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking10">
+  <trav:handledBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#NikosGeorgiou"/>
+  <trav:bookedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ElenaKarra"/>
+  <trav:forPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SantoriniEscape"/>
+  <trav:hasStatus rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Pending"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking"/>
+  <trav:numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</trav:numberOfTravellers>
+  <trav:bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-12-12T10:30:00</trav:bookingDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BasicInsurance">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelInsurance"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Βασική ταξιδιωτική ασφάλιση</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#France">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Country"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Γαλλία</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#VaticanTour">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Excursion"/>
+  <trav:visitsDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Rome"/>
+  <trav:hasGuide rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#GiorgosNikolaou"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ξενάγηση στα Μουσεία του Βατικανού</trav:name>
+  <trav:maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</trav:maxParticipants>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#French">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Language"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Français</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ElenaKarra">
+  <trav:hasBooking rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking10"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+  <trav:travelsWith rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#DimitrisKarras"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <trav:servedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#NikosGeorgiou"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ekarra@mail.example</trav:email>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Καρρά</trav:lastName>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Έλενα</trav:firstName>
+  <trav:loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">420</trav:loyaltyPoints>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MykonosBlueSuites">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cyclades"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Hotel"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Mykonos"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mykonos Blue Suites</trav:name>
+  <trav:starRating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</trav:starRating>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EuropeCityBreaks">
+  <trav:usesChannel rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SocialMedia"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingCampaign"/>
+  <trav:createdBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AnnaVasileiou"/>
+  <trav:usesChannel rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#RadioSpot"/>
+  <trav:promotes rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#RomanHoliday"/>
+  <trav:promotes rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ParisCityBreak"/>
+  <trav:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-15T00:00:00</trav:startDate>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">City breaks στην Ευρώπη</trav:name>
+  <trav:endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-02-28T23:59:59</trav:endDate>
+  <trav:budget rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3500.0</trav:budget>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#KaterinaLazarou">
+  <trav:hasBooking rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking02"/>
+  <trav:writesReview rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review02"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Customer"/>
+  <trav:servedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EleniDimitriou"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">klazarou@mail.example</trav:email>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Λαζάρου</trav:lastName>
+  <trav:loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">300</trav:loyaltyPoints>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κατερίνα</trav:firstName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#LumiereHotel">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#France"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Hotel"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#IleDeFrance"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Paris"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hôtel Lumière</trav:name>
+  <trav:starRating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</trav:starRating>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AgencyWebsite">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AdvertisingChannel"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ιστότοπος πρακτορείου</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#FCO">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Rome"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Lazio"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Italy"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airport"/>
+  <trav:iataCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FCO</trav:iataCode>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Rome Fiumicino</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment03">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CardPayment"/>
+  <trav:amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2900.0</trav:amount>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#RadioSpot">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AdvertisingChannel"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ραδιοφωνικό σποτ</trav:name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#LouvreTour">
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Excursion"/>
+  <trav:visitsDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Paris"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ξενάγηση στο Λούβρο</trav:name>
+  <trav:maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</trav:maxParticipants>
+</owl:NamedIndividual>
+
+<trav:Booking rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking08">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:forPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SantoriniEscape"/>
+  <trav:handledBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MariaPapadopoulou"/>
+  <trav:bookedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#LauraBianchi"/>
+  <trav:hasStatus rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cancelled"/>
+  <trav:numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</trav:numberOfTravellers>
+  <trav:bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-08T08:50:00</trav:bookingDate>
+</trav:Booking>
+
+<trav:GuidedPackage rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ParisCityBreak">
+  <trav:hasDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Paris"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#France"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <trav:offeredBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AegeanHorizons"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#IleDeFrance"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Paris"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#FlightPackage"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#LouvreTour"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#LumiereHotel"/>
+  <trav:promotedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EuropeCityBreaks"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight_MS440"/>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-03-11T09:10:00</trav:departureDate>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Paris City Break</trav:name>
+  <trav:durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</trav:durationDays>
+  <trav:pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">560.0</trav:pricePerPerson>
+</trav:GuidedPackage>
+
+<trav:CityDestination rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Paris">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#IleDeFrance"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#France"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Παρίσι</trav:name>
+</trav:CityDestination>
+
+<trav:AdvertisingChannel rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SocialMedia">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Social media (Facebook / Instagram)</trav:name>
+</trav:AdvertisingChannel>
+
+<trav:Language rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ελληνικά</trav:name>
+</trav:Language>
+
+<trav:Booking rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking06">
+  <trav:bookedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#IoannaStavrou"/>
+  <trav:hasStatus rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Pending"/>
+  <trav:forPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ParisCityBreak"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:handledBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EleniDimitriou"/>
+  <trav:numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</trav:numberOfTravellers>
+  <trav:bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-12-10T09:45:00</trav:bookingDate>
+</trav:Booking>
+
+<trav:Excursion rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#DelosDayTrip">
+  <trav:hasGuide rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SofiaAlexiou"/>
+  <trav:visitsDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Mykonos"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">25</trav:maxParticipants>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ημερήσια εκδρομή στη Δήλο</trav:name>
+</trav:Excursion>
+
+<trav:GuidedPackage rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiGastronomy">
+  <trav:hasDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Thessaloniki"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Thessaloniki"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#WhiteTowerHotel"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiFoodWalk"/>
+  <trav:promotedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#WinterInGreece"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CentralMacedonia"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:offeredBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AegeanHorizons"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-02-20T10:00:00</trav:departureDate>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Thessaloniki Gastronomy Weekend</trav:name>
+  <trav:durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</trav:durationDays>
+  <trav:pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">230.0</trav:pricePerPerson>
+</trav:GuidedPackage>
+
+<trav:Flight rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight_HA210">
+  <trav:arrivesAt rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#JTR"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:operatedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HellasAir"/>
+  <trav:departsFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ATH"/>
+  <trav:flightNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HA210</trav:flightNumber>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-07-03T10:00:00</trav:departureDate>
+</trav:Flight>
+
+<trav:Booking rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking01">
+  <trav:forPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SantoriniEscape"/>
+  <trav:handledBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#NikosGeorgiou"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:hasStatus rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Confirmed"/>
+  <trav:hasPayment rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment01"/>
+  <trav:bookedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#DimitrisKarras"/>
+  <trav:numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</trav:numberOfTravellers>
+  <trav:bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-02T11:20:00</trav:bookingDate>
+</trav:Booking>
+
+<trav:Booking rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking04">
+  <trav:handledBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#NikosGeorgiou"/>
+  <trav:bookedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#PetrosMichail"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:hasPayment rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment04"/>
+  <trav:forPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#RomanHoliday"/>
+  <trav:hasStatus rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Confirmed"/>
+  <trav:numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</trav:numberOfTravellers>
+  <trav:bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-12-01T12:00:00</trav:bookingDate>
+</trav:Booking>
+
+<trav:TravelAgent rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#NikosGeorgiou">
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+  <trav:worksFor rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiBranch"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Italian"/>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">n.georgiou@aegeanhorizons.example</trav:email>
+  <trav:salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1350.0</trav:salary>
+  <trav:hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-05-10T09:00:00</trav:hireDate>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Γεωργίου</trav:lastName>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Νίκος</trav:firstName>
+</trav:TravelAgent>
+
+<trav:Booking rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking02">
+  <trav:hasPayment rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment02"/>
+  <trav:forPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MykonosSummer"/>
+  <trav:hasStatus rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Confirmed"/>
+  <trav:handledBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EleniDimitriou"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:bookedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#KaterinaLazarou"/>
+  <trav:numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</trav:numberOfTravellers>
+  <trav:bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-05T15:40:00</trav:bookingDate>
+</trav:Booking>
+
+<trav:Booking rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking12">
+  <trav:forPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ArachovaWinter"/>
+  <trav:hasPayment rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment12"/>
+  <trav:handledBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EleniDimitriou"/>
+  <trav:hasStatus rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Confirmed"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:bookedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#DimitrisKarras"/>
+  <trav:numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</trav:numberOfTravellers>
+  <trav:bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-12-20T18:00:00</trav:bookingDate>
+</trav:Booking>
+
+<trav:IslandPackage rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MykonosSummer">
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#DelosDayTrip"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MykonosBlueSuites"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cyclades"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Ferry_PiraeusMykonos"/>
+  <trav:offeredBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AegeanHorizons"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#GuidedPackage"/>
+  <trav:promotedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SummerIslands2027"/>
+  <trav:hasDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Mykonos"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Mykonos"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</trav:durationDays>
+  <trav:pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">640.0</trav:pricePerPerson>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mykonos Summer</trav:name>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-07-10T07:00:00</trav:departureDate>
+</trav:IslandPackage>
+
+<trav:TravelAgent rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EleniDimitriou">
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#French"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+  <trav:worksFor rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AthensBranch"/>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ελένη</trav:firstName>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">e.dimitriou@aegeanhorizons.example</trav:email>
+  <trav:salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1400.0</trav:salary>
+  <trav:hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2019-09-16T09:00:00</trav:hireDate>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Δημητρίου</trav:lastName>
+</trav:TravelAgent>
+
+<trav:FlightPackage rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CycladesHopping">
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Santorini"/>
+  <trav:offeredBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AegeanHorizons"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Ferry_PiraeusMykonos"/>
+  <trav:promotedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SummerIslands2027"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CalderaViewHotel"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Mykonos"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#PremiumInsurance"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cyclades"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#IslandPackage"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#LongStayPackage"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MykonosBlueSuites"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight_HA210"/>
+  <trav:hasDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Santorini"/>
+  <trav:hasDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Mykonos"/>
+  <trav:durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</trav:durationDays>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cyclades Island Hopping</trav:name>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-07-03T10:00:00</trav:departureDate>
+  <trav:pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1450.0</trav:pricePerPerson>
+</trav:FlightPackage>
+
+<trav:IslandDestination rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Santorini">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cyclades"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Σαντορίνη</trav:name>
+</trav:IslandDestination>
+
+<trav:TravelAgency rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AegeanHorizons">
+  <trav:offersPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiGastronomy"/>
+  <trav:offersPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ArachovaWinter"/>
+  <trav:hasBranch rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AthensBranch"/>
+  <trav:offersPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SantoriniEscape"/>
+  <trav:offersPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MykonosSummer"/>
+  <trav:hasBranch rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiBranch"/>
+  <trav:offersPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CycladesHopping"/>
+  <trav:offersPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#RomanHoliday"/>
+  <trav:offersPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ParisCityBreak"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Aegean Horizons Travel</trav:name>
+</trav:TravelAgency>
+
+<trav:HolidayPackage rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ArachovaWinter">
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ParnassosChalet"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CentralGreece"/>
+  <trav:promotedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#WinterInGreece"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:offeredBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AegeanHorizons"/>
+  <trav:hasDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Arachova"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transfer_AthensArachova"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Arachova"/>
+  <trav:pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">310.0</trav:pricePerPerson>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-01-15T09:00:00</trav:departureDate>
+  <trav:durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</trav:durationDays>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Arachova Winter Weekend</trav:name>
+</trav:HolidayPackage>
+
+<trav:Customer rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#JohnSmith">
+  <trav:writesReview rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review05"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#VIPCustomer"/>
+  <trav:hasBooking rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking05"/>
+  <trav:travelsWith rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#LauraBianchi"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+  <trav:servedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#NikosGeorgiou"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">John</trav:firstName>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Smith</trav:lastName>
+  <trav:loyaltyPoints rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</trav:loyaltyPoints>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jsmith@mail.example</trav:email>
+</trav:Customer>
+
+<trav:Review rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review05">
+  <trav:reviews rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#RomanHoliday"/>
+  <trav:writtenBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#JohnSmith"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</trav:rating>
+  <trav:reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Good tour, but the hotel room was small.</trav:reviewText>
+</trav:Review>
+
+<trav:AgencyBranch rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiBranch">
+  <trav:employs rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#NikosGeorgiou"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Thessaloniki"/>
+  <trav:employs rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MariaPapadopoulou"/>
+  <trav:branchOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AegeanHorizons"/>
+  <trav:employs rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AnnaVasileiou"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CentralMacedonia"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:employs rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#GiorgosNikolaou"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Υποκατάστημα Θεσσαλονίκης</trav:name>
+</trav:AgencyBranch>
+
+<trav:MarketingSpecialist rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AnnaVasileiou">
+  <trav:worksFor rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiBranch"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Άννα</trav:firstName>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Βασιλείου</trav:lastName>
+  <trav:salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1500.0</trav:salary>
+  <trav:hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2018-11-05T09:00:00</trav:hireDate>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">a.vasileiou@aegeanhorizons.example</trav:email>
+</trav:MarketingSpecialist>
+
+<trav:Manager rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MariaPapadopoulou">
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+  <trav:worksFor rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiBranch"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <trav:manages rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiBranch"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelAgent"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Παπαδοπούλου</trav:lastName>
+  <trav:salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2100.0</trav:salary>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">m.papadopoulou@aegeanhorizons.example</trav:email>
+  <trav:hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2015-03-01T09:00:00</trav:hireDate>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Μαρία</trav:firstName>
+</trav:Manager>
+
+<trav:Booking rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking07">
+  <trav:bookedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AndreasPappas"/>
+  <trav:hasStatus rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Confirmed"/>
+  <trav:handledBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EleniDimitriou"/>
+  <trav:forPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ArachovaWinter"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:hasPayment rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment07"/>
+  <trav:bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-25T13:10:00</trav:bookingDate>
+  <trav:numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</trav:numberOfTravellers>
+</trav:Booking>
+
+<trav:Country rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Italy">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ιταλία</trav:name>
+</trav:Country>
+
+<trav:IslandPackage rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SantoriniEscape">
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cyclades"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transfer_JTR_Oia"/>
+  <trav:offeredBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AegeanHorizons"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#LongStayPackage"/>
+  <trav:promotedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SummerIslands2027"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#GuidedPackage"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:visitsPlace rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Santorini"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight_HA102"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#VolcanoBoatTour"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BasicInsurance"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CalderaViewHotel"/>
+  <rdf:type rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#FlightPackage"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:hasDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Santorini"/>
+  <trav:includesService rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight_HA101"/>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-06-12T08:30:00</trav:departureDate>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Santorini Escape</trav:name>
+  <trav:durationDays rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</trav:durationDays>
+  <trav:pricePerPerson rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">890.0</trav:pricePerPerson>
+</trav:IslandPackage>
+
+<trav:CityDestination rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Thessaloniki">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CentralMacedonia"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Θεσσαλονίκη</trav:name>
+</trav:CityDestination>
+
+<trav:Region rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CentralGreece">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Στερεά Ελλάδα</trav:name>
+</trav:Region>
+
+<trav:TourGuide rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#GiorgosNikolaou">
+  <trav:worksFor rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiBranch"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <trav:guides rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ThessalonikiFoodWalk"/>
+  <trav:guides rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#VaticanTour"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Italian"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Γιώργος</trav:firstName>
+  <trav:hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2022-03-15T09:00:00</trav:hireDate>
+  <trav:salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1200.0</trav:salary>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Νικολάου</trav:lastName>
+</trav:TourGuide>
+
+<trav:Excursion rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#VolcanoBoatTour">
+  <trav:visitsDestination rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Santorini"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:hasGuide rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SofiaAlexiou"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κρουαζιέρα στο ηφαίστειο</trav:name>
+  <trav:maxParticipants rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">30</trav:maxParticipants>
+</trav:Excursion>
+
+<trav:Flight rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight_HA102">
+  <trav:departsFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#JTR"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:arrivesAt rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SKG"/>
+  <trav:operatedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HellasAir"/>
+  <trav:flightNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HA102</trav:flightNumber>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-06-19T20:15:00</trav:departureDate>
+</trav:Flight>
+
+<trav:TourGuide rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SofiaAlexiou">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#French"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+  <trav:worksFor rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AthensBranch"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <trav:guides rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#DelosDayTrip"/>
+  <trav:guides rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#VolcanoBoatTour"/>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Σοφία</trav:firstName>
+  <trav:salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1250.0</trav:salary>
+  <trav:hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2020-04-01T09:00:00</trav:hireDate>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Αλεξίου</trav:lastName>
+</trav:TourGuide>
+
+<trav:Country rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ελλάδα</trav:name>
+</trav:Country>
+
+<trav:MarketingCampaign rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SummerIslands2027">
+  <trav:promotes rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SantoriniEscape"/>
+  <trav:createdBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AnnaVasileiou"/>
+  <trav:promotes rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MykonosSummer"/>
+  <trav:promotes rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CycladesHopping"/>
+  <trav:usesChannel rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AgencyWebsite"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:usesChannel rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Newsletter"/>
+  <trav:usesChannel rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SocialMedia"/>
+  <trav:budget rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6000.0</trav:budget>
+  <trav:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-02-01T00:00:00</trav:startDate>
+  <trav:endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-05-31T23:59:59</trav:endDate>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Καλοκαίρι στα νησιά 2027</trav:name>
+</trav:MarketingCampaign>
+
+<trav:Airport rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CDG">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#IleDeFrance"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#France"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Paris"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Paris Charles de Gaulle</trav:name>
+  <trav:iataCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CDG</trav:iataCode>
+</trav:Airport>
+
+<trav:FerryTrip rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Ferry_PiraeusMykonos">
+  <trav:arrivesAt rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MykonosPort"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:departsFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#PiraeusPort"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Πειραιάς → Μύκονος (ταχύπλοο)</trav:name>
+</trav:FerryTrip>
+
+<trav:CityDestination rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Rome">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Lazio"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Italy"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ρώμη</trav:name>
+</trav:CityDestination>
+
+<trav:Review rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review08">
+  <trav:writtenBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarthaKosta"/>
+  <trav:reviews rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MykonosSummer"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ακριβό για την περίοδο.</trav:reviewText>
+  <trav:rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</trav:rating>
+</trav:Review>
+
+<trav:AdvertisingChannel rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Newsletter">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Email newsletter</trav:name>
+</trav:AdvertisingChannel>
+
+<trav:Manager rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#KostasIoannou">
+  <trav:manages rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AthensBranch"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:speaksLanguage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+  <trav:worksFor rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AthensBranch"/>
+  <trav:email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">k.ioannou@aegeanhorizons.example</trav:email>
+  <trav:lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ιωάννου</trav:lastName>
+  <trav:hireDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2012-01-09T09:00:00</trav:hireDate>
+  <trav:firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κώστας</trav:firstName>
+  <trav:salary rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2050.0</trav:salary>
+</trav:Manager>
+
+<trav:AgencyBranch rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AthensBranch">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Attica"/>
+  <trav:employs rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SofiaAlexiou"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:employs rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#KostasIoannou"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Athens"/>
+  <trav:branchOf rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AegeanHorizons"/>
+  <trav:employs rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EleniDimitriou"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Υποκατάστημα Αθήνας</trav:name>
+</trav:AgencyBranch>
+
+<trav:TravelInsurance rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#PremiumInsurance">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ταξιδιωτική ασφάλιση Premium</trav:name>
+</trav:TravelInsurance>
+
+<trav:Flight rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight_MS440">
+  <trav:departsFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ATH"/>
+  <trav:arrivesAt rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CDG"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:operatedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MedSkyAirways"/>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-03-11T09:10:00</trav:departureDate>
+  <trav:flightNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MS440</trav:flightNumber>
+</trav:Flight>
+
+<trav:IslandDestination rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Mykonos">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cyclades"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Μύκονος</trav:name>
+</trav:IslandDestination>
+
+<trav:Booking rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking05">
+  <trav:hasPayment rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment05"/>
+  <trav:handledBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#NikosGeorgiou"/>
+  <trav:bookedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#JohnSmith"/>
+  <trav:hasStatus rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Confirmed"/>
+  <trav:forPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#RomanHoliday"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-11-18T17:30:00</trav:bookingDate>
+  <trav:numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</trav:numberOfTravellers>
+</trav:Booking>
+
+<trav:Region rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Attica">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Αττική</trav:name>
+</trav:Region>
+
+<trav:CityDestination rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Athens">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Attica"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Αθήνα</trav:name>
+</trav:CityDestination>
+
+<trav:Flight rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight_HA101">
+  <trav:arrivesAt rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#JTR"/>
+  <trav:departsFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SKG"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:operatedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HellasAir"/>
+  <trav:flightNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HA101</trav:flightNumber>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-06-12T08:30:00</trav:departureDate>
+</trav:Flight>
+
+<trav:Booking rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking11">
+  <trav:bookedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarthaKosta"/>
+  <trav:handledBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#EleniDimitriou"/>
+  <trav:hasPayment rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment11"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:forPackage rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MykonosSummer"/>
+  <trav:hasStatus rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Confirmed"/>
+  <trav:bookingDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2026-12-15T11:15:00</trav:bookingDate>
+  <trav:numberOfTravellers rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</trav:numberOfTravellers>
+</trav:Booking>
+
+<trav:BookingStatus rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cancelled">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <rdfs:label xml:lang="el">Ακυρωμένη</rdfs:label>
+</trav:BookingStatus>
+
+<trav:Flight rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight_MS330">
+  <trav:operatedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MedSkyAirways"/>
+  <trav:departsFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SKG"/>
+  <trav:arrivesAt rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#FCO"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:flightNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MS330</trav:flightNumber>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-04-22T07:45:00</trav:departureDate>
+</trav:Flight>
+
+<trav:Airline rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MedSkyAirways">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MedSky Airways</trav:name>
+</trav:Airline>
+
+<trav:Review rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review06">
+  <trav:reviews rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#ArachovaWinter"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:writtenBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AndreasPappas"/>
+  <trav:rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</trav:rating>
+  <trav:reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ζεστό σαλέ, ιδανικό για οικογένειες.</trav:reviewText>
+</trav:Review>
+
+<trav:Region rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#IleDeFrance">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#France"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ιλ-ντε-Φρανς</trav:name>
+</trav:Region>
+
+<trav:Review rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review01">
+  <trav:reviews rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SantoriniEscape"/>
+  <trav:writtenBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#DimitrisKarras"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</trav:rating>
+  <trav:reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Εξαιρετικό ξενοδοχείο και άψογη οργάνωση.</trav:reviewText>
+</trav:Review>
+
+<trav:Review rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review02">
+  <trav:reviews rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MykonosSummer"/>
+  <trav:writtenBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#KaterinaLazarou"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:reviewText rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Πολύ ωραία εκδρομή στη Δήλο, λίγο κουραστικό το ταχύπλοο.</trav:reviewText>
+  <trav:rating rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</trav:rating>
+</trav:Review>
+
+<trav:CardPayment rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment04">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">720.0</trav:amount>
+</trav:CardPayment>
+
+<trav:BankTransfer rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment11">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1920.0</trav:amount>
+</trav:BankTransfer>
+
+<trav:Port rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MykonosPort">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cyclades"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Mykonos"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Λιμάνι Μυκόνου</trav:name>
+</trav:Port>
+
+<trav:CashPayment rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment07">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1240.0</trav:amount>
+</trav:CashPayment>
+
+<trav:CardPayment rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment01">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1780.0</trav:amount>
+</trav:CardPayment>
+
+<trav:MountainDestination rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Arachova">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CentralGreece"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Αράχωβα</trav:name>
+</trav:MountainDestination>
+
+<trav:Region rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CentralMacedonia">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Κεντρική Μακεδονία</trav:name>
+</trav:Region>
+
+<trav:Language rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Italian">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Italiano</trav:name>
+</trav:Language>
+
+<trav:Flight rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight_MS331">
+  <trav:departsFrom rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#FCO"/>
+  <trav:operatedBy rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MedSkyAirways"/>
+  <trav:arrivesAt rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SKG"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:flightNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MS331</trav:flightNumber>
+  <trav:departureDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2027-04-26T19:30:00</trav:departureDate>
+</trav:Flight>
+
+<trav:Airline rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HellasAir">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HellasAir</trav:name>
+</trav:Airline>
+
+<trav:Port rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#PiraeusPort">
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Attica"/>
+  <trav:locatedIn rdf:resource="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greece"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Λιμάνι Πειραιά</trav:name>
+</trav:Port>
+
+<trav:CardPayment rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment09">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:amount rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">460.0</trav:amount>
+</trav:CardPayment>
+
+<trav:AdvertisingChannel rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelFair">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <trav:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Τουριστική έκθεση</trav:name>
+</trav:AdvertisingChannel>
+
+<rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency">
+  <rdfs:comment xml:lang="el">Οντολογία της δομής ενός ταξιδιωτικού πρακτορείου: προορισμοί, πελάτες, πακέτα διακοπών, ξενοδοχεία, πτήσεις, οργανωμένες εκδρομές, οδηγοί/συνοδοί, τιμές, προσωπικό, κρατήσεις, πληρωμές, αξιολογήσεις και διαφημιστικές καμπάνιες.</rdfs:comment>
+  <dc:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Apostolos Dagklis (2021031)</dc:creator>
+  <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1.0</owl:versionInfo>
+  <dc:title xml:lang="el">Οντολογία Ταξιδιωτικού Πρακτορείου</dc:title>
+  <rdfs:comment xml:lang="en">Ontology of the structure of a travel agency: destinations, customers, holiday packages, hotels, flights, organised excursions, guides, prices, staff, bookings, payments, reviews and advertising campaigns.</rdfs:comment>
+  <dc:title xml:lang="en">Travel Agency Ontology</dc:title>
+</rdf:Description>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Country"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Region"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Destination"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airport"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Port"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Flight"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#FerryTrip"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transfer"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Greek"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#English"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Italian"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#French"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Confirmed"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Pending"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Cancelled"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#SocialMedia"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AgencyWebsite"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Newsletter"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#RadioSpot"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelFair"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelAgent"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TourGuide"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingSpecialist"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CardPayment"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BankTransfer"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#CashPayment"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelAgency"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AgencyBranch"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Airline"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Person"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Organization"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Place"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelService"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#HolidayPackage"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Booking"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#BookingStatus"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Payment"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Review"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#MarketingCampaign"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#AdvertisingChannel"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Language"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Accommodation"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Transport"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#Excursion"/>
+    <rdf:Description rdf:about="http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#TravelInsurance"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+
+</rdf:RDF>

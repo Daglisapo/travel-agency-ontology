@@ -1,0 +1,969 @@
+# =====================================================================
+#  Οντολογία Ταξιδιωτικού Πρακτορείου (Travel Agency Ontology)
+#  Σημασιολογικός Ιστός, 1η Εργασία, Θέμα 25 — ΔΙΠΑΕ 2026-27
+#  Απόστολος Δαγκλής, Α.Μ. 2021031
+#
+#  Πηγή της οντολογίας σε Turtle. Το αρχείο travel_agency.owl (RDF/XML,
+#  για Protégé) παράγεται από αυτό με: python scripts/build_owl.py
+# =====================================================================
+
+@prefix :     <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+
+<http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency>
+    a owl:Ontology ;
+    owl:versionInfo "1.0" ;
+    dc:title "Travel Agency Ontology"@en , "Οντολογία Ταξιδιωτικού Πρακτορείου"@el ;
+    dc:creator "Apostolos Dagklis (2021031)" ;
+    rdfs:comment "Ontology of the structure of a travel agency: destinations, customers, holiday packages, hotels, flights, organised excursions, guides, prices, staff, bookings, payments, reviews and advertising campaigns."@en ,
+                 "Οντολογία της δομής ενός ταξιδιωτικού πρακτορείου: προορισμοί, πελάτες, πακέτα διακοπών, ξενοδοχεία, πτήσεις, οργανωμένες εκδρομές, οδηγοί/συνοδοί, τιμές, προσωπικό, κρατήσεις, πληρωμές, αξιολογήσεις και διαφημιστικές καμπάνιες."@el .
+
+dc:title   a owl:AnnotationProperty .
+dc:creator a owl:AnnotationProperty .
+
+# =====================================================================
+#  ΚΛΑΣΕΙΣ
+# =====================================================================
+
+# ---------- Πρόσωπα ----------
+:Person a owl:Class ;
+    rdfs:label "Person"@en , "Πρόσωπο"@el .
+
+:Customer a owl:Class ;
+    rdfs:subClassOf :Person ;
+    rdfs:label "Customer"@en , "Πελάτης"@el ;
+    rdfs:comment "Πρόσωπο που κάνει κρατήσεις πακέτων διακοπών."@el .
+
+:VIPCustomer a owl:Class ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf ( :Customer
+            [ a owl:Restriction ;
+              owl:onProperty :loyaltyPoints ;
+              owl:someValuesFrom [ a rdfs:Datatype ;
+                                   owl:onDatatype xsd:integer ;
+                                   owl:withRestrictions ( [ xsd:minInclusive 1000 ] ) ] ] )
+    ] ;
+    rdfs:label "VIP Customer"@en , "Πελάτης VIP"@el ;
+    rdfs:comment "Ορισμένη κλάση: πελάτης με τουλάχιστον 1000 πόντους επιβράβευσης. Τα μέλη της συνάγονται από τον reasoner."@el .
+
+:Employee a owl:Class ;
+    rdfs:subClassOf :Person ,
+        [ a owl:Restriction ; owl:onProperty :worksFor ; owl:someValuesFrom :AgencyBranch ] ;
+    rdfs:label "Employee"@en , "Υπάλληλος"@el ;
+    rdfs:comment "Μέλος του προσωπικού του πρακτορείου· εργάζεται σε τουλάχιστον ένα υποκατάστημα."@el .
+
+:TravelAgent a owl:Class ;
+    rdfs:subClassOf :Employee ;
+    rdfs:label "Travel Agent"@en , "Ταξιδιωτικός Σύμβουλος"@el ;
+    rdfs:comment "Υπάλληλος που εξυπηρετεί πελάτες και διεκπεραιώνει κρατήσεις."@el .
+
+:TourGuide a owl:Class ;
+    rdfs:subClassOf :Employee ,
+        [ a owl:Restriction ; owl:onProperty :speaksLanguage ; owl:someValuesFrom :Language ] ;
+    rdfs:label "Tour Guide"@en , "Οδηγός / Συνοδός"@el ;
+    rdfs:comment "Συνοδός ή ξεναγός οργανωμένων εκδρομών· μιλά τουλάχιστον μία γλώσσα."@el .
+
+:MarketingSpecialist a owl:Class ;
+    rdfs:subClassOf :Employee ;
+    rdfs:label "Marketing Specialist"@en , "Υπεύθυνος Προβολής"@el ;
+    rdfs:comment "Υπάλληλος που σχεδιάζει διαφημιστικές καμπάνιες."@el .
+
+:Manager a owl:Class ;
+    rdfs:subClassOf :Employee ,
+        [ a owl:Restriction ; owl:onProperty :manages ; owl:someValuesFrom :AgencyBranch ] ;
+    rdfs:label "Manager"@en , "Διευθυντής Υποκαταστήματος"@el ;
+    rdfs:comment "Υπάλληλος που διευθύνει υποκατάστημα. Δεν δηλώνεται ξένη με τις άλλες υποκλάσεις του Employee: ένας διευθυντής μπορεί να είναι και σύμβουλος."@el .
+
+[] a owl:AllDisjointClasses ;
+   owl:members ( :TravelAgent :TourGuide :MarketingSpecialist ) .
+
+# ---------- Οργανισμοί ----------
+:Organization a owl:Class ;
+    rdfs:label "Organization"@en , "Οργανισμός"@el .
+
+:TravelAgency a owl:Class ;
+    rdfs:subClassOf :Organization ;
+    rdfs:label "Travel Agency"@en , "Ταξιδιωτικό Πρακτορείο"@el .
+
+:AgencyBranch a owl:Class ;
+    rdfs:subClassOf :Organization ,
+        [ a owl:Restriction ; owl:onProperty :branchOf ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :TravelAgency ] ;
+    rdfs:label "Agency Branch"@en , "Υποκατάστημα"@el ;
+    rdfs:comment "Κάθε υποκατάστημα ανήκει σε ακριβώς ένα πρακτορείο."@el .
+
+:Airline a owl:Class ;
+    rdfs:subClassOf :Organization ;
+    rdfs:label "Airline"@en , "Αεροπορική Εταιρεία"@el .
+
+[] a owl:AllDisjointClasses ;
+   owl:members ( :TravelAgency :AgencyBranch :Airline ) .
+
+# ---------- Τοποθεσίες ----------
+:Place a owl:Class ;
+    rdfs:label "Place"@en , "Τοποθεσία"@el .
+
+:Country a owl:Class ;
+    rdfs:subClassOf :Place ;
+    rdfs:label "Country"@en , "Χώρα"@el .
+
+:Region a owl:Class ;
+    rdfs:subClassOf :Place ;
+    rdfs:label "Region"@en , "Περιφέρεια / Περιοχή"@el .
+
+:Destination a owl:Class ;
+    rdfs:subClassOf :Place ;
+    rdfs:label "Destination"@en , "Προορισμός"@el ;
+    rdfs:comment "Τοποθεσία στην οποία το πρακτορείο οργανώνει ταξίδια."@el .
+
+:CityDestination a owl:Class ;
+    rdfs:subClassOf :Destination ;
+    rdfs:label "City Destination"@en , "Αστικός Προορισμός"@el .
+
+:IslandDestination a owl:Class ;
+    rdfs:subClassOf :Destination ;
+    rdfs:label "Island Destination"@en , "Νησιωτικός Προορισμός"@el .
+
+:MountainDestination a owl:Class ;
+    rdfs:subClassOf :Destination ;
+    rdfs:label "Mountain Destination"@en , "Ορεινός Προορισμός"@el .
+
+:Airport a owl:Class ;
+    rdfs:subClassOf :Place ;
+    rdfs:label "Airport"@en , "Αεροδρόμιο"@el .
+
+:Port a owl:Class ;
+    rdfs:subClassOf :Place ;
+    rdfs:label "Port"@en , "Λιμάνι"@el .
+
+[] a owl:AllDisjointClasses ;
+   owl:members ( :Country :Region :Destination :Airport :Port ) .
+
+# ---------- Ταξιδιωτικές υπηρεσίες ----------
+:TravelService a owl:Class ;
+    rdfs:label "Travel Service"@en , "Ταξιδιωτική Υπηρεσία"@el ;
+    rdfs:comment "Συστατικό ενός πακέτου διακοπών (διαμονή, μεταφορά, εκδρομή, ασφάλεια)."@el .
+
+:Accommodation a owl:Class ;
+    rdfs:subClassOf :TravelService ,
+        [ a owl:Restriction ; owl:onProperty :locatedIn ; owl:someValuesFrom :Destination ] ;
+    rdfs:label "Accommodation"@en , "Κατάλυμα"@el .
+
+:Hotel a owl:Class ;
+    rdfs:subClassOf :Accommodation ,
+        [ a owl:Restriction ; owl:onProperty :starRating ;
+          owl:someValuesFrom [ a rdfs:Datatype ; owl:onDatatype xsd:integer ;
+                               owl:withRestrictions ( [ xsd:minInclusive 1 ] [ xsd:maxInclusive 5 ] ) ] ] ;
+    rdfs:label "Hotel"@en , "Ξενοδοχείο"@el ;
+    rdfs:comment "Ξενοδοχείο με κατηγορία αστέρων 1–5."@el .
+
+:Transport a owl:Class ;
+    rdfs:subClassOf :TravelService ;
+    rdfs:label "Transport"@en , "Μεταφορά"@el .
+
+:Flight a owl:Class ;
+    rdfs:subClassOf :Transport ,
+        [ a owl:Restriction ; owl:onProperty :departsFrom ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :Airport ] ,
+        [ a owl:Restriction ; owl:onProperty :arrivesAt ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :Airport ] ,
+        [ a owl:Restriction ; owl:onProperty :operatedBy ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :Airline ] ;
+    rdfs:label "Flight"@en , "Πτήση"@el .
+
+:FerryTrip a owl:Class ;
+    rdfs:subClassOf :Transport ,
+        [ a owl:Restriction ; owl:onProperty :departsFrom ; owl:someValuesFrom :Port ] ,
+        [ a owl:Restriction ; owl:onProperty :arrivesAt ; owl:someValuesFrom :Port ] ;
+    rdfs:label "Ferry Trip"@en , "Ακτοπλοϊκή Μετακίνηση"@el .
+
+:Transfer a owl:Class ;
+    rdfs:subClassOf :Transport ;
+    rdfs:label "Transfer"@en , "Οδική Μεταφορά (Transfer)"@el .
+
+[] a owl:AllDisjointClasses ;
+   owl:members ( :Flight :FerryTrip :Transfer ) .
+
+:Excursion a owl:Class ;
+    rdfs:subClassOf :TravelService ,
+        [ a owl:Restriction ; owl:onProperty :hasGuide ; owl:someValuesFrom :TourGuide ] ,
+        [ a owl:Restriction ; owl:onProperty :visitsDestination ; owl:someValuesFrom :Destination ] ;
+    rdfs:label "Organised Excursion"@en , "Οργανωμένη Εκδρομή"@el ;
+    rdfs:comment "Κάθε οργανωμένη εκδρομή έχει τουλάχιστον έναν οδηγό/συνοδό (ακόμη κι αν δεν είναι γνωστός ποιος)."@el .
+
+:TravelInsurance a owl:Class ;
+    rdfs:subClassOf :TravelService ;
+    rdfs:label "Travel Insurance"@en , "Ταξιδιωτική Ασφάλιση"@el .
+
+[] a owl:AllDisjointClasses ;
+   owl:members ( :Accommodation :Transport :Excursion :TravelInsurance ) .
+
+# ---------- Πακέτα διακοπών ----------
+:HolidayPackage a owl:Class ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :hasDestination ; owl:someValuesFrom :Destination ] ,
+        [ a owl:Restriction ; owl:onProperty :includesService ; owl:someValuesFrom :Accommodation ] ,
+        [ a owl:Restriction ; owl:onProperty :pricePerPerson ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onDataRange xsd:decimal ] ;
+    rdfs:label "Holiday Package"@en , "Πακέτο Διακοπών"@el ;
+    rdfs:comment "Πακέτο με τουλάχιστον έναν προορισμό, τουλάχιστον ένα κατάλυμα και ακριβώς μία τιμή ανά άτομο."@el .
+
+:FlightPackage a owl:Class ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf ( :HolidayPackage
+            [ a owl:Restriction ; owl:onProperty :includesService ; owl:someValuesFrom :Flight ] )
+    ] ;
+    rdfs:label "Flight Package"@en , "Πακέτο με Πτήση"@el ;
+    rdfs:comment "Ορισμένη κλάση: πακέτο που περιλαμβάνει τουλάχιστον μία πτήση."@el .
+
+:IslandPackage a owl:Class ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf ( :HolidayPackage
+            [ a owl:Restriction ; owl:onProperty :hasDestination ; owl:someValuesFrom :IslandDestination ] )
+    ] ;
+    rdfs:label "Island Package"@en , "Νησιωτικό Πακέτο"@el ;
+    rdfs:comment "Ορισμένη κλάση: πακέτο με τουλάχιστον έναν νησιωτικό προορισμό."@el .
+
+:GuidedPackage a owl:Class ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf ( :HolidayPackage
+            [ a owl:Restriction ; owl:onProperty :includesService ;
+              owl:someValuesFrom [ a owl:Restriction ; owl:onProperty :hasGuide ; owl:someValuesFrom :TourGuide ] ] )
+    ] ;
+    rdfs:label "Guided Package"@en , "Πακέτο με Συνοδό"@el ;
+    rdfs:comment "Ορισμένη κλάση: πακέτο που περιλαμβάνει υπηρεσία με οδηγό/συνοδό."@el .
+
+:LongStayPackage a owl:Class ;
+    owl:equivalentClass [
+        a owl:Class ;
+        owl:intersectionOf ( :HolidayPackage
+            [ a owl:Restriction ; owl:onProperty :durationDays ;
+              owl:someValuesFrom [ a rdfs:Datatype ; owl:onDatatype xsd:integer ;
+                                   owl:withRestrictions ( [ xsd:minInclusive 7 ] ) ] ] )
+    ] ;
+    rdfs:label "Long Stay Package"@en , "Πακέτο Μεγάλης Διάρκειας"@el ;
+    rdfs:comment "Ορισμένη κλάση: πακέτο διάρκειας τουλάχιστον 7 ημερών."@el .
+
+# ---------- Κρατήσεις, πληρωμές, αξιολογήσεις ----------
+:Booking a owl:Class ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :bookedBy ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :Customer ] ,
+        [ a owl:Restriction ; owl:onProperty :forPackage ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :HolidayPackage ] ,
+        [ a owl:Restriction ; owl:onProperty :hasStatus ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :BookingStatus ] ;
+    rdfs:label "Booking"@en , "Κράτηση"@el ;
+    rdfs:comment "Κράτηση ενός πακέτου από ακριβώς έναν πελάτη, με ακριβώς μία κατάσταση."@el .
+
+:BookingStatus a owl:Class ;
+    owl:equivalentClass [ a owl:Class ; owl:oneOf ( :Confirmed :Pending :Cancelled ) ] ;
+    rdfs:label "Booking Status"@en , "Κατάσταση Κράτησης"@el ;
+    rdfs:comment "Απαριθμητή κλάση με τρεις τιμές."@el .
+
+:Payment a owl:Class ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :amount ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onDataRange xsd:decimal ] ;
+    rdfs:label "Payment"@en , "Πληρωμή"@el .
+
+:CardPayment a owl:Class ;
+    rdfs:subClassOf :Payment ;
+    rdfs:label "Card Payment"@en , "Πληρωμή με Κάρτα"@el .
+
+:BankTransfer a owl:Class ;
+    rdfs:subClassOf :Payment ;
+    rdfs:label "Bank Transfer"@en , "Τραπεζική Μεταφορά"@el .
+
+:CashPayment a owl:Class ;
+    rdfs:subClassOf :Payment ;
+    rdfs:label "Cash Payment"@en , "Πληρωμή με Μετρητά"@el .
+
+[] a owl:AllDisjointClasses ;
+   owl:members ( :CardPayment :BankTransfer :CashPayment ) .
+
+:Review a owl:Class ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :writtenBy ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :Customer ] ,
+        [ a owl:Restriction ; owl:onProperty :reviews ;
+          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ; owl:onClass :HolidayPackage ] ;
+    rdfs:label "Review"@en , "Αξιολόγηση"@el .
+
+# ---------- Διαφήμιση και προβολή ----------
+:MarketingCampaign a owl:Class ;
+    rdfs:subClassOf
+        [ a owl:Restriction ; owl:onProperty :promotes ; owl:someValuesFrom :HolidayPackage ] ,
+        [ a owl:Restriction ; owl:onProperty :usesChannel ; owl:someValuesFrom :AdvertisingChannel ] ;
+    rdfs:label "Marketing Campaign"@en , "Διαφημιστική Καμπάνια"@el .
+
+:AdvertisingChannel a owl:Class ;
+    rdfs:label "Advertising Channel"@en , "Διαφημιστικό Κανάλι"@el .
+
+# ---------- Βοηθητικές ----------
+:Language a owl:Class ;
+    rdfs:label "Language"@en , "Γλώσσα"@el .
+
+# Οι κλάσεις του ανώτερου επιπέδου είναι ανά δύο ξένες μεταξύ τους.
+[] a owl:AllDisjointClasses ;
+   owl:members ( :Person :Organization :Place :TravelService :HolidayPackage :Booking
+                 :BookingStatus :Payment :Review :MarketingCampaign :AdvertisingChannel :Language ) .
+
+# =====================================================================
+#  ΙΔΙΟΤΗΤΕΣ ΑΝΤΙΚΕΙΜΕΝΩΝ (Object properties)
+# =====================================================================
+
+# ---------- Πελάτες και κρατήσεις ----------
+:hasBooking a owl:ObjectProperty , owl:InverseFunctionalProperty ;
+    owl:inverseOf :bookedBy ;
+    rdfs:domain :Customer ; rdfs:range :Booking ;
+    rdfs:label "has booking"@en , "έχει κράτηση"@el .
+
+:bookedBy a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain :Booking ; rdfs:range :Customer ;
+    rdfs:label "booked by"@en , "κρατήθηκε από"@el .
+
+:forPackage a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain :Booking ; rdfs:range :HolidayPackage ;
+    rdfs:label "for package"@en , "αφορά πακέτο"@el .
+
+:handledBy a owl:ObjectProperty ;
+    rdfs:domain :Booking ; rdfs:range :TravelAgent ;
+    rdfs:label "handled by"@en , "διεκπεραιώθηκε από"@el .
+
+:hasPayment a owl:ObjectProperty , owl:InverseFunctionalProperty ;
+    rdfs:domain :Booking ; rdfs:range :Payment ;
+    rdfs:label "has payment"@en , "έχει πληρωμή"@el .
+
+:hasStatus a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain :Booking ; rdfs:range :BookingStatus ;
+    rdfs:label "has status"@en , "έχει κατάσταση"@el .
+
+:servedBy a owl:ObjectProperty ;
+    owl:propertyChainAxiom ( :hasBooking :handledBy ) ;
+    rdfs:domain :Customer ; rdfs:range :TravelAgent ;
+    rdfs:label "served by"@en , "εξυπηρετήθηκε από"@el ;
+    rdfs:comment "Αλυσίδα ιδιοτήτων: αν ο πελάτης έχει κράτηση που διεκπεραίωσε ο σύμβουλος Χ, τότε εξυπηρετήθηκε από τον Χ."@el .
+
+:travelsWith a owl:ObjectProperty , owl:SymmetricProperty , owl:IrreflexiveProperty ;
+    rdfs:domain :Customer ; rdfs:range :Customer ;
+    rdfs:label "travels with"@en , "ταξιδεύει μαζί με"@el .
+
+# ---------- Πακέτα και υπηρεσίες ----------
+:includesService a owl:ObjectProperty ;
+    rdfs:domain :HolidayPackage ; rdfs:range :TravelService ;
+    rdfs:label "includes service"@en , "περιλαμβάνει υπηρεσία"@el .
+
+:visitsPlace a owl:ObjectProperty ;
+    rdfs:domain :HolidayPackage ; rdfs:range :Place ;
+    owl:propertyChainAxiom ( :hasDestination :locatedIn ) ;
+    rdfs:label "visits place"@en , "επισκέπτεται τοποθεσία"@el ;
+    rdfs:comment "Υπερ-ιδιότητα του hasDestination και αλυσίδα hasDestination ∘ locatedIn: ένα πακέτο «επισκέπτεται» τον προορισμό του και όλες τις τοποθεσίες που τον περιέχουν (περιοχή, χώρα)."@el .
+
+:hasDestination a owl:ObjectProperty ;
+    rdfs:subPropertyOf :visitsPlace ;
+    rdfs:domain :HolidayPackage ; rdfs:range :Destination ;
+    rdfs:label "has destination"@en , "έχει προορισμό"@el .
+
+:offeredBy a owl:ObjectProperty ;
+    owl:inverseOf :offersPackage ;
+    rdfs:domain :HolidayPackage ; rdfs:range :TravelAgency ;
+    rdfs:label "offered by"@en , "προσφέρεται από"@el .
+
+:offersPackage a owl:ObjectProperty ;
+    rdfs:domain :TravelAgency ; rdfs:range :HolidayPackage ;
+    rdfs:label "offers package"@en , "προσφέρει πακέτο"@el .
+
+:locatedIn a owl:ObjectProperty , owl:TransitiveProperty ;
+    rdfs:range :Place ;
+    rdfs:label "located in"@en , "βρίσκεται σε"@el ;
+    rdfs:comment "Μεταβατική: αν η Οία βρίσκεται στη Σαντορίνη και η Σαντορίνη στις Κυκλάδες, τότε η Οία βρίσκεται στις Κυκλάδες. Χρησιμοποιείται για τοποθεσίες, καταλύματα και υποκαταστήματα (χωρίς domain)."@el .
+
+:departsFrom a owl:ObjectProperty ;
+    rdfs:domain :Transport ; rdfs:range :Place ;
+    rdfs:label "departs from"@en , "αναχωρεί από"@el .
+
+:arrivesAt a owl:ObjectProperty ;
+    rdfs:domain :Transport ; rdfs:range :Place ;
+    rdfs:label "arrives at"@en , "φτάνει σε"@el .
+
+:operatedBy a owl:ObjectProperty ;
+    rdfs:domain :Flight ; rdfs:range :Airline ;
+    rdfs:label "operated by"@en , "εκτελείται από"@el .
+
+:hasGuide a owl:ObjectProperty ;
+    owl:inverseOf :guides ;
+    rdfs:range :TourGuide ;
+    rdfs:label "has guide"@en , "έχει οδηγό/συνοδό"@el ;
+    rdfs:comment "Χωρίς domain: χρησιμοποιείται για εκδρομές, αλλά και ως περιορισμός στον ορισμό του GuidedPackage."@el .
+
+:guides a owl:ObjectProperty ;
+    rdfs:domain :TourGuide ;
+    rdfs:label "guides"@en , "συνοδεύει"@el .
+
+:visitsDestination a owl:ObjectProperty ;
+    rdfs:domain :Excursion ; rdfs:range :Destination ;
+    rdfs:label "visits destination"@en , "επισκέπτεται προορισμό"@el .
+
+# ---------- Προσωπικό και οργάνωση ----------
+:worksFor a owl:ObjectProperty ;
+    owl:inverseOf :employs ;
+    rdfs:domain :Employee ; rdfs:range :AgencyBranch ;
+    rdfs:label "works for"@en , "εργάζεται σε"@el .
+
+:employs a owl:ObjectProperty ;
+    rdfs:domain :AgencyBranch ; rdfs:range :Employee ;
+    rdfs:label "employs"@en , "απασχολεί"@el .
+
+:manages a owl:ObjectProperty , owl:InverseFunctionalProperty ;
+    rdfs:subPropertyOf :worksFor ;
+    rdfs:domain :Manager ; rdfs:range :AgencyBranch ;
+    rdfs:label "manages"@en , "διευθύνει"@el ;
+    rdfs:comment "Υπο-ιδιότητα του worksFor: όποιος διευθύνει ένα υποκατάστημα εργάζεται σε αυτό. Κάθε υποκατάστημα έχει το πολύ έναν διευθυντή."@el .
+
+:branchOf a owl:ObjectProperty , owl:FunctionalProperty ;
+    owl:inverseOf :hasBranch ;
+    rdfs:domain :AgencyBranch ; rdfs:range :TravelAgency ;
+    rdfs:label "branch of"@en , "υποκατάστημα του"@el .
+
+:hasBranch a owl:ObjectProperty ;
+    rdfs:domain :TravelAgency ; rdfs:range :AgencyBranch ;
+    rdfs:label "has branch"@en , "έχει υποκατάστημα"@el .
+
+:speaksLanguage a owl:ObjectProperty ;
+    rdfs:domain :Person ; rdfs:range :Language ;
+    rdfs:label "speaks language"@en , "μιλά γλώσσα"@el .
+
+# ---------- Αξιολογήσεις ----------
+:writtenBy a owl:ObjectProperty , owl:FunctionalProperty ;
+    owl:inverseOf :writesReview ;
+    rdfs:domain :Review ; rdfs:range :Customer ;
+    rdfs:label "written by"@en , "γράφτηκε από"@el .
+
+:writesReview a owl:ObjectProperty ;
+    rdfs:domain :Customer ; rdfs:range :Review ;
+    rdfs:label "writes review"@en , "γράφει αξιολόγηση"@el .
+
+:reviews a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain :Review ; rdfs:range :HolidayPackage ;
+    rdfs:label "reviews"@en , "αξιολογεί"@el .
+
+# ---------- Διαφήμιση ----------
+:promotes a owl:ObjectProperty ;
+    owl:inverseOf :promotedBy ;
+    rdfs:domain :MarketingCampaign ; rdfs:range :HolidayPackage ;
+    rdfs:label "promotes"@en , "προβάλλει"@el .
+
+:promotedBy a owl:ObjectProperty ;
+    rdfs:domain :HolidayPackage ; rdfs:range :MarketingCampaign ;
+    rdfs:label "promoted by"@en , "προβάλλεται από"@el .
+
+:usesChannel a owl:ObjectProperty ;
+    rdfs:domain :MarketingCampaign ; rdfs:range :AdvertisingChannel ;
+    rdfs:label "uses channel"@en , "χρησιμοποιεί κανάλι"@el .
+
+:createdBy a owl:ObjectProperty ;
+    rdfs:domain :MarketingCampaign ; rdfs:range :MarketingSpecialist ;
+    rdfs:label "created by"@en , "σχεδιάστηκε από"@el .
+
+# =====================================================================
+#  ΙΔΙΟΤΗΤΕΣ ΔΕΔΟΜΕΝΩΝ (Data properties)
+# =====================================================================
+
+:name a owl:DatatypeProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "name"@en , "όνομα"@el ;
+    rdfs:comment "Ονομασία οργανισμού, τοποθεσίας, πακέτου, υπηρεσίας κ.λπ."@el .
+
+:firstName a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Person ; rdfs:range xsd:string ;
+    rdfs:label "first name"@en , "όνομα"@el .
+
+:lastName a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Person ; rdfs:range xsd:string ;
+    rdfs:label "last name"@en , "επώνυμο"@el .
+
+:email a owl:DatatypeProperty ;
+    rdfs:domain :Person ; rdfs:range xsd:string ;
+    rdfs:label "email"@en , "ηλεκτρονική διεύθυνση"@el .
+
+:loyaltyPoints a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Customer ; rdfs:range xsd:integer ;
+    rdfs:label "loyalty points"@en , "πόντοι επιβράβευσης"@el .
+
+:salary a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Employee ; rdfs:range xsd:decimal ;
+    rdfs:label "monthly salary (EUR)"@en , "μηνιαίος μισθός (€)"@el .
+
+:hireDate a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Employee ; rdfs:range xsd:dateTime ;
+    rdfs:label "hire date"@en , "ημερομηνία πρόσληψης"@el .
+
+:pricePerPerson a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :HolidayPackage ; rdfs:range xsd:decimal ;
+    rdfs:label "price per person (EUR)"@en , "τιμή ανά άτομο (€)"@el .
+
+:durationDays a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :HolidayPackage ; rdfs:range xsd:integer ;
+    rdfs:label "duration (days)"@en , "διάρκεια (ημέρες)"@el .
+
+:departureDate a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "departure date"@en , "ημερομηνία αναχώρησης"@el ;
+    rdfs:comment "Για πακέτα και πτήσεις."@el .
+
+:bookingDate a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Booking ; rdfs:range xsd:dateTime ;
+    rdfs:label "booking date"@en , "ημερομηνία κράτησης"@el .
+
+:numberOfTravellers a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Booking ; rdfs:range xsd:positiveInteger ;
+    rdfs:label "number of travellers"@en , "αριθμός ταξιδιωτών"@el .
+
+:amount a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Payment ; rdfs:range xsd:decimal ;
+    rdfs:label "amount (EUR)"@en , "ποσό (€)"@el .
+
+:rating a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Review ;
+    rdfs:range [ a rdfs:Datatype ; owl:onDatatype xsd:integer ;
+                 owl:withRestrictions ( [ xsd:minInclusive 1 ] [ xsd:maxInclusive 5 ] ) ] ;
+    rdfs:label "rating (1-5)"@en , "βαθμολογία (1-5)"@el .
+
+:reviewText a owl:DatatypeProperty ;
+    rdfs:domain :Review ; rdfs:range xsd:string ;
+    rdfs:label "review text"@en , "κείμενο αξιολόγησης"@el .
+
+:starRating a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Hotel ; rdfs:range xsd:integer ;
+    rdfs:label "star rating"@en , "κατηγορία αστέρων"@el .
+
+:flightNumber a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Flight ; rdfs:range xsd:string ;
+    rdfs:label "flight number"@en , "αριθμός πτήσης"@el .
+
+:iataCode a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Airport ; rdfs:range xsd:string ;
+    rdfs:label "IATA code"@en , "κωδικός IATA"@el .
+
+:maxParticipants a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :Excursion ; rdfs:range xsd:positiveInteger ;
+    rdfs:label "max participants"@en , "μέγιστος αριθμός συμμετεχόντων"@el .
+
+:budget a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :MarketingCampaign ; rdfs:range xsd:decimal ;
+    rdfs:label "budget (EUR)"@en , "προϋπολογισμός (€)"@el .
+
+:startDate a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :MarketingCampaign ; rdfs:range xsd:dateTime ;
+    rdfs:label "start date"@en , "ημερομηνία έναρξης"@el .
+
+:endDate a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain :MarketingCampaign ; rdfs:range xsd:dateTime ;
+    rdfs:label "end date"@en , "ημερομηνία λήξης"@el .
+
+# =====================================================================
+#  ΣΤΙΓΜΙΟΤΥΠΑ (Individuals)
+# =====================================================================
+
+# ---------- Γλώσσες, καταστάσεις κράτησης, κανάλια ----------
+:Greek   a owl:NamedIndividual , :Language ; :name "Ελληνικά" .
+:English a owl:NamedIndividual , :Language ; :name "English" .
+:Italian a owl:NamedIndividual , :Language ; :name "Italiano" .
+:French  a owl:NamedIndividual , :Language ; :name "Français" .
+
+:Confirmed a owl:NamedIndividual , :BookingStatus ; rdfs:label "Επιβεβαιωμένη"@el .
+:Pending   a owl:NamedIndividual , :BookingStatus ; rdfs:label "Σε αναμονή"@el .
+:Cancelled a owl:NamedIndividual , :BookingStatus ; rdfs:label "Ακυρωμένη"@el .
+
+:SocialMedia   a owl:NamedIndividual , :AdvertisingChannel ; :name "Social media (Facebook / Instagram)" .
+:AgencyWebsite a owl:NamedIndividual , :AdvertisingChannel ; :name "Ιστότοπος πρακτορείου" .
+:Newsletter    a owl:NamedIndividual , :AdvertisingChannel ; :name "Email newsletter" .
+:RadioSpot     a owl:NamedIndividual , :AdvertisingChannel ; :name "Ραδιοφωνικό σποτ" .
+:TravelFair    a owl:NamedIndividual , :AdvertisingChannel ; :name "Τουριστική έκθεση" .
+
+[] a owl:AllDifferent ;
+   owl:distinctMembers ( :Greek :English :Italian :French
+                         :Confirmed :Pending :Cancelled
+                         :SocialMedia :AgencyWebsite :Newsletter :RadioSpot :TravelFair ) .
+
+# ---------- Πρακτορείο και υποκαταστήματα ----------
+:AegeanHorizons a owl:NamedIndividual , :TravelAgency ;
+    :name "Aegean Horizons Travel" ;
+    :hasBranch :ThessalonikiBranch , :AthensBranch .
+
+:ThessalonikiBranch a owl:NamedIndividual , :AgencyBranch ;
+    :name "Υποκατάστημα Θεσσαλονίκης" ;
+    :branchOf :AegeanHorizons ;
+    :locatedIn :Thessaloniki .
+
+:AthensBranch a owl:NamedIndividual , :AgencyBranch ;
+    :name "Υποκατάστημα Αθήνας" ;
+    :branchOf :AegeanHorizons ;
+    :locatedIn :Athens .
+
+# ---------- Χώρες, περιοχές, προορισμοί ----------
+:Greece a owl:NamedIndividual , :Country ; :name "Ελλάδα" .
+:Italy  a owl:NamedIndividual , :Country ; :name "Ιταλία" .
+:France a owl:NamedIndividual , :Country ; :name "Γαλλία" .
+
+:Cyclades         a owl:NamedIndividual , :Region ; :name "Κυκλάδες" ;         :locatedIn :Greece .
+:CentralMacedonia a owl:NamedIndividual , :Region ; :name "Κεντρική Μακεδονία" ; :locatedIn :Greece .
+:Attica           a owl:NamedIndividual , :Region ; :name "Αττική" ;           :locatedIn :Greece .
+:CentralGreece    a owl:NamedIndividual , :Region ; :name "Στερεά Ελλάδα" ;    :locatedIn :Greece .
+:Lazio            a owl:NamedIndividual , :Region ; :name "Λάτσιο" ;           :locatedIn :Italy .
+:IleDeFrance      a owl:NamedIndividual , :Region ; :name "Ιλ-ντε-Φρανς" ;     :locatedIn :France .
+
+:Santorini    a owl:NamedIndividual , :IslandDestination ;   :name "Σαντορίνη" ;    :locatedIn :Cyclades .
+:Mykonos      a owl:NamedIndividual , :IslandDestination ;   :name "Μύκονος" ;      :locatedIn :Cyclades .
+:Thessaloniki a owl:NamedIndividual , :CityDestination ;     :name "Θεσσαλονίκη" ;  :locatedIn :CentralMacedonia .
+:Athens       a owl:NamedIndividual , :CityDestination ;     :name "Αθήνα" ;        :locatedIn :Attica .
+:Arachova     a owl:NamedIndividual , :MountainDestination ; :name "Αράχωβα" ;      :locatedIn :CentralGreece .
+:Rome         a owl:NamedIndividual , :CityDestination ;     :name "Ρώμη" ;         :locatedIn :Lazio .
+:Paris        a owl:NamedIndividual , :CityDestination ;     :name "Παρίσι" ;       :locatedIn :IleDeFrance .
+
+# ---------- Αεροδρόμια και λιμάνια ----------
+:SKG a owl:NamedIndividual , :Airport ; :name "Αερολιμένας Θεσσαλονίκης «Μακεδονία»" ; :iataCode "SKG" ; :locatedIn :Thessaloniki .
+:ATH a owl:NamedIndividual , :Airport ; :name "Διεθνής Αερολιμένας Αθηνών" ;          :iataCode "ATH" ; :locatedIn :Athens .
+:JTR a owl:NamedIndividual , :Airport ; :name "Κρατικός Αερολιμένας Σαντορίνης" ;     :iataCode "JTR" ; :locatedIn :Santorini .
+:FCO a owl:NamedIndividual , :Airport ; :name "Rome Fiumicino" ;                      :iataCode "FCO" ; :locatedIn :Rome .
+:CDG a owl:NamedIndividual , :Airport ; :name "Paris Charles de Gaulle" ;             :iataCode "CDG" ; :locatedIn :Paris .
+
+:PiraeusPort a owl:NamedIndividual , :Port ; :name "Λιμάνι Πειραιά" ;  :locatedIn :Attica .
+:MykonosPort a owl:NamedIndividual , :Port ; :name "Λιμάνι Μυκόνου" ;  :locatedIn :Mykonos .
+
+# ---------- Αεροπορικές εταιρείες και πτήσεις ----------
+:HellasAir    a owl:NamedIndividual , :Airline ; :name "HellasAir" .
+:MedSkyAirways a owl:NamedIndividual , :Airline ; :name "MedSky Airways" .
+
+:Flight_HA101 a owl:NamedIndividual , :Flight ;
+    :flightNumber "HA101" ; :departsFrom :SKG ; :arrivesAt :JTR ; :operatedBy :HellasAir ;
+    :departureDate "2027-06-12T08:30:00"^^xsd:dateTime .
+:Flight_HA102 a owl:NamedIndividual , :Flight ;
+    :flightNumber "HA102" ; :departsFrom :JTR ; :arrivesAt :SKG ; :operatedBy :HellasAir ;
+    :departureDate "2027-06-19T20:15:00"^^xsd:dateTime .
+:Flight_HA210 a owl:NamedIndividual , :Flight ;
+    :flightNumber "HA210" ; :departsFrom :ATH ; :arrivesAt :JTR ; :operatedBy :HellasAir ;
+    :departureDate "2027-07-03T10:00:00"^^xsd:dateTime .
+:Flight_MS330 a owl:NamedIndividual , :Flight ;
+    :flightNumber "MS330" ; :departsFrom :SKG ; :arrivesAt :FCO ; :operatedBy :MedSkyAirways ;
+    :departureDate "2027-04-22T07:45:00"^^xsd:dateTime .
+:Flight_MS331 a owl:NamedIndividual , :Flight ;
+    :flightNumber "MS331" ; :departsFrom :FCO ; :arrivesAt :SKG ; :operatedBy :MedSkyAirways ;
+    :departureDate "2027-04-26T19:30:00"^^xsd:dateTime .
+:Flight_MS440 a owl:NamedIndividual , :Flight ;
+    :flightNumber "MS440" ; :departsFrom :ATH ; :arrivesAt :CDG ; :operatedBy :MedSkyAirways ;
+    :departureDate "2027-03-11T09:10:00"^^xsd:dateTime .
+
+# ---------- Ακτοπλοΐα και transfers ----------
+:Ferry_PiraeusMykonos a owl:NamedIndividual , :FerryTrip ;
+    :name "Πειραιάς → Μύκονος (ταχύπλοο)" ; :departsFrom :PiraeusPort ; :arrivesAt :MykonosPort .
+:Transfer_AthensArachova a owl:NamedIndividual , :Transfer ;
+    :name "Πούλμαν Αθήνα → Αράχωβα" ; :departsFrom :Athens ; :arrivesAt :Arachova .
+:Transfer_JTR_Oia a owl:NamedIndividual , :Transfer ;
+    :name "Transfer αεροδρόμιο Σαντορίνης → ξενοδοχείο" ; :departsFrom :JTR ; :arrivesAt :Santorini .
+
+# ---------- Ξενοδοχεία ----------
+:CalderaViewHotel a owl:NamedIndividual , :Hotel ;
+    :name "Caldera View Hotel" ; :starRating 5 ; :locatedIn :Santorini .
+:MykonosBlueSuites a owl:NamedIndividual , :Hotel ;
+    :name "Mykonos Blue Suites" ; :starRating 4 ; :locatedIn :Mykonos .
+:WhiteTowerHotel a owl:NamedIndividual , :Hotel ;
+    :name "White Tower Hotel" ; :starRating 3 ; :locatedIn :Thessaloniki .
+:ParnassosChalet a owl:NamedIndividual , :Hotel ;
+    :name "Parnassos Chalet" ; :starRating 4 ; :locatedIn :Arachova .
+:RomaCentroHotel a owl:NamedIndividual , :Hotel ;
+    :name "Roma Centro Hotel" ; :starRating 4 ; :locatedIn :Rome .
+:LumiereHotel a owl:NamedIndividual , :Hotel ;
+    :name "Hôtel Lumière" ; :starRating 3 ; :locatedIn :Paris .
+
+# ---------- Εκδρομές ----------
+:VolcanoBoatTour a owl:NamedIndividual , :Excursion ;
+    :name "Κρουαζιέρα στο ηφαίστειο" ; :visitsDestination :Santorini ;
+    :hasGuide :SofiaAlexiou ; :maxParticipants 30 .
+:DelosDayTrip a owl:NamedIndividual , :Excursion ;
+    :name "Ημερήσια εκδρομή στη Δήλο" ; :visitsDestination :Mykonos ;
+    :hasGuide :SofiaAlexiou ; :maxParticipants 25 .
+:VaticanTour a owl:NamedIndividual , :Excursion ;
+    :name "Ξενάγηση στα Μουσεία του Βατικανού" ; :visitsDestination :Rome ;
+    :hasGuide :GiorgosNikolaou ; :maxParticipants 20 .
+# Ο συνοδός της ξενάγησης στο Λούβρο δεν έχει ακόμη οριστεί· η οντολογία
+# γνωρίζει όμως (Excursion ⊑ ∃hasGuide.TourGuide) ότι θα υπάρχει.
+:LouvreTour a owl:NamedIndividual , :Excursion ;
+    :name "Ξενάγηση στο Λούβρο" ; :visitsDestination :Paris ; :maxParticipants 20 .
+:ThessalonikiFoodWalk a owl:NamedIndividual , :Excursion ;
+    :name "Γαστρονομική περιήγηση στη Θεσσαλονίκη" ; :visitsDestination :Thessaloniki ;
+    :hasGuide :GiorgosNikolaou ; :maxParticipants 15 .
+
+# ---------- Ασφάλειες ----------
+:BasicInsurance   a owl:NamedIndividual , :TravelInsurance ; :name "Βασική ταξιδιωτική ασφάλιση" .
+:PremiumInsurance a owl:NamedIndividual , :TravelInsurance ; :name "Ταξιδιωτική ασφάλιση Premium" .
+
+# ---------- Πακέτα διακοπών ----------
+# Σε κανένα πακέτο δεν δηλώνεται ρητά υποκλάση (FlightPackage, IslandPackage κ.λπ.):
+# οι υποκλάσεις συνάγονται από τον reasoner.
+:SantoriniEscape a owl:NamedIndividual , :HolidayPackage ;
+    :name "Santorini Escape" ;
+    :hasDestination :Santorini ;
+    :includesService :Flight_HA101 , :Flight_HA102 , :Transfer_JTR_Oia , :CalderaViewHotel , :VolcanoBoatTour , :BasicInsurance ;
+    :pricePerPerson 890.00 ; :durationDays 7 ;
+    :departureDate "2027-06-12T08:30:00"^^xsd:dateTime ;
+    :offeredBy :AegeanHorizons .
+
+:MykonosSummer a owl:NamedIndividual , :HolidayPackage ;
+    :name "Mykonos Summer" ;
+    :hasDestination :Mykonos ;
+    :includesService :Ferry_PiraeusMykonos , :MykonosBlueSuites , :DelosDayTrip ;
+    :pricePerPerson 640.00 ; :durationDays 5 ;
+    :departureDate "2027-07-10T07:00:00"^^xsd:dateTime ;
+    :offeredBy :AegeanHorizons .
+
+:CycladesHopping a owl:NamedIndividual , :HolidayPackage ;
+    :name "Cyclades Island Hopping" ;
+    :hasDestination :Santorini , :Mykonos ;
+    :includesService :Flight_HA210 , :Ferry_PiraeusMykonos , :CalderaViewHotel , :MykonosBlueSuites , :PremiumInsurance ;
+    :pricePerPerson 1450.00 ; :durationDays 10 ;
+    :departureDate "2027-07-03T10:00:00"^^xsd:dateTime ;
+    :offeredBy :AegeanHorizons .
+
+:RomanHoliday a owl:NamedIndividual , :HolidayPackage ;
+    :name "Roman Holiday" ;
+    :hasDestination :Rome ;
+    :includesService :Flight_MS330 , :Flight_MS331 , :RomaCentroHotel , :VaticanTour , :BasicInsurance ;
+    :pricePerPerson 720.00 ; :durationDays 4 ;
+    :departureDate "2027-04-22T07:45:00"^^xsd:dateTime ;
+    :offeredBy :AegeanHorizons .
+
+:ParisCityBreak a owl:NamedIndividual , :HolidayPackage ;
+    :name "Paris City Break" ;
+    :hasDestination :Paris ;
+    :includesService :Flight_MS440 , :LumiereHotel , :LouvreTour ;
+    :pricePerPerson 560.00 ; :durationDays 3 ;
+    :departureDate "2027-03-11T09:10:00"^^xsd:dateTime ;
+    :offeredBy :AegeanHorizons .
+
+:ArachovaWinter a owl:NamedIndividual , :HolidayPackage ;
+    :name "Arachova Winter Weekend" ;
+    :hasDestination :Arachova ;
+    :includesService :Transfer_AthensArachova , :ParnassosChalet ;
+    :pricePerPerson 310.00 ; :durationDays 3 ;
+    :departureDate "2027-01-15T09:00:00"^^xsd:dateTime ;
+    :offeredBy :AegeanHorizons .
+
+:ThessalonikiGastronomy a owl:NamedIndividual , :HolidayPackage ;
+    :name "Thessaloniki Gastronomy Weekend" ;
+    :hasDestination :Thessaloniki ;
+    :includesService :WhiteTowerHotel , :ThessalonikiFoodWalk ;
+    :pricePerPerson 230.00 ; :durationDays 2 ;
+    :departureDate "2027-02-20T10:00:00"^^xsd:dateTime ;
+    :offeredBy :AegeanHorizons .
+
+# ---------- Προσωπικό ----------
+:MariaPapadopoulou a owl:NamedIndividual , :Manager , :TravelAgent ;
+    :firstName "Μαρία" ; :lastName "Παπαδοπούλου" ; :email "m.papadopoulou@aegeanhorizons.example" ;
+    :manages :ThessalonikiBranch ;
+    :salary 2100.00 ; :hireDate "2015-03-01T09:00:00"^^xsd:dateTime ;
+    :speaksLanguage :Greek , :English .
+
+:NikosGeorgiou a owl:NamedIndividual , :TravelAgent ;
+    :firstName "Νίκος" ; :lastName "Γεωργίου" ; :email "n.georgiou@aegeanhorizons.example" ;
+    :worksFor :ThessalonikiBranch ;
+    :salary 1350.00 ; :hireDate "2021-05-10T09:00:00"^^xsd:dateTime ;
+    :speaksLanguage :Greek , :English , :Italian .
+
+:EleniDimitriou a owl:NamedIndividual , :TravelAgent ;
+    :firstName "Ελένη" ; :lastName "Δημητρίου" ; :email "e.dimitriou@aegeanhorizons.example" ;
+    :worksFor :AthensBranch ;
+    :salary 1400.00 ; :hireDate "2019-09-16T09:00:00"^^xsd:dateTime ;
+    :speaksLanguage :Greek , :English , :French .
+
+:KostasIoannou a owl:NamedIndividual , :Manager ;
+    :firstName "Κώστας" ; :lastName "Ιωάννου" ; :email "k.ioannou@aegeanhorizons.example" ;
+    :manages :AthensBranch ;
+    :salary 2050.00 ; :hireDate "2012-01-09T09:00:00"^^xsd:dateTime ;
+    :speaksLanguage :Greek , :English .
+
+:SofiaAlexiou a owl:NamedIndividual , :TourGuide ;
+    :firstName "Σοφία" ; :lastName "Αλεξίου" ;
+    :worksFor :AthensBranch ;
+    :salary 1250.00 ; :hireDate "2020-04-01T09:00:00"^^xsd:dateTime ;
+    :speaksLanguage :Greek , :English , :French .
+
+:GiorgosNikolaou a owl:NamedIndividual , :TourGuide ;
+    :firstName "Γιώργος" ; :lastName "Νικολάου" ;
+    :worksFor :ThessalonikiBranch ;
+    :salary 1200.00 ; :hireDate "2022-03-15T09:00:00"^^xsd:dateTime ;
+    :speaksLanguage :Greek , :English , :Italian .
+
+:AnnaVasileiou a owl:NamedIndividual , :MarketingSpecialist ;
+    :firstName "Άννα" ; :lastName "Βασιλείου" ; :email "a.vasileiou@aegeanhorizons.example" ;
+    :worksFor :ThessalonikiBranch ;
+    :salary 1500.00 ; :hireDate "2018-11-05T09:00:00"^^xsd:dateTime ;
+    :speaksLanguage :Greek , :English .
+
+# ---------- Πελάτες ----------
+# Κανένας πελάτης δεν δηλώνεται ρητά VIPCustomer· η ιδιότητα hasBooking δεν
+# δηλώνεται (συνάγεται ως αντίστροφη του bookedBy).
+:DimitrisKarras a owl:NamedIndividual , :Customer ;
+    :firstName "Δημήτρης" ; :lastName "Καρράς" ; :email "dkarras@mail.example" ;
+    :loyaltyPoints 1850 ; :speaksLanguage :Greek ;
+    :travelsWith :ElenaKarra .
+
+:ElenaKarra a owl:NamedIndividual , :Customer ;
+    :firstName "Έλενα" ; :lastName "Καρρά" ; :email "ekarra@mail.example" ;
+    :loyaltyPoints 420 ; :speaksLanguage :Greek , :English .
+
+:KaterinaLazarou a owl:NamedIndividual , :Customer ;
+    :firstName "Κατερίνα" ; :lastName "Λαζάρου" ; :email "klazarou@mail.example" ;
+    :loyaltyPoints 300 ; :speaksLanguage :Greek .
+
+:PetrosMichail a owl:NamedIndividual , :Customer ;
+    :firstName "Πέτρος" ; :lastName "Μιχαήλ" ; :email "pmichail@mail.example" ;
+    :loyaltyPoints 2600 ; :speaksLanguage :Greek , :English .
+
+:IoannaStavrou a owl:NamedIndividual , :Customer ;
+    :firstName "Ιωάννα" ; :lastName "Σταύρου" ; :email "istavrou@mail.example" ;
+    :loyaltyPoints 999 ; :speaksLanguage :Greek , :French .
+
+:JohnSmith a owl:NamedIndividual , :Customer ;
+    :firstName "John" ; :lastName "Smith" ; :email "jsmith@mail.example" ;
+    :loyaltyPoints 1000 ; :speaksLanguage :English ;
+    :travelsWith :LauraBianchi .
+
+:LauraBianchi a owl:NamedIndividual , :Customer ;
+    :firstName "Laura" ; :lastName "Bianchi" ; :email "lbianchi@mail.example" ;
+    :loyaltyPoints 150 ; :speaksLanguage :Italian , :English .
+
+:AndreasPappas a owl:NamedIndividual , :Customer ;
+    :firstName "Ανδρέας" ; :lastName "Παππάς" ; :email "apappas@mail.example" ;
+    :loyaltyPoints 60 ; :speaksLanguage :Greek .
+
+:MarthaKosta a owl:NamedIndividual , :Customer ;
+    :firstName "Μάρθα" ; :lastName "Κώστα" ; :email "mkosta@mail.example" ;
+    :loyaltyPoints 1200 ; :speaksLanguage :Greek , :English .
+
+# ---------- Κρατήσεις και πληρωμές ----------
+:Booking01 a owl:NamedIndividual , :Booking ;
+    :bookedBy :DimitrisKarras ; :forPackage :SantoriniEscape ; :handledBy :NikosGeorgiou ;
+    :hasStatus :Confirmed ; :numberOfTravellers 2 ;
+    :bookingDate "2026-11-02T11:20:00"^^xsd:dateTime ; :hasPayment :Payment01 .
+:Payment01 a owl:NamedIndividual , :CardPayment ; :amount 1780.00 .
+
+:Booking02 a owl:NamedIndividual , :Booking ;
+    :bookedBy :KaterinaLazarou ; :forPackage :MykonosSummer ; :handledBy :EleniDimitriou ;
+    :hasStatus :Confirmed ; :numberOfTravellers 1 ;
+    :bookingDate "2026-11-05T15:40:00"^^xsd:dateTime ; :hasPayment :Payment02 .
+:Payment02 a owl:NamedIndividual , :BankTransfer ; :amount 640.00 .
+
+:Booking03 a owl:NamedIndividual , :Booking ;
+    :bookedBy :PetrosMichail ; :forPackage :CycladesHopping ; :handledBy :MariaPapadopoulou ;
+    :hasStatus :Confirmed ; :numberOfTravellers 2 ;
+    :bookingDate "2026-10-28T10:05:00"^^xsd:dateTime ; :hasPayment :Payment03 .
+:Payment03 a owl:NamedIndividual , :CardPayment ; :amount 2900.00 .
+
+:Booking04 a owl:NamedIndividual , :Booking ;
+    :bookedBy :PetrosMichail ; :forPackage :RomanHoliday ; :handledBy :NikosGeorgiou ;
+    :hasStatus :Confirmed ; :numberOfTravellers 1 ;
+    :bookingDate "2026-12-01T12:00:00"^^xsd:dateTime ; :hasPayment :Payment04 .
+:Payment04 a owl:NamedIndividual , :CardPayment ; :amount 720.00 .
+
+:Booking05 a owl:NamedIndividual , :Booking ;
+    :bookedBy :JohnSmith ; :forPackage :RomanHoliday ; :handledBy :NikosGeorgiou ;
+    :hasStatus :Confirmed ; :numberOfTravellers 2 ;
+    :bookingDate "2026-11-18T17:30:00"^^xsd:dateTime ; :hasPayment :Payment05 .
+:Payment05 a owl:NamedIndividual , :BankTransfer ; :amount 1440.00 .
+
+:Booking06 a owl:NamedIndividual , :Booking ;
+    :bookedBy :IoannaStavrou ; :forPackage :ParisCityBreak ; :handledBy :EleniDimitriou ;
+    :hasStatus :Pending ; :numberOfTravellers 1 ;
+    :bookingDate "2026-12-10T09:45:00"^^xsd:dateTime .
+
+:Booking07 a owl:NamedIndividual , :Booking ;
+    :bookedBy :AndreasPappas ; :forPackage :ArachovaWinter ; :handledBy :EleniDimitriou ;
+    :hasStatus :Confirmed ; :numberOfTravellers 4 ;
+    :bookingDate "2026-11-25T13:10:00"^^xsd:dateTime ; :hasPayment :Payment07 .
+:Payment07 a owl:NamedIndividual , :CashPayment ; :amount 1240.00 .
+
+:Booking08 a owl:NamedIndividual , :Booking ;
+    :bookedBy :LauraBianchi ; :forPackage :SantoriniEscape ; :handledBy :MariaPapadopoulou ;
+    :hasStatus :Cancelled ; :numberOfTravellers 1 ;
+    :bookingDate "2026-11-08T08:50:00"^^xsd:dateTime .
+
+:Booking09 a owl:NamedIndividual , :Booking ;
+    :bookedBy :MarthaKosta ; :forPackage :ThessalonikiGastronomy ; :handledBy :NikosGeorgiou ;
+    :hasStatus :Confirmed ; :numberOfTravellers 2 ;
+    :bookingDate "2026-12-03T16:00:00"^^xsd:dateTime ; :hasPayment :Payment09 .
+:Payment09 a owl:NamedIndividual , :CardPayment ; :amount 460.00 .
+
+:Booking10 a owl:NamedIndividual , :Booking ;
+    :bookedBy :ElenaKarra ; :forPackage :SantoriniEscape ; :handledBy :NikosGeorgiou ;
+    :hasStatus :Pending ; :numberOfTravellers 1 ;
+    :bookingDate "2026-12-12T10:30:00"^^xsd:dateTime .
+
+:Booking11 a owl:NamedIndividual , :Booking ;
+    :bookedBy :MarthaKosta ; :forPackage :MykonosSummer ; :handledBy :EleniDimitriou ;
+    :hasStatus :Confirmed ; :numberOfTravellers 3 ;
+    :bookingDate "2026-12-15T11:15:00"^^xsd:dateTime ; :hasPayment :Payment11 .
+:Payment11 a owl:NamedIndividual , :BankTransfer ; :amount 1920.00 .
+
+:Booking12 a owl:NamedIndividual , :Booking ;
+    :bookedBy :DimitrisKarras ; :forPackage :ArachovaWinter ; :handledBy :EleniDimitriou ;
+    :hasStatus :Confirmed ; :numberOfTravellers 2 ;
+    :bookingDate "2026-12-20T18:00:00"^^xsd:dateTime ; :hasPayment :Payment12 .
+:Payment12 a owl:NamedIndividual , :CardPayment ; :amount 620.00 .
+
+# ---------- Αξιολογήσεις ----------
+:Review01 a owl:NamedIndividual , :Review ;
+    :writtenBy :DimitrisKarras ; :reviews :SantoriniEscape ; :rating 5 ;
+    :reviewText "Εξαιρετικό ξενοδοχείο και άψογη οργάνωση." .
+:Review02 a owl:NamedIndividual , :Review ;
+    :writtenBy :KaterinaLazarou ; :reviews :MykonosSummer ; :rating 4 ;
+    :reviewText "Πολύ ωραία εκδρομή στη Δήλο, λίγο κουραστικό το ταχύπλοο." .
+:Review03 a owl:NamedIndividual , :Review ;
+    :writtenBy :PetrosMichail ; :reviews :CycladesHopping ; :rating 5 ;
+    :reviewText "Το καλύτερο πακέτο που έχουμε κλείσει." .
+:Review04 a owl:NamedIndividual , :Review ;
+    :writtenBy :PetrosMichail ; :reviews :RomanHoliday ; :rating 4 ;
+    :reviewText "Πολύ καλός ξεναγός στο Βατικανό." .
+:Review05 a owl:NamedIndividual , :Review ;
+    :writtenBy :JohnSmith ; :reviews :RomanHoliday ; :rating 3 ;
+    :reviewText "Good tour, but the hotel room was small." .
+:Review06 a owl:NamedIndividual , :Review ;
+    :writtenBy :AndreasPappas ; :reviews :ArachovaWinter ; :rating 4 ;
+    :reviewText "Ζεστό σαλέ, ιδανικό για οικογένειες." .
+:Review07 a owl:NamedIndividual , :Review ;
+    :writtenBy :MarthaKosta ; :reviews :ThessalonikiGastronomy ; :rating 5 ;
+    :reviewText "Υπέροχη γαστρονομική περιήγηση." .
+:Review08 a owl:NamedIndividual , :Review ;
+    :writtenBy :MarthaKosta ; :reviews :MykonosSummer ; :rating 3 ;
+    :reviewText "Ακριβό για την περίοδο." .
+
+# ---------- Διαφημιστικές καμπάνιες ----------
+:SummerIslands2027 a owl:NamedIndividual , :MarketingCampaign ;
+    :name "Καλοκαίρι στα νησιά 2027" ;
+    :promotes :SantoriniEscape , :MykonosSummer , :CycladesHopping ;
+    :usesChannel :SocialMedia , :AgencyWebsite , :Newsletter ;
+    :createdBy :AnnaVasileiou ; :budget 6000.00 ;
+    :startDate "2027-02-01T00:00:00"^^xsd:dateTime ; :endDate "2027-05-31T23:59:59"^^xsd:dateTime .
+
+:EuropeCityBreaks a owl:NamedIndividual , :MarketingCampaign ;
+    :name "City breaks στην Ευρώπη" ;
+    :promotes :RomanHoliday , :ParisCityBreak ;
+    :usesChannel :SocialMedia , :RadioSpot ;
+    :createdBy :AnnaVasileiou ; :budget 3500.00 ;
+    :startDate "2026-11-15T00:00:00"^^xsd:dateTime ; :endDate "2027-02-28T23:59:59"^^xsd:dateTime .
+
+:WinterInGreece a owl:NamedIndividual , :MarketingCampaign ;
+    :name "Χειμώνας στην Ελλάδα" ;
+    :promotes :ArachovaWinter , :ThessalonikiGastronomy ;
+    :usesChannel :TravelFair , :Newsletter ;
+    :createdBy :AnnaVasileiou ; :budget 1800.00 ;
+    :startDate "2026-10-15T00:00:00"^^xsd:dateTime ; :endDate "2027-01-31T23:59:59"^^xsd:dateTime .

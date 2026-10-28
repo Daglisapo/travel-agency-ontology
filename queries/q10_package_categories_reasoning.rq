@@ -1,0 +1,20 @@
+# Q10. [Reasoning] Σε ποιες ορισμένες (defined) κατηγορίες ανήκει κάθε πακέτο.
+#      Οι κατηγορίες FlightPackage, IslandPackage, GuidedPackage, LongStayPackage
+#      δεν δηλώνονται σε κανένα πακέτο: συνάγονται από τον reasoner.
+# Χαρακτηριστικά: VALUES, OPTIONAL, GROUP_CONCAT, LANG
+# Γράφημα: inferred (στο asserted όλες οι κατηγορίες είναι κενές)
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?package (GROUP_CONCAT(?category; separator=", ") AS ?categories)
+WHERE {
+  ?p a ta:HolidayPackage ; ta:name ?package .
+  OPTIONAL {
+    VALUES ?class { ta:FlightPackage ta:IslandPackage ta:GuidedPackage ta:LongStayPackage }
+    ?p a ?class .
+    ?class rdfs:label ?category .
+    FILTER (LANG(?category) = "el")
+  }
+}
+GROUP BY ?package
+ORDER BY ?package

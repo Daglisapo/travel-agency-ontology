@@ -1,0 +1,27 @@
+Reasoner: HermiT (owlready2 0.51)
+
+Αρχική οντολογία: συνεπής, unsatisfiable κλάσεις: καμία
+
+Α. Το ξενοδοχείο ως οργανισμός (Hotel ⊑ Organization)
+  Αιτία: Εναλλακτική μοντελοποίηση που εξετάστηκε: το ξενοδοχείο ως συνεργαζόμενη επιχείρηση. Συγκρούεται με το Hotel ⊑ Accommodation ⊑ TravelService και με την ξενότητα Organization / TravelService.
+  Προστέθηκε: Hotel subClassOf Organization
+  Πλήρης οντολογία: ΑΣΥΝΕΠΗΣ (inconsistent)
+  Μόνο TBox: unsatisfiable κλάσεις = Hotel
+
+Β. Βαθμολογία εκτός ορίων (rating = 7)
+  Αιτία: Το range της rating είναι xsd:integer[1..5].
+  Προστέθηκε: Review01 rating 7
+  Πλήρης οντολογία: ΑΣΥΝΕΠΗΣ (inconsistent)
+  Μόνο TBox: unsatisfiable κλάσεις = καμία
+
+Γ. Ταξιδιωτικός σύμβουλος ως συνοδός εκδρομής
+  Αιτία: Το range της hasGuide είναι TourGuide, άρα ο Νίκος Γεωργίου θα ήταν και TourGuide· όμως TravelAgent και TourGuide είναι ξένες κλάσεις.
+  Προστέθηκε: LouvreTour hasGuide NikosGeorgiou
+  Πλήρης οντολογία: ΑΣΥΝΕΠΗΣ (inconsistent)
+  Μόνο TBox: unsatisfiable κλάσεις = καμία
+
+Δ. Κράτηση με δύο πελάτες
+  Αιτία: Η bookedBy είναι functional, οπότε ο reasoner (χωρίς Unique Name Assumption) θα ταύτιζε τους δύο πελάτες· αυτό είναι αδύνατο γιατί έχουν διαφορετικούς πόντους και η loyaltyPoints είναι επίσης functional.
+  Προστέθηκε: Booking01 bookedBy KaterinaLazarou
+  Πλήρης οντολογία: ΑΣΥΝΕΠΗΣ (inconsistent)
+  Μόνο TBox: unsatisfiable κλάσεις = καμία

@@ -1,0 +1,26 @@
+# Q7. Έλεγχος εξόφλησης: για κάθε μη ακυρωμένη κράτηση υπολογίζεται το κόστος
+#     (τιμή ανά άτομο × ταξιδιώτες), το ποσό που πληρώθηκε και το υπόλοιπο.
+# Χαρακτηριστικά: BIND με αριθμητικές πράξεις, COALESCE, OPTIONAL, FILTER, LANG, STRAFTER
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?booking ?customer ?package ?status ?cost ?paid ?balance
+WHERE {
+  ?b a ta:Booking ;
+     ta:bookedBy ?c ;
+     ta:forPackage ?p ;
+     ta:numberOfTravellers ?n ;
+     ta:hasStatus ?s .
+  FILTER (?s != ta:Cancelled)
+  ?s rdfs:label ?status .
+  FILTER (LANG(?status) = "el")
+  ?c ta:lastName ?customer .
+  ?p ta:name ?package ; ta:pricePerPerson ?price .
+  OPTIONAL { ?b ta:hasPayment/ta:amount ?amount . }
+  BIND (?price * ?n AS ?cost)
+  BIND (COALESCE(?amount, 0) AS ?paid)
+  BIND (?cost - ?paid AS ?balance)
+  BIND (STRAFTER(STR(?b), "#") AS ?booking)
+}
+ORDER BY DESC(?balance) ?booking

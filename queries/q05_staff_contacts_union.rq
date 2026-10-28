@@ -1,0 +1,29 @@
+# Q5. Με ποια μέλη του προσωπικού ήρθε σε επαφή ο πελάτης Πέτρος Μιχαήλ: οι
+#     σύμβουλοι που διεκπεραίωσαν τις κρατήσεις του και οι συνοδοί των εκδρομών
+#     που περιλαμβάνονται στα πακέτα που έκλεισε.
+# Χαρακτηριστικά: UNION, BIND, IF/BOUND, DISTINCT
+# Γράφημα: asserted
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?role ?employee ?context
+WHERE {
+  ?b ta:bookedBy ta:PetrosMichail ;
+     ta:forPackage ?p .
+  ?p ta:name ?pname .
+  {
+    ?b ta:handledBy ?e .
+    BIND ("Ταξιδιωτικός σύμβουλος" AS ?role)
+  }
+  UNION
+  {
+    ?p ta:includesService ?x .
+    ?x a ta:Excursion ; ta:hasGuide ?e ; ta:name ?xname .
+    BIND ("Οδηγός / Συνοδός" AS ?role)
+  }
+  ?e ta:firstName ?f ; ta:lastName ?l .
+  BIND (CONCAT(?f, " ", ?l) AS ?employee)
+  # Το ?pname δεν είναι ορατό μέσα στα σκέλη του UNION, γι' αυτό το πλαίσιο υπολογίζεται εδώ.
+  BIND (IF(BOUND(?xname), CONCAT(?pname, ": ", ?xname), ?pname) AS ?context)
+}
+ORDER BY ?role ?employee

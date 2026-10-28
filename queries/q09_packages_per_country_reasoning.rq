@@ -1,0 +1,18 @@
+# Q9. [Reasoning] Πόσα πακέτα επισκέπτονται κάθε χώρα. Τα πακέτα συνδέονται μόνο με
+#     πόλεις/νησιά (hasDestination)· η σχέση με τη χώρα συνάγεται από την αλυσίδα
+#     hasDestination ∘ locatedIn ⊑ visitsPlace και τη μεταβατικότητα του locatedIn.
+# Χαρακτηριστικά: property chain, transitive property, COUNT DISTINCT, GROUP_CONCAT
+# Γράφημα: inferred (στο asserted επιστρέφει 0 γραμμές)
+PREFIX ta:   <http://www.semanticweb.org/dagklis/ontologies/2026/travel-agency#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?country (COUNT(DISTINCT ?p) AS ?packages)
+       (GROUP_CONCAT(DISTINCT ?package; separator=", ") AS ?packageNames)
+WHERE {
+  ?p ta:visitsPlace ?c ;
+     ta:name ?package .
+  ?c a ta:Country ;
+     ta:name ?country .
+}
+GROUP BY ?country
+ORDER BY DESC(?packages) ?country
